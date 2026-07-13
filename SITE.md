@@ -17,7 +17,7 @@
 
 - **Homepage** (`/`) — Hero with "Make Your Brand Sticky", portfolio grid (4 cards), The Fuzz Tax section, Strategy & Consultations (Workshops + Audits cards), Creative Services (Growth Plans + Projects), parallax yellow section, What We Do services grid, Patrick Lowndes testimonial, contact form
 - **Our Work** (`/work`) — Featured case study (Pinkston for TN) with sticky sidebar + scrolling image grid, additional portfolio cards grid. Click "Read the full story" to open case study overlay modal.
-- **What We Do** (`/what-we-do`) — Service category hero with filter tags, Design service breakdown with dropdown list, Featured Services cards (AI Brand Kit, Print & Production), portfolio preview grid
+- **What We Do** (`/what-we-do`) — Service category hero with 6 filter buttons (Design, Writing & Copy, Digital & UI Design, Videography & Media, Events Design & Media, Workshops & Audits). Clicking a button animates the service detail section below it (icon, title, description, CTA, and list of sub-services). Auto-cycles every 4 seconds. Featured Services static cards (AI Brand Kit, Print & Production) below that. Static portfolio grid at the bottom shows all projects.
 - **Workshops & Audits** (`/workshops-audits`) — Hero on dark burgundy, Workshops card (coral/red), Audits card (salmon), testimonial, light footer
 
 ## Components
@@ -60,8 +60,13 @@ Portfolio asset files go in `.shipstudio/assets/portfolio/` (served at `/.shipst
 
 Current projects: Pinkston for Tennessee, Frontier Operators, David Bruce Winery (video cover), Faith Driven Talent. Featured (in testimonials): Frontier Operators + David Bruce Winery.
 
+## Service Content
+
+Service copy lives in `data/content/services.ts`. Each service has a `label` (button text), `icon` (SVG path), `title`, `description`, `ctaText`, `ctaHref`, and `items` (array of 5 sub-services with title + desc). To update copy for any category, edit that service's entry in this file.
+
 ## Recent Changes
 
+- **2026-07-13:** Rewired `/what-we-do` so the animated section is the service detail area (icon, title, description, CTA, and sub-service list), not the portfolio grid. Portfolio grid at the bottom is now static and always shows all projects. Service content pulled from `data/content/services.ts` — edit that file to update copy for any category.
 - **2026-07-13:** Wired homepage portfolio bento grid and testimonial slider to live project data. The 4 bento cards now pull from `getAllProjects()`, render real cover images/videos, and link to `/portfolio/[slug]`. The testimonial slider pulls from `getFeaturedProjects()`, shows real client quotes with author/role, and links to each project's case study page. Image placeholders will fill in once asset files are added to `.shipstudio/assets/portfolio/`.
 - **2026-07-13:** Three homepage refinements — button text now smoothly fades between colors on hover (instead of snapping), all 4 portfolio bento cards have equal image height (380px fixed), Workshops and Audits cards now expand on hover with ease-in-out animation (Workshops stays red, Audits stays pink).
 - **2026-07-12:** Built entire site from Figma design brief — 4 pages + Navbar + Footer components. Set up Belanosima + Aleo fonts, brand color tokens, symlinked `.shipstudio/assets/` into `public/` for asset serving. Enabled `images.unoptimized` and `dangerouslyAllowSVG` in next.config.ts.
