@@ -45,6 +45,9 @@ next-env.d.ts
 .shipstudio/assets/brief.md
 .shipstudio/screenshots/
 .shipstudio/*.png
+# Ship Studio internal tooling — never commit (contains API keys/tokens)
+.shipstudio/plugins/
+.shipstudio/project.json
 # Large binary files — videos and oversized GIFs should be hosted externally
 .shipstudio/assets/**/*.mp4
 .shipstudio/assets/**/*.mov
