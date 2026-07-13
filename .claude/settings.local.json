@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__shipstudio-preview__preview_status",
+      "mcp__shipstudio-preview__preview_screenshot",
+      "mcp__shipstudio-preview__preview_console",
+      "mcp__shipstudio-preview__preview_navigate",
+      "Bash(ln -sf ../.shipstudio .shipstudio)"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "playwright",
+    "sanity"
+  ]
+}

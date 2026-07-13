@@ -1,0 +1,199 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - navigation [ref=f3e3]:
+      - link [ref=f3e4] [cursor=pointer]:
+        - /url: /
+        - img "Nectarine" [ref=f3e5]
+      - button "Open menu" [ref=f3e6]
+    - generic [ref=f3e10]:
+      - heading "Make Your Brand Sticky" [level=1] [ref=f3e11]
+      - generic [ref=f3e12]:
+        - paragraph [ref=f3e13]: Having an unclear or fuzzy brand doesn't just look bad; it bleeds opportunities. Walk away with the strategy, story, and visual identity that makes your brand stick. Grow a brand foundation that cultivates loyal communities and compelling narratives.
+        - generic [ref=f3e14]:
+          - link "Book a Strategy Call" [ref=f3e15] [cursor=pointer]:
+            - /url: /contact
+          - link "Explore our Work" [ref=f3e16] [cursor=pointer]:
+            - /url: /work
+    - generic [ref=f3e19]:
+      - generic [ref=f3e25] [cursor=pointer]:
+        - heading "David Bruce Winery" [level=3] [ref=f3e26]
+        - generic [ref=f3e27]:
+          - generic [ref=f3e28]: identity development
+          - generic [ref=f3e29]: Web design
+          - generic [ref=f3e30]: copywriting
+      - generic [ref=f3e36] [cursor=pointer]:
+        - heading "Pinkston For TN" [level=3] [ref=f3e37]
+        - generic [ref=f3e38]:
+          - generic [ref=f3e39]: identity development
+          - generic [ref=f3e40]: Web design
+          - generic [ref=f3e41]: copywriting
+      - generic [ref=f3e47] [cursor=pointer]:
+        - heading "Faith Driven Talent" [level=3] [ref=f3e48]
+        - generic [ref=f3e49]:
+          - generic [ref=f3e50]: identity development
+          - generic [ref=f3e51]: Web design
+          - generic [ref=f3e52]: copywriting
+      - generic [ref=f3e58] [cursor=pointer]:
+        - heading "Frontier Operators" [level=3] [ref=f3e59]
+        - generic [ref=f3e60]:
+          - generic [ref=f3e61]: identity development
+          - generic [ref=f3e62]: Web design
+          - generic [ref=f3e63]: copywriting
+    - generic [ref=f3e66]:
+      - generic [ref=f3e67]:
+        - generic [ref=f3e68]:
+          - generic [ref=f3e69]: The Real Cost of an Unclear Brand
+          - heading "The Fuzz Tax" [level=2] [ref=f3e70]
+        - paragraph [ref=f3e71]: A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag. You know something isn't landing the way it should. Pitches that almost land. Content that fills feeds but doesn't convert. Teams that do great work but can't articulate why it matters.
+      - generic [ref=f3e72]:
+        - generic [ref=f3e73]:
+          - generic [ref=f3e74]:
+            - generic [ref=f3e75]: "1"
+            - heading "A Tax on Your Brand" [level=3] [ref=f3e76]
+          - list [ref=f3e77]:
+            - listitem [ref=f3e78]: You're working harder than you should have to
+            - listitem [ref=f3e79]: Your materials look professional but don't feel like you
+            - listitem [ref=f3e80]: Every new piece of creative starts over because there's no foundation
+        - generic [ref=f3e81] [cursor=pointer]:
+          - generic [ref=f3e82]:
+            - generic [ref=f3e83]: "2"
+            - heading "A Tax on Your Audience" [level=3] [ref=f3e84]
+          - list [ref=f3e85]:
+            - listitem [ref=f3e86]: Your ICPs engage with your materials but don't self-identify as people who need you
+            - listitem [ref=f3e87]: Your content isn't building recognition — it's just filling a feed
+            - listitem [ref=f3e88]: People leave your website without a clear sense of what you do
+      - generic [ref=f3e89]:
+        - generic [ref=f3e90] [cursor=pointer]:
+          - generic [ref=f3e91]:
+            - generic [ref=f3e92]: "3"
+            - heading "A Tax on Your Team" [level=3] [ref=f3e93]
+          - list [ref=f3e94]:
+            - listitem [ref=f3e95]: New hires can't articulate what the company stands for in their first 90 days
+            - listitem [ref=f3e96]: No two people on your team describe what you do the same way
+            - listitem [ref=f3e97]: Your team is doing great work but doesn't have the language to talk about it
+        - generic [ref=f3e98] [cursor=pointer]:
+          - generic [ref=f3e99]:
+            - generic [ref=f3e100]: "4"
+            - heading "A Tax on You…" [level=3] [ref=f3e101]
+          - list [ref=f3e102]:
+            - listitem [ref=f3e103]: Energy — You're still explaining what you do from scratch every time
+            - listitem [ref=f3e104]: Confidence — Missed opportunities chip away at team morale
+            - listitem [ref=f3e105]: Every new piece of creative starts over because there's no foundation to build from
+    - generic [ref=f3e107]:
+      - generic [ref=f3e108]:
+        - generic [ref=f3e109]: Strategy & Consultations
+        - paragraph [ref=f3e110]: You know what you do and why it matters. The hard part is finding the language and visuals that make everyone else see it too.
+        - paragraph [ref=f3e111]: Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed.
+        - link "Learn More" [ref=f3e112] [cursor=pointer]:
+          - /url: /workshops-audits
+      - generic [ref=f3e113]:
+        - generic [ref=f3e114] [cursor=pointer]:
+          - img "Workshop" [ref=f3e115]
+          - generic [ref=f3e116]:
+            - heading "Workshops" [level=3] [ref=f3e118]
+            - paragraph [ref=f3e121]: A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can act on immediately.
+            - link "Schedule a 30 Minute Intro Call" [ref=f3e122]:
+              - /url: /workshops-audits
+            - generic [ref=f3e123]:
+              - generic [ref=f3e124]: Brand Audits
+              - generic [ref=f3e125]: Website Audits
+              - generic [ref=f3e126]: Narrative Audits
+              - generic [ref=f3e127]: The Internal Playbook Workshop
+        - generic [ref=f3e128] [cursor=pointer]:
+          - img "Audit" [ref=f3e129]
+          - heading "Audits" [level=3] [ref=f3e131]
+    - generic [ref=f3e134]:
+      - generic [ref=f3e135]: p.s. we also have Creative Services
+      - generic [ref=f3e136]:
+        - generic [ref=f3e137]:
+          - generic [ref=f3e138]:
+            - heading "Growth Plans" [level=3] [ref=f3e139]
+            - paragraph [ref=f3e140]: Great Brands Need Consistent Creative.
+          - paragraph [ref=f3e141]: Looking for a dedicated creative partner? Someone who knows your voice, your goals, and your audience well enough to deliver consistent, professional visuals and content? Our monthly plans give you dedicated creative without the overhead.
+          - link "Learn More about Growth Plans →" [ref=f3e142] [cursor=pointer]:
+            - /url: /growth-plans
+        - generic [ref=f3e144]:
+          - generic [ref=f3e145]:
+            - heading "Projects & Express Delivery" [level=3] [ref=f3e146]
+            - paragraph [ref=f3e147]: Projects À La Carte
+          - paragraph [ref=f3e148]: Not every season calls for a full partnership. For well-scoped projects and one-time needs, we offer hourly options that give you professional creativity without the commitment.
+          - link "Explore Project Options →" [ref=f3e149] [cursor=pointer]:
+            - /url: /projects
+    - generic [ref=f3e152]:
+      - generic [ref=f3e153]:
+        - generic [ref=f3e154]: What We Do
+        - paragraph [ref=f3e155]: "Every service we offer is rooted in the same belief: beautiful, intentional work creates good in the world. Whether we're building a brand from the ground up or crafting one asset that needs to be exactly right."
+      - generic [ref=f3e156]:
+        - generic [ref=f3e157]:
+          - img "Design" [ref=f3e158]
+          - heading "Design" [level=3] [ref=f3e159]
+          - paragraph [ref=f3e160]: Logos, brand identity, and visual assets for every format and surface. From packaging and murals to signage, stickers, and banners — if it needs to look good, we're in.
+        - generic [ref=f3e161]:
+          - img "Copywriting" [ref=f3e162]
+          - heading "Copywriting" [level=3] [ref=f3e163]
+          - paragraph [ref=f3e164]: Mission statements, messaging frameworks, social copy, scripts, and pitch materials. The words that make your brand stick — and actually sound like you.
+        - generic [ref=f3e165]:
+          - img "Websites" [ref=f3e166]
+          - heading "Websites" [level=3] [ref=f3e167]
+          - paragraph [ref=f3e168]: Custom web design, UX/UI, and high-performance builds on Framer, WordPress, Webflow, and more. Sites that look beautiful and actually convert.
+        - generic [ref=f3e169]:
+          - img "Videography" [ref=f3e170]
+          - heading "Videography" [level=3] [ref=f3e171]
+          - paragraph [ref=f3e172]: Brand animations, testimonials, explainers, and more. From short-form content to full creative direction — we make brands move.
+        - generic [ref=f3e173]:
+          - img "Event Design & Media" [ref=f3e174]
+          - heading "Event Design & Media" [level=3] [ref=f3e175]
+          - paragraph [ref=f3e176]: "The full visual scope of events: large-scale graphics, banners, apparel, merch, posters, and print materials that make your brand feel as good in person as it does online."
+        - generic [ref=f3e177]:
+          - img "Brand Strategy" [ref=f3e178]
+          - heading "Brand Strategy" [level=3] [ref=f3e179]
+          - paragraph [ref=f3e180]: Narrative workshops, positioning sessions, digital audits and AI integration. Clarity on your story, your strategy and how to carry your brand consistently.
+    - generic [ref=f3e182]:
+      - generic [ref=f3e183]:
+        - blockquote [ref=f3e186]: Nectarine really helped me articulate the vision and motivation for why behind our brand...
+        - paragraph [ref=f3e187]: Patrick Lowndes, frontier operators
+        - link "Read the full story" [ref=f3e188] [cursor=pointer]:
+          - /url: /work
+      - img "Patrick Lowndes" [ref=f3e192]
+    - generic [ref=f3e204]:
+      - generic [ref=f3e205]:
+        - generic [ref=f3e206]:
+          - heading "Contact us" [level=2] [ref=f3e207]
+          - paragraph [ref=f3e208]: Send us a message and we'll get back to you within 1-2 business days.
+        - generic [ref=f3e209]: "[contact-illustration] 492x350"
+      - generic [ref=f3e211]:
+        - generic [ref=f3e212]:
+          - generic [ref=f3e213]:
+            - generic [ref=f3e214]: Name
+            - textbox "Jane Doe" [ref=f3e215]
+          - generic [ref=f3e216]:
+            - generic [ref=f3e217]: Email
+            - textbox "jane@company.com" [ref=f3e218]
+          - generic [ref=f3e219]:
+            - generic [ref=f3e220]: Subject
+            - textbox "General inquiry" [ref=f3e221]
+          - generic [ref=f3e222]:
+            - generic [ref=f3e223]: Message
+            - textbox "How can we help?" [ref=f3e224]
+        - button "Submit" [ref=f3e225]
+    - contentinfo [ref=f3e226]:
+      - generic [ref=f3e227]:
+        - generic [ref=f3e228]:
+          - generic [ref=f3e229]: We are nectarine
+          - paragraph [ref=f3e230]: We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.
+          - link "More About Nectarine" [ref=f3e231] [cursor=pointer]:
+            - /url: /about
+        - generic [ref=f3e235]:
+          - generic [ref=f3e236]:
+            - link "Instagram" [ref=f3e237] [cursor=pointer]:
+              - /url: https://instagram.com
+            - link "Linkedin" [ref=f3e241] [cursor=pointer]:
+              - /url: https://linkedin.com
+          - link "hello@nectarine.ink" [ref=f3e245] [cursor=pointer]:
+            - /url: mailto:hello@nectarine.ink
+      - generic [ref=f3e249]:
+        - img "Nectarine" [ref=f3e250]
+        - generic [ref=f3e251]:
+          - generic [ref=f3e252]: hello@nectarine.ink
+          - generic [ref=f3e253]: © 2026 nectarine studio llc.
+  - button "Open Next.js Dev Tools" [ref=f3e259] [cursor=pointer]

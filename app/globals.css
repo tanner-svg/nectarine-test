@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --burgundy: #380102;
+  --coral: #d7432a;
+  --cream: #fcf8f3;
+  --yellow: #f9ce6a;
+  --peach: #f8e4cc;
+  --salmon: #ffc1a7;
+  --pale-peach: #f7dec1;
+}
+
+@utility font-bel {
+  font-family: var(--font-belanosima), sans-serif;
+}
+
+@utility font-aleo {
+  font-family: var(--font-aleo), serif;
+}
+
+@utility font-inter {
+  font-family: var(--font-inter), sans-serif;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes menu-circle-expand {
+  from {
+    clip-path: circle(2% at calc(100% - 100px) 55px);
+  }
+  to {
+    clip-path: circle(200% at calc(100% - 100px) 55px);
+  }
+}
+
+@keyframes menu-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  background: var(--cream);
+  color: var(--burgundy);
+  font-family: var(--font-aleo), serif;
+}
+
+/* ─── Page transition states ─────────────────────────────────── */
+
+/* Starting position: below viewport, invisible. transition:none so it snaps instantly. */
+.page-entering {
+  transform: translateY(72px);
+  opacity: 0;
+  transition: none;
+  pointer-events: none;
+}
+
+/* Reveal: slides up to rest with a smooth eased stop */
+.page-entered {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 0.68s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity   0.52s ease-out;
+}
+
+/* Exit: existing page darkens, blurs, and drifts upward */
+.page-exiting {
+  transform: translateY(-48px) scale(0.97);
+  filter: blur(10px) brightness(0.4);
+  opacity: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.55, 0, 1, 0.45),
+    filter    0.4s ease-in,
+    opacity   0.38s ease-in;
+  pointer-events: none;
+}
+
+/* ─── Staggered section float-up within the entering page ────── */
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-entered > section,
+.page-entered > footer {
+  animation: float-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.page-entered > section:nth-of-type(1)  { animation-delay: 0.10s; }
+.page-entered > section:nth-of-type(2)  { animation-delay: 0.17s; }
+.page-entered > section:nth-of-type(3)  { animation-delay: 0.24s; }
+.page-entered > section:nth-of-type(4)  { animation-delay: 0.31s; }
+.page-entered > section:nth-of-type(5)  { animation-delay: 0.38s; }
+.page-entered > section:nth-of-type(6)  { animation-delay: 0.45s; }
+.page-entered > section:nth-of-type(7)  { animation-delay: 0.52s; }
+.page-entered > section:nth-of-type(8)  { animation-delay: 0.59s; }
+.page-entered > section:nth-of-type(9)  { animation-delay: 0.66s; }
+.page-entered > section:nth-of-type(10) { animation-delay: 0.73s; }
+.page-entered > footer                  { animation-delay: 0.80s; }
