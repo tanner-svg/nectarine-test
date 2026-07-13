@@ -57,8 +57,8 @@ function PortfolioCard({ project, className }: {
             className="object-cover"
           />
         )}
-        <div className="relative z-10 w-[38px] h-[38px] rounded-full bg-[#fcf8f3]/80 border border-[#380102]/30 flex items-center justify-center">
-          <ArrowOutward color="#380102" size={16} />
+        <div className="relative z-10 w-[38px] h-[38px] rounded-full border border-white flex items-center justify-center" style={{ mixBlendMode: 'difference' }}>
+          <ArrowOutward color="#ffffff" size={16} />
         </div>
       </div>
       <div className="flex flex-col gap-[15px]">
@@ -630,8 +630,8 @@ export default function HomePage() {
                     <Image src={media.url} alt={t.clientQuote.author} fill className="object-cover" />
                   );
                 })()}
-                <div className="absolute top-[40px] right-[40px] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
-                  <ArrowOutward color="#380102" size={25} />
+                <div className="absolute top-[40px] right-[40px] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" style={{ mixBlendMode: 'difference' }}>
+                  <ArrowOutward color="#ffffff" size={25} />
                 </div>
               </Link>
             </div>

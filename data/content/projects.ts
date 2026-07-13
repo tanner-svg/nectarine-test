@@ -5,6 +5,7 @@ const projects: Project[] = [
     title: "Pinkston for Tennessee",
     slug: "pinkston-for-tn",
     order: 2,
+    galleryFolder: "portfolio/pinkston-for-tn",
     coverMedia: {
       type: "image",
       url: "/.shipstudio/assets/portfolio/NECT_Site_LP-Gif.gif",
@@ -24,13 +25,14 @@ The work spanned a full brand system, campaign website, and digital presence. Ev
     title: "Frontier Operators",
     slug: "frontier-operators",
     order: 3,
+    galleryFolder: "portfolio/frontier-operators",
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/frontier-cover.jpg",
+      url: "/.shipstudio/assets/portfolio/FO-Image.jpg",
     },
     testimonialMedia: {
       type: "image",
-      url: "/.shipstudio/assets/patrick-image.png",
+      url: "/.shipstudio/assets/portfolio/FO-Image.jpg",
     },
     body: `Frontier Operators serves a community of military veterans transitioning into small business ownership — people who've spent careers executing under pressure and now need the language and tools to lead in a civilian market.
 
@@ -47,6 +49,7 @@ We led a full brand narrative engagement: starting with a strategy intensive to 
     title: "David Bruce Winery",
     slug: "david-bruce-winery",
     order: 1,
+    galleryFolder: "portfolio/david-bruce-winery",
     coverMedia: {
       type: "image",
       url: "/.shipstudio/assets/portfolio/David-Bruce-Cover.gif",
@@ -66,6 +69,7 @@ We rebuilt the brand from its strongest asset: the story of a doctor who fell in
     title: "Faith Driven Talent",
     slug: "faith-driven-talent",
     order: 4,
+    galleryFolder: "portfolio/faith-driven-talent",
     coverMedia: {
       type: "image",
       url: "/.shipstudio/assets/portfolio/faith-driven-cover.jpg",

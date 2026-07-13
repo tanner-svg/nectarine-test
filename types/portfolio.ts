@@ -22,6 +22,7 @@ export interface Project {
   order?: number;
   coverMedia: CoverMedia;
   testimonialMedia?: CoverMedia;
+  galleryFolder?: string;
   body: string;
   attributes: ProjectAttribute[];
   clientQuote: ClientQuote;

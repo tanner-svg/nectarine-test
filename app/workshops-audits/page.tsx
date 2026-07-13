@@ -216,8 +216,8 @@ export default function WorkshopsAuditsPage() {
                         <Image src={media.url} alt={t.clientQuote.author} fill className="object-cover" />
                       );
                     })()}
-                    <div className="absolute top-[40px] right-[40px] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
-                      <ArrowOutward color="#380102" size={25} />
+                    <div className="absolute top-[40px] right-[40px] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" style={{ mixBlendMode: 'difference' }}>
+                      <ArrowOutward color="#ffffff" size={25} />
                     </div>
                   </Link>
                 </div>
