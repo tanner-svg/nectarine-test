@@ -325,11 +325,11 @@ export default function HomePage() {
       </section>
 
       {/* The Fuzz Tax */}
-      <section className="bg-[#f8e4cc] py-5 lg:py-[30px] overflow-hidden xl:pb-0 xl:pt-0">
-        <div className="max-w-[1290px] mx-auto flex flex-col lg:flex-row lg:items-stretch lg:justify-between gap-8 lg:gap-[40px] xl:max-w-screen xl:pl-20 xl:h-3/4 xl:pr-20 xl:pt-0 xl:pb-0">
+      <section className="bg-[#f8e4cc] py-5 lg:py-0 overflow-hidden">
+        <div className="max-w-[1290px] mx-auto flex flex-col lg:flex-row lg:items-stretch lg:justify-between gap-8 lg:gap-[40px] xl:max-w-screen xl:pl-20 xl:pr-20">
 
           {/* Left: text */}
-          <div className="px-5 sm:px-10 lg:pl-[75px] flex flex-col gap-5 lg:gap-[28px] lg:w-[500px] lg:flex-shrink-0 lg:pt-[50px] xl:pt-0 xl:pr-0 xl:pl-0">
+          <div className="px-5 sm:px-10 lg:pl-[75px] flex flex-col gap-5 lg:gap-[28px] lg:w-[500px] lg:flex-shrink-0 lg:py-[100px] xl:pr-0 xl:pl-0">
             <span className="font-bel text-[13px] bg-[#d7432a] text-[#fcf8f3] rounded-full px-[14px] py-[9px] w-fit uppercase" style={{ letterSpacing: '0.12em' }}>
               The Fuzz Tax
             </span>
@@ -368,10 +368,10 @@ export default function HomePage() {
                   style={{
                     position: 'absolute',
                     top: '50%',
-                    left: 0,
-                    width: '100%',
+                    left: '50%',
+                    width: '90%',
                     aspectRatio: '1130 / 770',
-                    transform: `translateY(${cfg.y}%) rotate(${cfg.rot}deg)`,
+                    transform: `translate(-50%, ${cfg.y}%) rotate(${cfg.rot}deg)`,
                     zIndex: cfg.z,
                     opacity: cfg.op,
                     transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease',

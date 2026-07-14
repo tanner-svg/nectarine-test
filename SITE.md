@@ -27,7 +27,7 @@
 
 ## Assets
 
-All assets live in `.shipstudio/assets/` and are served via a symlink at `public/.shipstudio → ../.shipstudio`.
+Assets live in `.shipstudio/assets/`, but are actually served from `public/.shipstudio/assets/` — a separate copy of the folder (not a live symlink, despite the name). New files added to `.shipstudio/assets/` must also be copied into `public/.shipstudio/assets/` to show up on the site.
 
 Icons used: `workshop-icon.svg`, `audit-icon.svg`, `design-icon.svg`, `copywriting-icon.svg`, `websites-icon.svg`, `video-icon.svg`, `events-icon.svg`, `strategy-icon.svg`, `cancel.svg`, `parallax-bg.svg`
 Photos: `patrick-image.png` (testimonial section)
@@ -73,8 +73,9 @@ Current projects: Pinkston for Tennessee, Frontier Operators, David Bruce Winery
 
 Service copy lives in `data/content/services.ts`. Each service has a `label` (button text), `icon` (SVG path), `title`, `description`, `ctaText`, `ctaHref`, and `items` (array of 5 sub-services with title + desc). To update copy for any category, edit that service's entry in this file.
 
-## Recent Changes
-
+- **2026-07-14:** Fuzz Tax text padding increased to 100px top/bottom. Also fixed the rotating cards getting their left/right edges clipped when tilted — each card is now sized at 90% of the slider width (instead of 100%) and centered, so the rotated corners stay inside the container instead of getting cut off by the edge.
+- **2026-07-14:** Real Fuzz Tax card images are in and showing correctly. Also increased the top/bottom padding on the left text column by another 20% (50px → 60px) for more breathing room. Note: when adding new files to `.shipstudio/assets/`, they also need to be copied into `public/.shipstudio/assets/` — the folder that used to be a symlink (`public/.shipstudio → ../.shipstudio`) is now a real, separate copy, so new assets don't show up automatically until copied over.
+- **2026-07-14:** Fuzz Tax section layout — the image slider on the right now stretches to the full height of the section (no more gap above/below it), and the text column on the left got its own top/bottom padding so it has breathing room instead of relying on the section's padding.
 - **2026-07-14:** Rebuilt the Fuzz Tax carousel to show 4 distinct card images (one per "tax" — Opportunities, Audience, Team, You…) instead of repeating one placeholder. Card 1 uses the real exported design; cards 2-4 use cropped stand-ins from your reference screenshot. Carousel card shape now matches the real export ratio (1130x770). See "Fuzz Tax cards" above for how to swap in your own exports.
 - **2026-07-13:** Rewired `/what-we-do` so the animated section is the service detail area (icon, title, description, CTA, and sub-service list), not the portfolio grid. Portfolio grid at the bottom is now static and always shows all projects. Service content pulled from `data/content/services.ts` — edit that file to update copy for any category.
 - **2026-07-13:** Wired homepage portfolio bento grid and testimonial slider to live project data. The 4 bento cards now pull from `getAllProjects()`, render real cover images/videos, and link to `/portfolio/[slug]`. The testimonial slider pulls from `getFeaturedProjects()`, shows real client quotes with author/role, and links to each project's case study page. Image placeholders will fill in once asset files are added to `.shipstudio/assets/portfolio/`.
