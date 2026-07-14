@@ -188,7 +188,8 @@ export default function HomePage() {
   const [hoveredCard, setHoveredCard] = useState<'workshops' | 'audits' | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fuzzIndex, setFuzzIndex] = useState(0);
-  const fuzzTouchY = useRef(0);
+  const [fuzzHorizontal, setFuzzHorizontal] = useState(false);
+  const fuzzTouchStart = useRef(0);
   const parallaxRef = useRef<HTMLElement>(null);
   const parallaxImgRef = useRef<HTMLDivElement>(null);
 
@@ -241,6 +242,14 @@ export default function HomePage() {
   useEffect(() => {
     const t = setInterval(() => setFuzzIndex(p => (p + 1) % 4), 6000);
     return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setFuzzHorizontal(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
   }, []);
 
   const allProjects = getAllProjects();
@@ -325,11 +334,11 @@ export default function HomePage() {
       </section>
 
       {/* The Fuzz Tax */}
-      <section className="bg-[#f8e4cc] py-5 lg:py-0 overflow-hidden">
-        <div className="max-w-[1290px] mx-auto flex flex-col lg:flex-row lg:items-stretch lg:justify-between gap-8 lg:gap-[40px] xl:max-w-screen xl:pl-20 xl:pr-20">
+      <section className="bg-[#f8e4cc] py-5 md:py-0 overflow-hidden">
+        <div className="max-w-[1290px] mx-auto flex flex-col md:flex-row md:items-stretch md:justify-between gap-8 lg:gap-[40px] md:px-8 lg:max-w-screen lg:pl-20 lg:pr-20">
 
           {/* Left: text */}
-          <div className="px-5 sm:px-10 lg:pl-[75px] flex flex-col gap-5 lg:gap-[28px] lg:w-[500px] lg:flex-shrink-0 lg:py-[100px] xl:pr-0 xl:pl-0">
+          <div className="px-5 sm:px-10 md:px-0 flex flex-col gap-5 lg:gap-[28px] md:w-[42%] md:flex-shrink-0 md:py-[60px] lg:w-[500px] lg:py-[100px] lg:pr-0 lg:pl-0">
             <span className="font-bel text-[13px] bg-[#d7432a] text-[#fcf8f3] rounded-full px-[14px] py-[9px] w-fit uppercase" style={{ letterSpacing: '0.12em' }}>
               The Fuzz Tax
             </span>
@@ -346,21 +355,24 @@ export default function HomePage() {
 
           {/* Right: rolodex/waterfall — cards loop top to bottom, tilting -3deg in, flat at rest, +3deg out */}
           <div
-            className="relative w-full aspect-[1130/770] lg:aspect-auto lg:h-auto lg:self-stretch lg:w-[560px] lg:flex-shrink-0 overflow-hidden"
-            onTouchStart={(e) => { fuzzTouchY.current = e.touches[0].clientY; }}
+            className="relative w-full aspect-[1130/770] md:aspect-auto md:h-auto md:self-stretch md:flex-1 lg:flex-none lg:w-[560px] lg:flex-shrink-0 overflow-hidden"
+            style={fuzzHorizontal ? { aspectRatio: '6 / 5' } : undefined}
+            onTouchStart={(e) => { fuzzTouchStart.current = fuzzHorizontal ? e.touches[0].clientX : e.touches[0].clientY; }}
             onTouchEnd={(e) => {
-              const dy = e.changedTouches[0].clientY - fuzzTouchY.current;
-              if (Math.abs(dy) > 40) setFuzzIndex(p => dy < 0 ? (p + 1) % 4 : (p + 3) % 4);
+              const end = fuzzHorizontal ? e.changedTouches[0].clientX : e.changedTouches[0].clientY;
+              const d = end - fuzzTouchStart.current;
+              if (Math.abs(d) > 40) setFuzzIndex(p => d < 0 ? (p + 1) % 4 : (p + 3) % 4);
             }}
           >
             {fuzzCards.map((card, i) => {
               const offset = (fuzzIndex - i + 4) % 4;
-              // 0=active(center) 1=prev(just exited, peeking below) 2=hidden(parked, invisible) 3=next(about to enter, peeking above)
+              // 0=active(center) 1=prev(just exited, peeking behind) 2=hidden(parked, invisible) 3=next(about to enter, peeking ahead)
+              // d is the offset along the animation axis (vertical by default, horizontal below 768px)
               const cfg = {
-                0: { y: -50,  rot: -1, op: 1, z: 4 },
-                3: { y: -120, rot: -9, op: 1, z: 3 },
-                1: { y: 20,   rot: 5,  op: 1, z: 3 },
-                2: { y: -120, rot: -9, op: 0, z: 1 },
+                0: { d: -50,  rot: -1, op: 1, z: 4 },
+                3: { d: -120, rot: -9, op: 1, z: 3 },
+                1: { d: 20,   rot: 5,  op: 1, z: 3 },
+                2: { d: -120, rot: -9, op: 0, z: 1 },
               }[offset];
               return (
                 <div
@@ -371,7 +383,9 @@ export default function HomePage() {
                     left: '50%',
                     width: '90%',
                     aspectRatio: '1130 / 770',
-                    transform: `translate(-50%, ${cfg.y}%) rotate(${cfg.rot}deg)`,
+                    transform: fuzzHorizontal
+                      ? `translate(${cfg.d}%, -50%) rotate(${cfg.rot}deg)`
+                      : `translate(-50%, ${cfg.d}%) rotate(${cfg.rot}deg)`,
                     zIndex: cfg.z,
                     opacity: cfg.op,
                     transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease',
