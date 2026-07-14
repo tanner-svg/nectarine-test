@@ -255,7 +255,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div style={{ backgroundColor: "#380102" }}>
+    <div style={{ background: "linear-gradient(to bottom, #fcf8f3 50%, #380102 50%)" }}>
 
       {/* Hero */}
       <section className="bg-[#fcf8f3] pt-[90px] lg:pt-[150px] px-5 sm:px-10 lg:px-[75px] pb-0 flex flex-col gap-8 lg:gap-[75px]">
