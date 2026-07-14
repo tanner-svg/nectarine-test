@@ -1,0 +1,178 @@
+- generic [active] [ref=f10e1]:
+  - navigation [ref=f10e2]:
+    - link [ref=f10e3] [cursor=pointer]:
+      - /url: /
+      - img "Nectarine" [ref=f10e4]
+  - button "Close menu" [ref=f10e25]
+  - generic [ref=f10e26]:
+    - link [ref=f10e29] [cursor=pointer]:
+      - /url: /
+      - img "Nectarine" [ref=f10e30]
+    - generic [ref=f10e31]:
+      - link "Our Work" [ref=f10e32] [cursor=pointer]:
+        - /url: /work
+      - link "Workshops & Audits" [ref=f10e33] [cursor=pointer]:
+        - /url: /workshops-audits
+      - link "Creative Services" [ref=f10e34] [cursor=pointer]:
+        - /url: /what-we-do
+      - generic [ref=f10e35]:
+        - link "About Us" [ref=f10e36] [cursor=pointer]:
+          - /url: /about
+        - link "The Fuzz Tax" [ref=f10e37] [cursor=pointer]:
+          - /url: /the-fuzz-tax
+        - link "Contact" [ref=f10e38] [cursor=pointer]:
+          - /url: /contact
+  - generic [ref=f10e40]:
+    - generic [ref=f10e42]:
+      - generic [ref=f10e43]: Our Work
+      - heading "You know what you do and why it matters. The hard part is finding the language and visuals that make everyone else see it too." [level=1] [ref=f10e44]
+    - generic [ref=f10e46]:
+      - link "David Bruce Winery David Bruce Winery branding strategy" [ref=f10e47] [cursor=pointer]:
+        - /url: /portfolio/david-bruce-winery
+        - img "David Bruce Winery" [ref=f10e49]
+        - generic [ref=f10e53]:
+          - heading "David Bruce Winery" [level=3] [ref=f10e54]
+          - generic [ref=f10e55]:
+            - generic [ref=f10e56]: branding
+            - generic [ref=f10e57]: strategy
+      - link "Pinkston for Tennessee Pinkston for Tennessee web design" [ref=f10e58] [cursor=pointer]:
+        - /url: /portfolio/pinkston-for-tn
+        - img "Pinkston for Tennessee" [ref=f10e60]
+        - generic [ref=f10e64]:
+          - heading "Pinkston for Tennessee" [level=3] [ref=f10e65]
+          - generic [ref=f10e66]: web design
+      - link "Frontier Operators Frontier Operators strategy copywriting" [ref=f10e68] [cursor=pointer]:
+        - /url: /portfolio/frontier-operators
+        - img "Frontier Operators" [ref=f10e70]
+        - generic [ref=f10e74]:
+          - heading "Frontier Operators" [level=3] [ref=f10e75]
+          - generic [ref=f10e76]:
+            - generic [ref=f10e77]: strategy
+            - generic [ref=f10e78]: copywriting
+      - link "Faith Driven Talent Faith Driven Talent strategy copywriting branding" [ref=f10e79] [cursor=pointer]:
+        - /url: /portfolio/faith-driven-talent
+        - img "Faith Driven Talent" [ref=f10e81]
+        - generic [ref=f10e85]:
+          - heading "Faith Driven Talent" [level=3] [ref=f10e86]
+          - generic [ref=f10e87]:
+            - generic [ref=f10e88]: strategy
+            - generic [ref=f10e89]: copywriting
+            - generic [ref=f10e90]: branding
+    - generic [ref=f10e94]:
+      - generic [ref=f10e95]:
+        - generic [ref=f10e96]:
+          - heading "Contact us" [level=2] [ref=f10e97]
+          - paragraph [ref=f10e98]: Send us a message and we'll get back to you within 1-2 business days.
+        - generic [ref=f10e99]: "[contact-illustration] 492x350"
+      - generic [ref=f10e101]:
+        - generic [ref=f10e102]:
+          - generic [ref=f10e103]:
+            - generic [ref=f10e104]: Name
+            - textbox "Jane Doe" [ref=f10e105]
+          - generic [ref=f10e106]:
+            - generic [ref=f10e107]: Email
+            - textbox "jane@company.com" [ref=f10e108]
+          - generic [ref=f10e109]:
+            - generic [ref=f10e110]: Subject
+            - textbox "General inquiry" [ref=f10e111]
+          - generic [ref=f10e112]:
+            - generic [ref=f10e113]: Message
+            - textbox "How can we help?" [ref=f10e114]
+        - button "Submit" [ref=f10e115]
+    - contentinfo [ref=f10e116]:
+      - generic [ref=f10e117]:
+        - generic [ref=f10e118]:
+          - generic [ref=f10e119]: We are nectarine
+          - paragraph [ref=f10e120]: We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.
+          - link "More About Nectarine" [ref=f10e121] [cursor=pointer]:
+            - /url: /about
+        - generic [ref=f10e125]:
+          - generic [ref=f10e126]:
+            - link "Instagram" [ref=f10e127] [cursor=pointer]:
+              - /url: https://instagram.com
+            - link "Linkedin" [ref=f10e131] [cursor=pointer]:
+              - /url: https://linkedin.com
+          - link "hello@nectarine.ink" [ref=f10e135] [cursor=pointer]:
+            - /url: mailto:hello@nectarine.ink
+      - generic [ref=f10e139]:
+        - img "Nectarine" [ref=f10e140]
+        - generic [ref=f10e141]:
+          - generic [ref=f10e142]: hello@nectarine.ink
+          - generic [ref=f10e143]: © 2026 nectarine studio llc.
+  - button "Open Next.js Dev Tools" [ref=f10e14] [cursor=pointer]
+  - alert [ref=f10e18]
+  - button [ref=f10e20] [cursor=pointer]:
+    - generic:
+      - generic:
+        - button
+      - generic:
+        - button
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button
+      - generic:
+        - button
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - link:
+              - /url: https://agentation.com
+            - paragraph: v3.0.1
+            - button "Switch to light mode"
+          - generic:
+            - generic:
+              - generic: Output Detail
+              - button "Standard"
+            - generic:
+              - generic: React Components
+              - generic:
+                - checkbox [checked]
+            - generic:
+              - generic: Hide Until Restart
+              - generic:
+                - checkbox
+          - generic:
+            - generic: Marker Color
+            - generic:
+              - button "Indigo"
+              - button "Blue"
+              - button "Cyan"
+              - button "Green"
+              - button "Yellow"
+              - button "Orange"
+              - button "Red"
+          - generic:
+            - generic:
+              - generic:
+                - checkbox "Clear on copy/send"
+              - generic: Clear on copy/send
+            - generic:
+              - generic:
+                - checkbox "Block page interactions" [checked]
+              - generic: Block page interactions
+          - button "Manage MCP & Webhooks"
+        - generic:
+          - button "Manage MCP & Webhooks"
+          - generic:
+            - generic: MCP Connection
+            - paragraph:
+              - text: MCP connection allows agents to receive and act on annotations.
+              - link "Learn more":
+                - /url: https://agentation.dev/mcp
+          - generic:
+            - generic:
+              - generic: Webhooks
+              - generic:
+                - generic: Auto-Send
+                - generic:
+                  - checkbox "Auto-Send" [checked] [disabled]
+            - paragraph: The webhook URL will receive live annotation changes and annotation data.
+            - textbox "Webhook URL"

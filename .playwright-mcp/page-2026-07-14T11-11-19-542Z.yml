@@ -1,0 +1,248 @@
+- generic [active] [ref=f8e1]:
+  - navigation [ref=f8e2]:
+    - link [ref=f8e3] [cursor=pointer]:
+      - /url: /
+      - img "Nectarine" [ref=f8e4]
+  - button "Open menu" [ref=f8e6]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - heading "Make Your Brand" [level=1]
+          - generic:
+            - paragraph: Having an unclear or fuzzy brand doesn't just look bad; it bleeds opportunities. Walk away with the strategy, story, and visual identity that makes your brand stick. Grow a brand foundation that cultivates loyal communities and compelling narratives.
+            - generic:
+              - link "Book a Strategy Call":
+                - /url: /contact
+              - link "Explore our Work":
+                - /url: /work
+      - generic:
+        - generic:
+          - link "David Bruce Winery David Bruce Winery branding strategy":
+            - /url: /portfolio/david-bruce-winery
+            - generic:
+              - img "David Bruce Winery"
+            - generic:
+              - heading "David Bruce Winery" [level=3]
+              - generic:
+                - generic: branding
+                - generic: strategy
+          - link "Pinkston for Tennessee Pinkston for Tennessee web design":
+            - /url: /portfolio/pinkston-for-tn
+            - generic:
+              - img "Pinkston for Tennessee"
+            - generic:
+              - heading "Pinkston for Tennessee" [level=3]
+              - generic: web design
+          - link "Frontier Operators Frontier Operators strategy copywriting":
+            - /url: /portfolio/frontier-operators
+            - generic:
+              - img "Frontier Operators"
+            - generic:
+              - heading "Frontier Operators" [level=3]
+              - generic:
+                - generic: strategy
+                - generic: copywriting
+          - link "Faith Driven Talent Faith Driven Talent strategy copywriting branding":
+            - /url: /portfolio/faith-driven-talent
+            - generic:
+              - img "Faith Driven Talent"
+            - generic:
+              - heading "Faith Driven Talent" [level=3]
+              - generic:
+                - generic: strategy
+                - generic: copywriting
+                - generic: branding
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: The Fuzz Tax
+              - heading "The Real Cost of an Unclear Brand" [level=2]
+            - generic:
+              - paragraph: A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag.
+              - paragraph: You know something isn't landing the way it should. Pitches that almost close. Team members who struggle to explain what you do. Opportunities that go to someone who just told their story better. We call it the "Fuzz Tax", and it's more fixable than you'd think.
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: "1"
+                  - heading "A Tax on Your Opportunities" [level=3]
+                - list:
+                  - listitem: You're losing opportunities to competitors you know you're better than.
+                  - listitem: Dream partnerships stall because your positioning isn't landing in the room.
+                  - listitem: You lose out on the word-of-mouth and referrals you could've had from the opportunities you've already lost.
+              - generic:
+                - generic:
+                  - generic: "2"
+                  - heading "A Tax on Your Audience" [level=3]
+                - list:
+                  - listitem: Your ICPs engage with your materials but don't self-identify as people who need you.
+                  - listitem: Your content isn't building recognition; it's just filling a feed.
+                  - listitem: People leave your website without a clear sense of what makes you different.
+              - generic:
+                - generic:
+                  - generic: "3"
+                  - heading "A Tax on Your Team" [level=3]
+                - list:
+                  - listitem: New hires can't articulate what the company stands for in their first 90 days.
+                  - listitem: No two people on your team describe what you do the same way.
+                  - listitem: Your team is doing great work but doesn't have the language to talk about it.
+              - generic:
+                - generic:
+                  - generic: "4"
+                  - heading "A Tax on You…" [level=3]
+                - list:
+                  - listitem: Energy | You're still explaining what you do from scratch + Every new piece of creative starts over because there's no foundation to build from.
+                  - listitem: Confidence | Missed opportunities chip away at team morale.
+                  - listitem: Your Vision | You know what your brand should feel like, but translating that into a cohesive visual identity feels out of reach.
+      - generic:
+        - generic:
+          - generic:
+            - generic: Strategy & Consultations
+            - paragraph: You know what you do and why it matters. The hard part is finding the language and visuals that make everyone else see it too.
+            - paragraph: Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed. Some clients walk away ready to run with it on their own. Others use their session as the launchpad for a longer creative partnership. Either way, you leave with actionable insights to propel your brand forward.
+            - link "Learn More":
+              - /url: /workshops-audits
+          - generic:
+            - generic:
+              - generic:
+                - img "Workshop"
+                - generic:
+                  - heading "Workshops" [level=3]
+              - paragraph: A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can immediately implement across your organization.
+              - link "Schedule a 30 Minute Intro Call":
+                - /url: /workshops-audits
+              - generic:
+                - generic: The Visual Identity Workshop
+                - generic: The Brand Narrative Workshop
+                - generic: The Internal Playbook Workshop
+            - generic:
+              - generic:
+                - img "Audit"
+                - generic:
+                  - heading "Audits" [level=3]
+              - paragraph: A focused call (30-45 minutes) where we run a SWOT analysis on your selected focus area. You'll receive a one-page PDF of performance notes and recommendations shortly after.
+              - link "Schedule an Audit":
+                - /url: /workshops-audits
+              - generic:
+                - generic: Brand Audits
+                - generic: Website Audits
+                - generic: Narrative Audits
+                - generic: Specific Media Audits
+                - generic: Videography Audits
+      - generic:
+        - generic: p.s. we also have Creative Services
+        - generic:
+          - generic:
+            - generic:
+              - heading "Growth Plans" [level=3]
+              - paragraph: Great Brands Need Consistent Creative.
+            - paragraph: Looking for a dedicated creative partner? Someone who knows your voice, your goals, and your audience well enough to deliver consistent, professional visuals and content? Our monthly plans give you dedicated creative without the overhead.
+            - link "Learn More about Growth Plans":
+              - /url: /growth-plans
+          - generic:
+            - generic:
+              - heading "Projects & Express Delivery" [level=3]
+              - paragraph: Projects À La Carte
+            - paragraph: Not every season calls for a full partnership. For well-scoped projects and one-time needs, we offer hourly options that give you professional creativity without the commitment.
+            - link "Explore Project Options":
+              - /url: /projects
+      - generic:
+        - generic:
+          - generic:
+            - generic: What We Do
+            - paragraph: "Every service we offer is rooted in the same belief: beautiful, intentional work creates good in the world. Whether we're building a brand from the ground up or crafting one asset that needs to be exactly right."
+          - generic:
+            - generic:
+              - img "Design"
+              - heading "Design" [level=3]
+              - paragraph: Logos, brand identity, and visual assets for every format and surface. From packaging and murals to signage, stickers, and banners — if it needs to look good, we're in.
+            - generic:
+              - img "Copywriting"
+              - heading "Copywriting" [level=3]
+              - paragraph: Mission statements, messaging frameworks, social copy, scripts, and pitch materials. The words that make your brand stick — and actually sound like you.
+            - generic:
+              - img "Websites"
+              - heading "Websites" [level=3]
+              - paragraph: Custom web design, UX/UI, and high-performance builds on Framer, WordPress, Webflow, and more. Sites that look beautiful and actually convert.
+            - generic:
+              - img "Videography"
+              - heading "Videography" [level=3]
+              - paragraph: Brand animations, testimonials, explainers, and more. From short-form content to full creative direction — we make brands move.
+            - generic:
+              - img "Event Design & Media"
+              - heading "Event Design & Media" [level=3]
+              - paragraph: "The full visual scope of events: large-scale graphics, banners, apparel, merch, posters, and print materials that make your brand feel as good in person as it does online."
+            - generic:
+              - img "Brand Strategy"
+              - heading "Brand Strategy" [level=3]
+              - paragraph: Narrative workshops, positioning sessions, digital audits and AI integration. Clarity on your story, your strategy and how to carry your brand consistently.
+      - generic:
+        - generic:
+          - generic [ref=f8e9]:
+            - generic [ref=f8e10]:
+              - blockquote [ref=f8e13]: Nectarine really helped me articulate the vision and motivation for the why behind our brand. We had the instincts — they gave us the words.
+              - paragraph [ref=f8e14]: Patrick Lowndes, Founder, Frontier Operators
+              - link "Read the full story" [ref=f8e15] [cursor=pointer]:
+                - /url: /portfolio/frontier-operators
+            - link [ref=f8e18] [cursor=pointer]:
+              - /url: /portfolio/frontier-operators
+              - img "Patrick Lowndes" [ref=f8e19]
+          - generic:
+            - generic:
+              - blockquote: Working with Nectarine completely transformed how we present ourselves to the world. Sixty years of history, finally looking the part.
+              - paragraph: Eric Bruce, CEO, David Bruce Winery
+              - link "Read the full story":
+                - /url: /portfolio/david-bruce-winery
+            - link "Eric Bruce":
+              - /url: /portfolio/david-bruce-winery
+              - img "Eric Bruce"
+        - generic:
+          - button
+          - button
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - heading "Contact us" [level=2]
+                  - paragraph: Send us a message and we'll get back to you within 1-2 business days.
+                - generic: "[contact-illustration] 492x350"
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Name
+                    - textbox "Jane Doe"
+                  - generic:
+                    - generic: Email
+                    - textbox "jane@company.com"
+                  - generic:
+                    - generic: Subject
+                    - textbox "General inquiry"
+                  - generic:
+                    - generic: Message
+                    - textbox "How can we help?"
+                - button "Submit"
+      - contentinfo:
+        - generic:
+          - generic:
+            - generic: We are nectarine
+            - paragraph: We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.
+            - link "More About Nectarine":
+              - /url: /about
+          - generic:
+            - generic:
+              - link "Instagram":
+                - /url: https://instagram.com
+              - link "Linkedin":
+                - /url: https://linkedin.com
+            - link "hello@nectarine.ink":
+              - /url: mailto:hello@nectarine.ink
+        - generic:
+          - img "Nectarine"
+          - generic:
+            - generic: hello@nectarine.ink
+            - generic: © 2026 nectarine studio llc.
+  - button "Open Next.js Dev Tools" [ref=f8e28] [cursor=pointer]

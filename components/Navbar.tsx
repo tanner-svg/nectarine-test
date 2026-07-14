@@ -4,18 +4,45 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+const mainLinks = [
+  { href: '/work', label: 'Our Work' },
+  { href: '/workshops-audits', label: 'Workshops & Audits' },
+  { href: '/what-we-do', label: 'Creative Services' },
+];
+
+const secondaryLinks = [
+  { href: '/about', label: 'About Us' },
+  { href: '/the-fuzz-tax', label: 'The Fuzz Tax' },
+  { href: '/contact', label: 'Contact' },
+];
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [logoVisible, setLogoVisible] = useState(false);
+  const [hoveredChip, setHoveredChip] = useState<string | null>(null);
   const pathname = usePathname();
 
-  // Close (without animation) when route changes — the curtain hides this
   useEffect(() => {
     setOpen(false);
     setIsClosing(false);
+    setLogoVisible(false);
   }, [pathname]);
 
-  // Animated close for the X button (when not navigating)
+  // Double-rAF ensures the opacity:0 frame is painted before the transition fires
+  useEffect(() => {
+    if (open && !isClosing) {
+      setLogoVisible(false);
+      const r1 = requestAnimationFrame(() => {
+        const r2 = requestAnimationFrame(() => setLogoVisible(true));
+        return () => cancelAnimationFrame(r2);
+      });
+      return () => cancelAnimationFrame(r1);
+    } else {
+      setLogoVisible(false);
+    }
+  }, [open, isClosing]);
+
   const closeMenu = useCallback(() => {
     setIsClosing(true);
     setTimeout(() => {
@@ -28,7 +55,7 @@ export default function Navbar() {
     <>
       {/* Default navbar */}
       <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-5 sm:px-10 lg:px-[75px] h-[80px] lg:h-[110px]">
-        <Link href="/">
+        <Link href="/" className="navbar-logo">
           <Image
             src="/.shipstudio/assets/nectarine-logo-4.svg"
             alt="Nectarine"
@@ -40,10 +67,10 @@ export default function Navbar() {
         <div className="w-[44px] h-[44px] lg:w-[50px] lg:h-[50px]" />
       </nav>
 
-      {/* Hamburger / X button — above the overlay (z-[110]) and above the curtain (z-[200]) */}
+      {/* Hamburger / X button — always above curtain (z-[210]) */}
       <button
         onClick={() => open ? closeMenu() : setOpen(true)}
-        className={`fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[44px] h-[44px] lg:w-[50px] lg:h-[50px] flex flex-col items-center justify-center gap-[6px] z-[210] transition-all duration-300 ${!open && !isClosing ? 'rounded-full bg-[#d7432a]' : ''}`}
+        className={`fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[44px] h-[44px] lg:w-[50px] lg:h-[50px] flex flex-col items-center justify-center gap-[6px] z-[210] transition-all duration-300 hover:scale-[1.05] ${!open && !isClosing ? 'rounded-full bg-[#d7432a]' : ''}`}
         aria-label={open ? "Close menu" : "Open menu"}
       >
         <span
@@ -62,72 +89,78 @@ export default function Navbar() {
         />
       </button>
 
-      {/* Full-screen menu overlay — renders during open AND during close animation */}
+      {/* Full-screen menu overlay */}
       {(open || isClosing) && (
         <div className="fixed inset-0 z-[100] overflow-hidden">
-          {/* Circle that expands in / contracts out */}
+          {/* Circle expand / contract */}
           <div
             className="absolute inset-0 bg-[#d7432a]"
             style={{
-              clipPath: isClosing
-                ? 'circle(200% at calc(100% - 100px) 55px)'
-                : 'circle(200% at calc(100% - 100px) 55px)',
+              clipPath: 'circle(200% at calc(100% - 100px) 55px)',
               animation: isClosing
                 ? 'menu-circle-contract 0.38s cubic-bezier(0.55, 0, 0.55, 1) forwards'
                 : 'menu-circle-expand 0.55s ease-out forwards',
             }}
           />
 
-          {/* Menu content */}
+          {/* Logo — own layer, React-driven opacity transition (no position change) */}
           <div
-            className="relative z-10 h-full flex flex-col px-5 sm:px-10 lg:px-[75px] pt-[20px] lg:pt-[30px]"
+            className="absolute top-[20px] lg:top-[30px] left-5 sm:left-10 lg:left-[75px] z-20"
+            style={{
+              opacity: logoVisible ? 1 : 0,
+              transition: isClosing ? 'opacity 0.2s ease-in' : 'opacity 0.55s ease-out',
+            }}
+          >
+            <Link href="/" onClick={closeMenu}>
+              <Image
+                src="/.shipstudio/assets/nectarine-logo-5.svg"
+                alt="Nectarine"
+                width={299}
+                height={51}
+                className="h-[44px] lg:h-[51px] w-auto"
+              />
+            </Link>
+          </div>
+
+          {/* Nav links — translateY + opacity animation */}
+          <div
+            className="relative z-10 h-full flex flex-col items-center justify-center gap-[15px] px-5 sm:px-10 lg:px-[75px]"
             style={{
               animation: isClosing
                 ? 'menu-content-fade-out 0.2s ease-in forwards'
                 : 'menu-fade-in 0.35s ease 0.3s both',
             }}
           >
-            {/* Top bar — logo only */}
-            <div className="h-[50px] flex items-center">
-              <Image
-                src="/.shipstudio/assets/nectarine-logo-5.svg"
-                alt="Nectarine"
-                width={299}
-                height={51}
-                className="h-[51px] w-auto"
-              />
-            </div>
+            {mainLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`font-bel font-semibold text-[52px] sm:text-[65px] lg:text-[85px] leading-none hover:opacity-80 transition-opacity ${pathname === href ? 'text-[#f9ce6a]' : 'text-[#380102]'}`}
+              >
+                {label}
+              </Link>
+            ))}
 
-            {/* Nav links */}
-            <div className="flex-1 flex flex-col items-center justify-center gap-[15px]">
-              <Link href="/work"
-                className="font-bel font-semibold text-[52px] sm:text-[65px] lg:text-[85px] leading-none text-[#f9ce6a] hover:opacity-80 transition-opacity">
-                Our Work
-              </Link>
-              <Link href="/workshops-audits"
-                className="font-bel font-semibold text-[52px] sm:text-[65px] lg:text-[85px] leading-none text-[#380102] hover:opacity-80 transition-opacity">
-                Workshops &amp; Audits
-              </Link>
-              <Link href="/what-we-do"
-                className="font-bel font-semibold text-[52px] sm:text-[65px] lg:text-[85px] leading-none text-[#380102] hover:opacity-80 transition-opacity">
-                Creative Services
-              </Link>
-
-              {/* Secondary links */}
-              <div className="flex items-center gap-[25px] mt-[25px]">
-                <Link href="/about"
-                  className="font-bel text-[18px] text-[#f8e4cc] border border-[#f8e4cc] rounded-full px-[15px] py-[10px] hover:bg-[#f8e4cc]/10 transition-colors">
-                  About us
+            {/* Secondary links — eyebrow chip style with hover scale */}
+            <div
+              className="flex items-center gap-[12px] mt-[25px] flex-wrap justify-center"
+              onMouseLeave={() => setHoveredChip(null)}
+            >
+              {secondaryLinks.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onMouseEnter={() => setHoveredChip(href)}
+                  className="font-bel text-[13px] sm:text-[14px] text-[#fcf8f3] border border-[#fcf8f3]/60 rounded-full px-[15px] py-[9px] uppercase transition-all duration-200"
+                  style={{
+                    letterSpacing: '0.1em',
+                    transform: hoveredChip === href ? 'scale(1.05)' : 'scale(1)',
+                    opacity: hoveredChip && hoveredChip !== href ? 0.5 : 1,
+                  }}
+                >
+                  {label}
                 </Link>
-                <Link href="/the-fuzz-tax"
-                  className="font-bel text-[18px] text-[#f8e4cc] border border-[#f8e4cc] rounded-full px-[15px] py-[10px] hover:bg-[#f8e4cc]/10 transition-colors">
-                  The Fuzz Tax
-                </Link>
-                <Link href="/contact"
-                  className="font-bel text-[18px] text-[#d7432a] bg-[#f7dec1] rounded-full px-[15px] py-[10px] hover:opacity-90 transition-opacity">
-                  Contact
-                </Link>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -184,7 +184,7 @@ const accordionContent = (accentColor: string) => (
 
 export default function HomePage() {
   const [overlayOpen, setOverlayOpen] = useState(false);
-  const [auditsActive, setAuditsActive] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<'workshops' | 'audits' | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const parallaxRef = useRef<HTMLElement>(null);
   const parallaxImgRef = useRef<HTMLDivElement>(null);
@@ -310,180 +310,194 @@ export default function HomePage() {
       </section>
 
       {/* The Fuzz Tax */}
-      <section className="bg-[#f8e4cc] px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]">
-        <div className="max-w-[1290px] mx-auto flex flex-col gap-8 lg:gap-[40px]">
+      <section className="px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]" style={{ backgroundImage: 'url(/.shipstudio/assets/fuzz-tax-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="max-w-[1290px] mx-auto">
+          <div className="bg-[#f8e4cc] rounded-[25px] p-6 sm:p-10 lg:p-[60px] flex flex-col gap-8 lg:gap-[50px]">
 
-          <div className="flex flex-col gap-4 lg:flex-row lg:gap-[35px] lg:items-start">
-            <div className="flex flex-col gap-[10px]">
-              <span className="font-bel text-[14px] lg:text-[18px] bg-[#d7432a] text-[#f8e4cc] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: '0.1em' }}>
-                The Real Cost of an Unclear Brand
-              </span>
-              <h2 className="font-bel font-semibold text-[44px] sm:text-[56px] lg:text-[76px] leading-none text-[#380102]">The Fuzz Tax</h2>
+            {/* Header row */}
+            <div className="flex flex-col gap-6 lg:flex-row lg:gap-[60px] lg:items-start">
+              <div className="flex flex-col gap-[10px] lg:flex-1">
+                <span className="font-bel text-[14px] lg:text-[18px] bg-[#d7432a] text-[#f8e4cc] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: '0.1em' }}>
+                  The Fuzz Tax
+                </span>
+                <h2 className="font-bel font-semibold text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.0] text-[#380102]">
+                  The Real Cost of an Unclear Brand
+                </h2>
+              </div>
+              <div className="flex flex-col gap-[16px] lg:flex-1 lg:pt-[10px]">
+                <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
+                  A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag.
+                </p>
+                <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
+                  You know something isn't landing the way it should. Pitches that almost close. Team members who struggle to explain what you do. Opportunities that go to someone who just told their story better. We call it the "Fuzz Tax", and it's more fixable than you'd think.
+                </p>
+              </div>
             </div>
-            <p className="flex-1 font-aleo text-[16px] leading-[1.6] text-[#380102] lg:pt-[10px]">
-              A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag. You know something isn't landing the way it should. Pitches that almost land. Content that fills feeds but doesn't convert. Teams that do great work but can't articulate why it matters.
-            </p>
-          </div>
 
-          {/* Cards row 1 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-            <div className="bg-[#98b2bb] rounded-[15px] p-6 md:p-[50px_60px] flex flex-col gap-[20px] lg:gap-[30px]">
-              <div className="flex items-center gap-[20px] lg:gap-[30px]">
-                <span className="font-bel font-semibold text-[48px] lg:text-[76px] leading-none text-[#d7432a]">1</span>
-                <h3 className="font-aleo text-[24px] lg:text-[36px] leading-[1.1] text-[#fcf8f3] flex-1">A Tax on Your Brand</h3>
+            {/* Cards 2×2 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
+              {/* Card 1 */}
+              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#98b2bb] hover:border-[#98b2bb] cursor-pointer">
+                <div className="flex items-center gap-[16px] lg:gap-[24px]">
+                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#98b2bb] group-hover:text-[#380102] transition-colors duration-300">1</span>
+                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Opportunities</h3>
+                </div>
+                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
+                  <li>You're losing opportunities to competitors you know you're better than.</li>
+                  <li>Dream partnerships stall because your positioning isn't landing in the room.</li>
+                  <li>You lose out on the word-of-mouth and referrals you could've had from the opportunities you've already lost.</li>
+                </ul>
               </div>
-              <ul className="font-aleo text-[16px] lg:text-[18px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                <li>You're working harder than you should have to</li>
-                <li>Your materials look professional but don't feel like you</li>
-                <li>Every new piece of creative starts over because there's no foundation</li>
-              </ul>
-            </div>
-            <div className="border-2 border-[#380102] rounded-[15px] p-6 md:p-[50px_60px] flex flex-col gap-[20px] lg:gap-[30px] transition-colors duration-300 hover:bg-[#d7432a] hover:border-[#d7432a] cursor-pointer">
-              <div className="flex items-center gap-[20px] lg:gap-[30px]">
-                <span className="font-bel font-semibold text-[48px] lg:text-[76px] leading-none text-[#d7432a]">2</span>
-                <h3 className="font-aleo text-[24px] lg:text-[36px] leading-[1.1] text-[#380102] flex-1">A Tax on Your Audience</h3>
-              </div>
-              <ul className="font-aleo text-[16px] lg:text-[18px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                <li>Your ICPs engage with your materials but don't self-identify as people who need you</li>
-                <li>Your content isn't building recognition — it's just filling a feed</li>
-                <li>People leave your website without a clear sense of what you do</li>
-              </ul>
-            </div>
-          </div>
 
-          {/* Cards row 2 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-            <div className="border-2 border-[#380102] rounded-[15px] p-6 md:p-[50px_60px] flex flex-col gap-[20px] lg:gap-[30px] transition-colors duration-300 hover:bg-[#b79e31] hover:border-[#b79e31] cursor-pointer">
-              <div className="flex items-center gap-[20px] lg:gap-[30px]">
-                <span className="font-bel font-semibold text-[48px] lg:text-[76px] leading-none text-[#b79e31]">3</span>
-                <h3 className="font-aleo text-[24px] lg:text-[36px] leading-[1.1] text-[#380102] flex-1">A Tax on Your Team</h3>
+              {/* Card 2 */}
+              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#ffc1a7] hover:border-[#ffc1a7] cursor-pointer">
+                <div className="flex items-center gap-[16px] lg:gap-[24px]">
+                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#d7432a] group-hover:text-[#380102] transition-colors duration-300">2</span>
+                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Audience</h3>
+                </div>
+                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
+                  <li>Your ICPs engage with your materials but don't self-identify as people who need you.</li>
+                  <li>Your content isn't building recognition; it's just filling a feed.</li>
+                  <li>People leave your website without a clear sense of what makes you different.</li>
+                </ul>
               </div>
-              <ul className="font-aleo text-[16px] lg:text-[18px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                <li>New hires can't articulate what the company stands for in their first 90 days</li>
-                <li>No two people on your team describe what you do the same way</li>
-                <li>Your team is doing great work but doesn't have the language to talk about it</li>
-              </ul>
-            </div>
-            <div className="border-2 border-[#380102] rounded-[15px] p-6 md:p-[50px_60px] flex flex-col gap-[20px] lg:gap-[30px] transition-colors duration-300 hover:bg-[#f9ce6a] hover:border-[#f9ce6a] cursor-pointer">
-              <div className="flex items-center gap-[20px] lg:gap-[30px]">
-                <span className="font-bel font-semibold text-[48px] lg:text-[76px] leading-none text-[#f9ce6a]">4</span>
-                <h3 className="font-aleo text-[24px] lg:text-[36px] leading-[1.1] text-[#380102] flex-1">A Tax on You…</h3>
+
+              {/* Card 3 */}
+              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#b79e31] hover:border-[#b79e31] cursor-pointer">
+                <div className="flex items-center gap-[16px] lg:gap-[24px]">
+                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#b79e31] group-hover:text-[#380102] transition-colors duration-300">3</span>
+                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Team</h3>
+                </div>
+                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
+                  <li>New hires can't articulate what the company stands for in their first 90 days.</li>
+                  <li>No two people on your team describe what you do the same way.</li>
+                  <li>Your team is doing great work but doesn't have the language to talk about it.</li>
+                </ul>
               </div>
-              <ul className="font-aleo text-[16px] lg:text-[18px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                <li>Energy — You're still explaining what you do from scratch every time</li>
-                <li>Confidence — Missed opportunities chip away at team morale</li>
-                <li>Every new piece of creative starts over because there's no foundation to build from</li>
-              </ul>
+
+              {/* Card 4 */}
+              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#f9ce6a] hover:border-[#f9ce6a] cursor-pointer">
+                <div className="flex items-center gap-[16px] lg:gap-[24px]">
+                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#f9ce6a] group-hover:text-[#380102] transition-colors duration-300">4</span>
+                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on You…</h3>
+                </div>
+                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
+                  <li>Energy | You're still explaining what you do from scratch + Every new piece of creative starts over because there's no foundation to build from.</li>
+                  <li>Confidence | Missed opportunities chip away at team morale.</li>
+                  <li>Your Vision | You know what your brand should feel like, but translating that into a cohesive visual identity feels out of reach.</li>
+                </ul>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* Strategy & Consultations */}
       <section className="bg-[#380102] px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]">
-        <div className="max-w-[1290px] mx-auto flex flex-col gap-10 lg:flex-row lg:gap-[40px] lg:items-center w-full">
+        <div className="max-w-[1290px] mx-auto flex flex-col gap-10 lg:flex-row lg:gap-[60px] lg:items-center w-full">
           {/* Left text */}
           <div className="flex-1 flex flex-col gap-6 lg:gap-[30px]">
             <span className="font-bel text-[14px] lg:text-[18px] text-[#f8e4cc] border border-[#f8e4cc] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: '0.1em' }}>
               Strategy &amp; Consultations
             </span>
-            <p className="font-aleo text-[28px] sm:text-[32px] lg:text-[36px] leading-[1.1] text-[#f8e4cc]">
-              You know what you do and why it matters. The hard part is finding the language and visuals that make everyone else see it too.
+            <p className="font-aleo text-[28px] sm:text-[32px] lg:text-[36px] leading-[1.1]">
+              <span className="text-[#f8e4cc]">You know what you do and why it matters. </span>
+              <span className="text-[#d7432a]">The hard part is finding the language and visuals that make everyone else see it too.</span>
             </p>
             <p className="font-aleo text-[16px] leading-[1.6] text-[#f8e4cc]">
-              Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed.
+              Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed. Some clients walk away ready to run with it on their own. Others use their session as the launchpad for a longer creative partnership. Either way, you leave with actionable insights to propel your brand forward.
             </p>
             <WipeLink
               href="/workshops-audits"
-              overlayColor="#f7dec1"
-              textOnHover="#380102"
-              className="flex items-center justify-center gap-[10px] border border-[#f7dec1] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] w-full lg:w-[300px] font-bel text-[16px] lg:text-[18px] text-[#f7dec1]"
+              overlayColor="#380102"
+              textOnHover="#f9ce6a"
+              className="flex items-center justify-center bg-[#f9ce6a] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] w-full lg:w-[200px] font-bel text-[16px] lg:text-[18px] text-[#380102] transition-all duration-300 hover:ring-2 hover:ring-[#f9ce6a] hover:ring-offset-2 hover:ring-offset-[#380102]"
             >
               Learn More
             </WipeLink>
           </div>
 
-          {/* Right — accordion cards */}
+          {/* Right — two always-open cards */}
           <div
             className="flex-1 flex flex-col gap-[10px]"
-            onMouseLeave={() => setAuditsActive(false)}
+            onMouseLeave={() => setHoveredCard(null)}
           >
             {/* Workshops card */}
             <div
-              className="bg-[#d7432a] rounded-[25px] p-6 lg:p-[40px] flex gap-4 lg:gap-[25px]"
-              onMouseEnter={() => setAuditsActive(false)}
+              className="bg-[#d7432a] rounded-[25px] p-6 lg:p-[40px] flex flex-col gap-[20px] cursor-pointer transition-all duration-300"
+              style={{
+                opacity: hoveredCard === 'audits' ? 0.5 : 1,
+                transform: hoveredCard === 'workshops' ? 'scale(1.02)' : 'scale(1)',
+              }}
+              onMouseEnter={() => setHoveredCard('workshops')}
             >
-              <Image src="/.shipstudio/assets/workshop-icon.svg" alt="Workshop" width={94} height={134} className="flex-shrink-0 w-[60px] lg:w-[94px] h-auto" />
-              <div className="flex flex-col flex-1">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-aleo text-[36px] lg:text-[48px] leading-none text-[#f8e4cc]">Workshops</h3>
-                  <ArrowOutward color="#f8e4cc" size={25} />
-                </div>
-                <div style={{
-                  maxHeight: auditsActive ? '0px' : '400px',
-                  overflow: 'hidden',
-                  paddingTop: auditsActive ? '0px' : '17px',
-                  transition: 'max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out',
-                }}>
-                  <div className="flex flex-col gap-[17px]">
-                    <p className="font-aleo text-[16px] leading-[1.6] text-[#f8e4cc]">
-                      A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can act on immediately.
-                    </p>
-                    <WipeLink
-                      href="/workshops-audits"
-                      overlayColor="#f9ce6a"
-                      textOnHover="#380102"
-                      className="bg-[#380102] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[16px] lg:text-[18px] text-[#fcf8f3]"
-                    >
-                      Schedule a 30 Minute Intro Call
-                    </WipeLink>
-                    <div className="flex flex-wrap gap-[10px]">
-                      {["Brand Audits", "Website Audits", "Narrative Audits", "The Internal Playbook Workshop"].map((t) => (
-                        <span key={t} className="font-bel text-[9px] text-[#d7432a] bg-[#ffc1a7] px-[12px] py-[8px] rounded-[15px]">{t}</span>
-                      ))}
-                    </div>
+              <div className="flex items-start gap-4 lg:gap-[20px]">
+                <Image src="/.shipstudio/assets/workshop-icon.svg" alt="Workshop" width={94} height={134} className="flex-shrink-0 w-[50px] lg:w-[70px] h-auto" />
+                <div className="flex-1 flex items-center justify-between gap-4">
+                  <h3 className="font-aleo text-[32px] lg:text-[48px] leading-none text-[#f8e4cc]">Workshops</h3>
+                  <div
+                    className="flex-shrink-0 transition-transform duration-300"
+                    style={{ transform: hoveredCard === 'workshops' ? 'translate(4px, -4px)' : 'translate(0,0)' }}
+                  >
+                    <ArrowOutward color="#f8e4cc" size={25} />
                   </div>
                 </div>
+              </div>
+              <p className="font-aleo text-[16px] leading-[1.6] text-[#f8e4cc]">
+                A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can immediately implement across your organization.
+              </p>
+              <WipeLink
+                href="/workshops-audits"
+                overlayColor="#f9ce6a"
+                textOnHover="#380102"
+                className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[16px] text-[#fcf8f3]"
+              >
+                Schedule a 30 Minute Intro Call
+              </WipeLink>
+              <div className="flex flex-wrap gap-[10px]">
+                {["The Visual Identity Workshop", "The Brand Narrative Workshop", "The Internal Playbook Workshop"].map((t) => (
+                  <span key={t} className="font-bel text-[9px] text-[#d7432a] bg-[#ffc1a7] px-[12px] py-[8px] rounded-[15px]">{t}</span>
+                ))}
               </div>
             </div>
 
             {/* Audits card */}
             <div
-              className="bg-[#ffc1a7] rounded-[25px] p-6 lg:p-[40px] flex gap-4 lg:gap-[25px] cursor-pointer"
-              onMouseEnter={() => setAuditsActive(true)}
-              onMouseLeave={() => setAuditsActive(false)}
+              className="bg-[#ffc1a7] rounded-[25px] p-6 lg:p-[40px] flex flex-col gap-[20px] cursor-pointer transition-all duration-300"
+              style={{
+                opacity: hoveredCard === 'workshops' ? 0.5 : 1,
+                transform: hoveredCard === 'audits' ? 'scale(1.02)' : 'scale(1)',
+              }}
+              onMouseEnter={() => setHoveredCard('audits')}
             >
-              <Image src="/.shipstudio/assets/audit-icon.svg" alt="Audit" width={94} height={151} className="flex-shrink-0 w-[60px] lg:w-[94px] h-auto" />
-              <div className="flex flex-col flex-1">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-aleo text-[36px] lg:text-[48px] leading-none text-[#380102]">Audits</h3>
-                  <ArrowOutward color="#380102" size={25} />
-                </div>
-                <div style={{
-                  maxHeight: auditsActive ? '400px' : '0px',
-                  overflow: 'hidden',
-                  paddingTop: auditsActive ? '17px' : '0px',
-                  transition: 'max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out',
-                }}>
-                  <div className="flex flex-col gap-[17px]">
-                    <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
-                      A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can act on immediately.
-                    </p>
-                    <WipeLink
-                      href="/workshops-audits"
-                      overlayColor="#380102"
-                      textOnHover="#fcf8f3"
-                      className="bg-[#d7432a] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[16px] lg:text-[18px] text-[#fcf8f3]"
-                    >
-                      Schedule a 30 Minute Intro Call
-                    </WipeLink>
-                    <div className="flex flex-wrap gap-[10px]">
-                      {["Brand Audits", "Website Audits", "Narrative Audits", "The Internal Playbook Workshop"].map((t) => (
-                        <span key={t} className="font-bel text-[9px] text-[#ffc1a7] bg-[#d7432a] px-[12px] py-[8px] rounded-[15px]">{t}</span>
-                      ))}
-                    </div>
+              <div className="flex items-start gap-4 lg:gap-[20px]">
+                <Image src="/.shipstudio/assets/audit-icon.svg" alt="Audit" width={94} height={151} className="flex-shrink-0 w-[50px] lg:w-[70px] h-auto" />
+                <div className="flex-1 flex items-center justify-between gap-4">
+                  <h3 className="font-aleo text-[32px] lg:text-[48px] leading-none text-[#380102]">Audits</h3>
+                  <div
+                    className="flex-shrink-0 transition-transform duration-300"
+                    style={{ transform: hoveredCard === 'audits' ? 'translate(4px, -4px)' : 'translate(0,0)' }}
+                  >
+                    <ArrowOutward color="#380102" size={25} />
                   </div>
                 </div>
+              </div>
+              <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
+                A focused call (30-45 minutes) where we run a SWOT analysis on your selected focus area. You'll receive a one-page PDF of performance notes and recommendations shortly after.
+              </p>
+              <WipeLink
+                href="/workshops-audits"
+                overlayColor="#380102"
+                textOnHover="#fcf8f3"
+                className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[16px] text-[#fcf8f3]"
+              >
+                Schedule an Audit
+              </WipeLink>
+              <div className="flex flex-wrap gap-[10px]">
+                {["Brand Audits", "Website Audits", "Narrative Audits", "Specific Media Audits", "Videography Audits"].map((t) => (
+                  <span key={t} className="font-bel text-[9px] text-[#380102] bg-[#f8e4cc] px-[12px] py-[8px] rounded-[15px]">{t}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -641,7 +655,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact */}
-      <section className="bg-[#f8e4cc] px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]">
+      <section className="px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]" style={{ backgroundImage: 'url(/.shipstudio/assets/contact-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="max-w-[1290px] mx-auto w-full">
           <div className="bg-[#f9ce6a] rounded-[25px] p-6 sm:p-10 lg:p-[65px_75px] flex flex-col gap-8 lg:gap-[60px]">
             <div className="flex flex-col gap-8 lg:flex-row lg:gap-[48px] lg:items-start">

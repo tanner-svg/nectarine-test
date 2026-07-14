@@ -1,0 +1,170 @@
+- generic [active] [ref=f10e1]:
+  - navigation [ref=f10e2]:
+    - link [ref=f10e3] [cursor=pointer]:
+      - /url: /
+      - img "Nectarine" [ref=f10e4]
+  - button "Open menu" [ref=f10e6]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic: Our Work
+          - heading "You know what you do and why it matters. The hard part is finding the language and visuals that make everyone else see it too." [level=1]
+      - generic:
+        - generic:
+          - link "David Bruce Winery David Bruce Winery branding strategy":
+            - /url: /portfolio/david-bruce-winery
+            - generic:
+              - img "David Bruce Winery"
+            - generic:
+              - heading "David Bruce Winery" [level=3]
+              - generic:
+                - generic: branding
+                - generic: strategy
+          - link "Pinkston for Tennessee Pinkston for Tennessee web design":
+            - /url: /portfolio/pinkston-for-tn
+            - generic:
+              - img "Pinkston for Tennessee"
+            - generic:
+              - heading "Pinkston for Tennessee" [level=3]
+              - generic: web design
+          - link "Frontier Operators Frontier Operators strategy copywriting":
+            - /url: /portfolio/frontier-operators
+            - generic:
+              - img "Frontier Operators"
+            - generic:
+              - heading "Frontier Operators" [level=3]
+              - generic:
+                - generic: strategy
+                - generic: copywriting
+          - link "Faith Driven Talent Faith Driven Talent strategy copywriting branding":
+            - /url: /portfolio/faith-driven-talent
+            - generic:
+              - img "Faith Driven Talent"
+            - generic:
+              - heading "Faith Driven Talent" [level=3]
+              - generic:
+                - generic: strategy
+                - generic: copywriting
+                - generic: branding
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - heading "Contact us" [level=2]
+                  - paragraph: Send us a message and we'll get back to you within 1-2 business days.
+                - generic: "[contact-illustration] 492x350"
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Name
+                    - textbox "Jane Doe"
+                  - generic:
+                    - generic: Email
+                    - textbox "jane@company.com"
+                  - generic:
+                    - generic: Subject
+                    - textbox "General inquiry"
+                  - generic:
+                    - generic: Message
+                    - textbox "How can we help?"
+                - button "Submit"
+      - contentinfo:
+        - generic:
+          - generic:
+            - generic: We are nectarine
+            - paragraph: We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.
+            - link "More About Nectarine":
+              - /url: /about
+          - generic:
+            - generic:
+              - link "Instagram":
+                - /url: https://instagram.com
+              - link "Linkedin":
+                - /url: https://linkedin.com
+            - link "hello@nectarine.ink":
+              - /url: mailto:hello@nectarine.ink
+        - generic:
+          - img "Nectarine"
+          - generic:
+            - generic: hello@nectarine.ink
+            - generic: © 2026 nectarine studio llc.
+  - button "Open Next.js Dev Tools" [ref=f10e14] [cursor=pointer]
+  - alert [ref=f10e18]
+  - button [ref=f10e20] [cursor=pointer]:
+    - generic:
+      - generic:
+        - button
+      - generic:
+        - button
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button
+      - generic:
+        - button
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - link:
+              - /url: https://agentation.com
+            - paragraph: v3.0.1
+            - button "Switch to light mode"
+          - generic:
+            - generic:
+              - generic: Output Detail
+              - button "Standard"
+            - generic:
+              - generic: React Components
+              - generic:
+                - checkbox [checked]
+            - generic:
+              - generic: Hide Until Restart
+              - generic:
+                - checkbox
+          - generic:
+            - generic: Marker Color
+            - generic:
+              - button "Indigo"
+              - button "Blue"
+              - button "Cyan"
+              - button "Green"
+              - button "Yellow"
+              - button "Orange"
+              - button "Red"
+          - generic:
+            - generic:
+              - generic:
+                - checkbox "Clear on copy/send"
+              - generic: Clear on copy/send
+            - generic:
+              - generic:
+                - checkbox "Block page interactions" [checked]
+              - generic: Block page interactions
+          - button "Manage MCP & Webhooks"
+        - generic:
+          - button "Manage MCP & Webhooks"
+          - generic:
+            - generic: MCP Connection
+            - paragraph:
+              - text: MCP connection allows agents to receive and act on annotations.
+              - link "Learn more":
+                - /url: https://agentation.dev/mcp
+          - generic:
+            - generic:
+              - generic: Webhooks
+              - generic:
+                - generic: Auto-Send
+                - generic:
+                  - checkbox "Auto-Send" [checked] [disabled]
+            - paragraph: The webhook URL will receive live annotation changes and annotation data.
+            - textbox "Webhook URL"

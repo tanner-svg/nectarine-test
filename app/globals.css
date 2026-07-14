@@ -27,6 +27,20 @@
   50% { opacity: 0; }
 }
 
+@keyframes logo-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.navbar-logo {
+  animation: logo-fade-in 0.6s ease-out 0.55s both;
+}
+
+@keyframes menu-logo-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* ─── Menu animations ─────────────────────────────────────────── */
 
 @keyframes menu-circle-expand {

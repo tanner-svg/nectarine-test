@@ -9,3 +9,5 @@ Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ 
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:63359/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
 [  104278ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:63359/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
 [  104283ms] [LOG] [Fast Refresh] done in 107ms @ http://localhost:63359/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  594616ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:63359/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  594727ms] [LOG] [Fast Refresh] done in 148ms @ http://localhost:63359/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
