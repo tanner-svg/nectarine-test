@@ -189,6 +189,7 @@ export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fuzzIndex, setFuzzIndex] = useState(0);
   const [fuzzHorizontal, setFuzzHorizontal] = useState(false);
+  const [fuzzDragging, setFuzzDragging] = useState(false);
   const fuzzTouchStart = useRef(0);
   const parallaxRef = useRef<HTMLElement>(null);
   const parallaxImgRef = useRef<HTMLDivElement>(null);
@@ -356,12 +357,28 @@ export default function HomePage() {
           {/* Right: rolodex/waterfall — cards loop top to bottom, tilting -3deg in, flat at rest, +3deg out */}
           <div
             className="relative w-full aspect-[1130/770] md:aspect-auto md:h-auto md:self-stretch md:flex-1 lg:flex-none lg:w-[560px] lg:flex-shrink-0 overflow-hidden"
-            style={fuzzHorizontal ? { aspectRatio: '6 / 5' } : undefined}
+            style={{
+              ...(fuzzHorizontal ? { aspectRatio: '6 / 5' } : undefined),
+              cursor: fuzzDragging ? 'grabbing' : 'grab',
+            }}
             onTouchStart={(e) => { fuzzTouchStart.current = fuzzHorizontal ? e.touches[0].clientX : e.touches[0].clientY; }}
             onTouchEnd={(e) => {
               const end = fuzzHorizontal ? e.changedTouches[0].clientX : e.changedTouches[0].clientY;
               const d = end - fuzzTouchStart.current;
-              if (Math.abs(d) > 40) setFuzzIndex(p => d < 0 ? (p + 1) % 4 : (p + 3) % 4);
+              if (Math.abs(d) > 40) setFuzzIndex(p => d > 0 ? (p + 1) % 4 : (p + 3) % 4);
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              fuzzTouchStart.current = fuzzHorizontal ? e.clientX : e.clientY;
+              setFuzzDragging(true);
+              const handleUp = (ev: MouseEvent) => {
+                const end = fuzzHorizontal ? ev.clientX : ev.clientY;
+                const d = end - fuzzTouchStart.current;
+                if (Math.abs(d) > 40) setFuzzIndex(p => d > 0 ? (p + 1) % 4 : (p + 3) % 4);
+                setFuzzDragging(false);
+                window.removeEventListener('mouseup', handleUp);
+              };
+              window.addEventListener('mouseup', handleUp);
             }}
           >
             {fuzzCards.map((card, i) => {
