@@ -27,24 +27,26 @@
   50% { opacity: 0; }
 }
 
+/* ─── Menu animations ─────────────────────────────────────────── */
+
 @keyframes menu-circle-expand {
-  from {
-    clip-path: circle(2% at calc(100% - 100px) 55px);
-  }
-  to {
-    clip-path: circle(200% at calc(100% - 100px) 55px);
-  }
+  from { clip-path: circle(2%   at calc(100% - 100px) 55px); }
+  to   { clip-path: circle(200% at calc(100% - 100px) 55px); }
+}
+
+@keyframes menu-circle-contract {
+  from { clip-path: circle(200% at calc(100% - 100px) 55px); }
+  to   { clip-path: circle(2%   at calc(100% - 100px) 55px); }
 }
 
 @keyframes menu-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes menu-content-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-16px); }
 }
 
 body {
@@ -53,55 +55,114 @@ body {
   font-family: var(--font-aleo), serif;
 }
 
-/* ─── Page transition states ─────────────────────────────────── */
+/* ─── Transition Curtain ──────────────────────────────────────── */
+/*
+ * Full-bleed cream panel that masks the route swap.
+ * Sweeps DOWN to cover the exiting page, stays covering while the
+ * incoming page mounts, then sweeps UP to reveal the new content.
+ */
+.page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  background: #fcf8f3;
+  will-change: transform;
+}
 
-/* Starting position: below viewport, invisible. transition:none so it snaps instantly. */
+/* Resting: panel is parked above the viewport */
+.curtain-entered {
+  transform: translateY(-100%);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Exit: panel sweeps down to cover the screen */
+.curtain-exiting {
+  transform: translateY(0%);
+  transition: transform 0.34s cubic-bezier(0.55, 0, 0.55, 1);
+}
+
+/* Entering: snap to fully-covering — no transition, new page mounts beneath */
+.curtain-entering {
+  transform: translateY(0%);
+  transition: none;
+}
+
+/* ─── Page Content States ─────────────────────────────────────── */
+
+/* New page is invisible while the curtain covers it */
 .page-entering {
-  transform: translateY(72px);
   opacity: 0;
   transition: none;
   pointer-events: none;
 }
 
-/* Reveal: slides up to rest with a smooth eased stop */
+/* Wrapper becomes visible; section animations cascade in beneath the lifting curtain */
 .page-entered {
-  transform: translateY(0);
   opacity: 1;
-  transition:
-    transform 0.68s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity   0.52s ease-out;
+  transition: opacity 0.05s ease-out;
 }
 
-/* Exit: existing page darkens, blurs, and drifts upward */
+/* Old page dims, blurs, and pulls back as the curtain sweeps in */
 .page-exiting {
-  transform: translateY(-48px) scale(0.97);
-  filter: blur(10px) brightness(0.4);
+  transform: translateY(-20px) scale(0.98);
+  filter: blur(8px) brightness(0.5);
   opacity: 0;
   transition:
-    transform 0.4s cubic-bezier(0.55, 0, 1, 0.45),
-    filter    0.4s ease-in,
-    opacity   0.38s ease-in;
+    transform 0.34s cubic-bezier(0.55, 0, 1, 0.45),
+    filter    0.28s ease-in,
+    opacity   0.22s ease-in;
   pointer-events: none;
 }
 
-/* ─── Staggered section float-up within the entering page ────── */
+/* ─── Staggered Section Reveal ───────────────────────────────── */
+/*
+ * As the curtain lifts, page sections cascade up one by one.
+ * cubic-bezier(0.16, 1, 0.3, 1) = ease-out-expo — premium feel.
+ */
 @keyframes float-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Pages wrap content in a div then sections — covers both structural patterns */
+.page-entered > div > section,
+.page-entered > div > footer,
 .page-entered > section,
 .page-entered > footer {
-  animation: float-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: float-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.page-entered > section:nth-of-type(1)  { animation-delay: 0.10s; }
-.page-entered > section:nth-of-type(2)  { animation-delay: 0.17s; }
+
+/* Stagger delays — each section arrives 80ms after the previous */
+.page-entered > div > section:nth-of-type(1),
+.page-entered > section:nth-of-type(1)  { animation-delay: 0.08s; }
+
+.page-entered > div > section:nth-of-type(2),
+.page-entered > section:nth-of-type(2)  { animation-delay: 0.16s; }
+
+.page-entered > div > section:nth-of-type(3),
 .page-entered > section:nth-of-type(3)  { animation-delay: 0.24s; }
-.page-entered > section:nth-of-type(4)  { animation-delay: 0.31s; }
-.page-entered > section:nth-of-type(5)  { animation-delay: 0.38s; }
-.page-entered > section:nth-of-type(6)  { animation-delay: 0.45s; }
-.page-entered > section:nth-of-type(7)  { animation-delay: 0.52s; }
-.page-entered > section:nth-of-type(8)  { animation-delay: 0.59s; }
-.page-entered > section:nth-of-type(9)  { animation-delay: 0.66s; }
-.page-entered > section:nth-of-type(10) { animation-delay: 0.73s; }
-.page-entered > footer                  { animation-delay: 0.80s; }
+
+.page-entered > div > section:nth-of-type(4),
+.page-entered > section:nth-of-type(4)  { animation-delay: 0.32s; }
+
+.page-entered > div > section:nth-of-type(5),
+.page-entered > section:nth-of-type(5)  { animation-delay: 0.40s; }
+
+.page-entered > div > section:nth-of-type(6),
+.page-entered > section:nth-of-type(6)  { animation-delay: 0.48s; }
+
+.page-entered > div > section:nth-of-type(7),
+.page-entered > section:nth-of-type(7)  { animation-delay: 0.56s; }
+
+.page-entered > div > section:nth-of-type(8),
+.page-entered > section:nth-of-type(8)  { animation-delay: 0.64s; }
+
+.page-entered > div > section:nth-of-type(9),
+.page-entered > section:nth-of-type(9)  { animation-delay: 0.72s; }
+
+.page-entered > div > section:nth-of-type(10),
+.page-entered > section:nth-of-type(10) { animation-delay: 0.80s; }
+
+.page-entered > div > footer,
+.page-entered > footer                  { animation-delay: 0.88s; }

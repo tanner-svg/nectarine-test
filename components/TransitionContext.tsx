@@ -29,7 +29,7 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
   const startExit = useCallback((onComplete: () => void) => {
     if (exitTimer.current) clearTimeout(exitTimer.current);
     setPhase("exiting");
-    exitTimer.current = setTimeout(onComplete, 420);
+    exitTimer.current = setTimeout(onComplete, 380);
   }, []);
 
   const startEnter = useCallback(() => {
