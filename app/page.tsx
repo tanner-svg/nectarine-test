@@ -182,10 +182,13 @@ const accordionContent = (accentColor: string) => (
   </>
 );
 
+
 export default function HomePage() {
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<'workshops' | 'audits' | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [fuzzIndex, setFuzzIndex] = useState(0);
+  const fuzzTouchY = useRef(0);
   const parallaxRef = useRef<HTMLElement>(null);
   const parallaxImgRef = useRef<HTMLDivElement>(null);
 
@@ -235,6 +238,11 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const t = setInterval(() => setFuzzIndex(p => (p + 1) % 4), 6000);
+    return () => clearInterval(t);
+  }, []);
+
   const allProjects = getAllProjects();
   const featuredProjects = getFeaturedProjects();
 
@@ -244,6 +252,13 @@ export default function HomePage() {
     }, 6000);
     return () => clearInterval(timer);
   }, [featuredProjects.length]);
+
+  const fuzzCards = [
+    { src: "/.shipstudio/assets/fuzz-card-1.png", alt: "A Tax on Your Opportunities" },
+    { src: "/.shipstudio/assets/fuzz-card-2.png", alt: "A Tax on Your Audience" },
+    { src: "/.shipstudio/assets/fuzz-card-3.png", alt: "A Tax on Your Team" },
+    { src: "/.shipstudio/assets/fuzz-card-4.png", alt: "A Tax on You…" },
+  ];
 
   const services = [
     { icon: "/.shipstudio/assets/design-icon.svg", title: "Design", desc: "Logos, brand identity, and visual assets for every format and surface. From packaging and murals to signage, stickers, and banners — if it needs to look good, we're in." },
@@ -310,86 +325,70 @@ export default function HomePage() {
       </section>
 
       {/* The Fuzz Tax */}
-      <section className="px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]" style={{ backgroundImage: 'url(/.shipstudio/assets/fuzz-tax-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="max-w-[1290px] mx-auto">
-          <div className="bg-[#f8e4cc] rounded-[25px] p-6 sm:p-10 lg:p-[60px] flex flex-col gap-8 lg:gap-[50px]">
+      <section className="bg-[#f8e4cc] py-5 lg:py-[30px] overflow-hidden xl:pb-0 xl:pt-0">
+        <div className="max-w-[1290px] mx-auto flex flex-col lg:flex-row lg:items-stretch lg:justify-between gap-8 lg:gap-[40px] xl:max-w-screen xl:pl-20 xl:h-3/4 xl:pr-20 xl:pt-0 xl:pb-0">
 
-            {/* Header row */}
-            <div className="flex flex-col gap-6 lg:flex-row lg:gap-[60px] lg:items-start">
-              <div className="flex flex-col gap-[10px] lg:flex-1">
-                <span className="font-bel text-[14px] lg:text-[18px] bg-[#d7432a] text-[#f8e4cc] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: '0.1em' }}>
-                  The Fuzz Tax
-                </span>
-                <h2 className="font-bel font-semibold text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.0] text-[#380102]">
-                  The Real Cost of an Unclear Brand
-                </h2>
-              </div>
-              <div className="flex flex-col gap-[16px] lg:flex-1 lg:pt-[10px]">
-                <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
-                  A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag.
-                </p>
-                <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
-                  You know something isn't landing the way it should. Pitches that almost close. Team members who struggle to explain what you do. Opportunities that go to someone who just told their story better. We call it the "Fuzz Tax", and it's more fixable than you'd think.
-                </p>
-              </div>
-            </div>
-
-            {/* Cards 2×2 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-              {/* Card 1 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#98b2bb] hover:border-[#98b2bb] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#98b2bb] group-hover:text-[#380102] transition-colors duration-300">1</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Opportunities</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>You're losing opportunities to competitors you know you're better than.</li>
-                  <li>Dream partnerships stall because your positioning isn't landing in the room.</li>
-                  <li>You lose out on the word-of-mouth and referrals you could've had from the opportunities you've already lost.</li>
-                </ul>
-              </div>
-
-              {/* Card 2 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#ffc1a7] hover:border-[#ffc1a7] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#d7432a] group-hover:text-[#380102] transition-colors duration-300">2</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Audience</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>Your ICPs engage with your materials but don't self-identify as people who need you.</li>
-                  <li>Your content isn't building recognition; it's just filling a feed.</li>
-                  <li>People leave your website without a clear sense of what makes you different.</li>
-                </ul>
-              </div>
-
-              {/* Card 3 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#b79e31] hover:border-[#b79e31] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#b79e31] group-hover:text-[#380102] transition-colors duration-300">3</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Team</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>New hires can't articulate what the company stands for in their first 90 days.</li>
-                  <li>No two people on your team describe what you do the same way.</li>
-                  <li>Your team is doing great work but doesn't have the language to talk about it.</li>
-                </ul>
-              </div>
-
-              {/* Card 4 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#f9ce6a] hover:border-[#f9ce6a] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#f9ce6a] group-hover:text-[#380102] transition-colors duration-300">4</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on You…</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>Energy | You're still explaining what you do from scratch + Every new piece of creative starts over because there's no foundation to build from.</li>
-                  <li>Confidence | Missed opportunities chip away at team morale.</li>
-                  <li>Your Vision | You know what your brand should feel like, but translating that into a cohesive visual identity feels out of reach.</li>
-                </ul>
-              </div>
-            </div>
-
+          {/* Left: text */}
+          <div className="px-5 sm:px-10 lg:pl-[75px] flex flex-col gap-5 lg:gap-[28px] lg:w-[500px] lg:flex-shrink-0 lg:pt-[50px] xl:pt-0 xl:pr-0 xl:pl-0">
+            <span className="font-bel text-[13px] bg-[#d7432a] text-[#fcf8f3] rounded-full px-[14px] py-[9px] w-fit uppercase" style={{ letterSpacing: '0.12em' }}>
+              The Fuzz Tax
+            </span>
+            <h2 className="font-bel font-semibold text-[52px] sm:text-[60px] lg:text-[80px] leading-[0.95] text-[#380102]">
+              The Real Cost of an Unclear Brand
+            </h2>
+            <p className="font-aleo text-[16px] leading-[1.65] text-[#380102]">
+              A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag.
+            </p>
+            <p className="font-aleo text-[16px] leading-[1.65] text-[#380102]">
+              You know something isn't landing the way it should. Pitches that almost close. Team members who struggle to explain what you do. Opportunities that go to someone who just told their story better. We call it the "Fuzz Tax", and it's more fixable than you'd think.
+            </p>
           </div>
+
+          {/* Right: rolodex/waterfall — cards loop top to bottom, tilting -3deg in, flat at rest, +3deg out */}
+          <div
+            className="relative w-full aspect-[1130/770] lg:aspect-auto lg:h-auto lg:self-stretch lg:w-[560px] lg:flex-shrink-0 overflow-hidden"
+            onTouchStart={(e) => { fuzzTouchY.current = e.touches[0].clientY; }}
+            onTouchEnd={(e) => {
+              const dy = e.changedTouches[0].clientY - fuzzTouchY.current;
+              if (Math.abs(dy) > 40) setFuzzIndex(p => dy < 0 ? (p + 1) % 4 : (p + 3) % 4);
+            }}
+          >
+            {fuzzCards.map((card, i) => {
+              const offset = (fuzzIndex - i + 4) % 4;
+              // 0=active(center) 1=prev(just exited, peeking below) 2=hidden(parked, invisible) 3=next(about to enter, peeking above)
+              const cfg = {
+                0: { y: -50,  rot: -1, op: 1, z: 4 },
+                3: { y: -120, rot: -9, op: 1, z: 3 },
+                1: { y: 20,   rot: 5,  op: 1, z: 3 },
+                2: { y: -120, rot: -9, op: 0, z: 1 },
+              }[offset];
+              return (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: 0,
+                    width: '100%',
+                    aspectRatio: '1130 / 770',
+                    transform: `translateY(${cfg.y}%) rotate(${cfg.rot}deg)`,
+                    zIndex: cfg.z,
+                    opacity: cfg.op,
+                    transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease',
+                    userSelect: 'none',
+                  }}
+                >
+                  <img
+                    src={card.src}
+                    alt={card.alt}
+                    style={{ width: '100%', height: '100%', borderRadius: '22px', display: 'block', objectFit: 'cover' }}
+                    draggable={false}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
         </div>
       </section>
 

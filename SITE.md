@@ -46,6 +46,15 @@ Portfolio/case study images throughout the site are currently shown as gray plac
 | [contact-illustration] | Homepage contact section | 492x350 |
 | [case-study-image] | Case study overlay modal | 513x681 |
 
+### Fuzz Tax cards (Homepage)
+
+The 4 stacked/rotating cards in "The Fuzz Tax" section are images, not coded text — each card is its own image file so you can export a new design from Figma and drop it in without touching code.
+
+- Files: `.shipstudio/assets/fuzz-card-1.png` through `fuzz-card-4.png`
+- Card 1 is the real exported design ("A Tax on Your Opportunities"). Cards 2-4 are cropped from your reference screenshot as stand-ins ("A Tax on Your Audience", "A Tax on Your Team", "A Tax on You…") — swap them for cleaner exports whenever you're ready.
+- Recommended export size: ~1130×770px (ratio 1.47:1) so they match the carousel's card shape exactly. Other ratios will get slightly cropped/stretched.
+- To swap one: tell Claude "replace fuzz-card-2 with this image" and attach the export — it'll drop the file in place; no code changes needed.
+
 ## Portfolio Data Schema
 
 Projects live in `data/content/projects.ts` using the `Project` type from `types/portfolio.ts`. Each project has:
@@ -66,6 +75,7 @@ Service copy lives in `data/content/services.ts`. Each service has a `label` (bu
 
 ## Recent Changes
 
+- **2026-07-14:** Rebuilt the Fuzz Tax carousel to show 4 distinct card images (one per "tax" — Opportunities, Audience, Team, You…) instead of repeating one placeholder. Card 1 uses the real exported design; cards 2-4 use cropped stand-ins from your reference screenshot. Carousel card shape now matches the real export ratio (1130x770). See "Fuzz Tax cards" above for how to swap in your own exports.
 - **2026-07-13:** Rewired `/what-we-do` so the animated section is the service detail area (icon, title, description, CTA, and sub-service list), not the portfolio grid. Portfolio grid at the bottom is now static and always shows all projects. Service content pulled from `data/content/services.ts` — edit that file to update copy for any category.
 - **2026-07-13:** Wired homepage portfolio bento grid and testimonial slider to live project data. The 4 bento cards now pull from `getAllProjects()`, render real cover images/videos, and link to `/portfolio/[slug]`. The testimonial slider pulls from `getFeaturedProjects()`, shows real client quotes with author/role, and links to each project's case study page. Image placeholders will fill in once asset files are added to `.shipstudio/assets/portfolio/`.
 - **2026-07-13:** Three homepage refinements — button text now smoothly fades between colors on hover (instead of snapping), all 4 portfolio bento cards have equal image height (380px fixed), Workshops and Audits cards now expand on hover with ease-in-out animation (Workshops stays red, Audits stays pink).
