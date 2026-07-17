@@ -1,0 +1,66 @@
+- generic [active] [ref=f1e1]:
+  - navigation [ref=f1e2]:
+    - link [ref=f1e3] [cursor=pointer]:
+      - /url: /
+      - img "Nectarine" [ref=f1e4]
+  - button "Open menu" [ref=f1e6]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - paragraph: Pinkston for Tennessee
+            - heading "Designing a Campaign That Put People Before Politics" [level=1]
+            - button "Read the Full Story"
+      - generic:
+        - generic:
+          - generic:
+            - link "David Bruce Winery David Bruce Winery branding strategy":
+              - /url: /portfolio/david-bruce-winery
+              - generic:
+                - img "David Bruce Winery"
+              - generic:
+                - heading "David Bruce Winery" [level=3]
+                - generic:
+                  - generic: branding
+                  - generic: strategy
+            - link "Frontier Operators Frontier Operators strategy copywriting":
+              - /url: /portfolio/frontier-operators
+              - generic:
+                - img "Frontier Operators"
+              - generic:
+                - heading "Frontier Operators" [level=3]
+                - generic:
+                  - generic: strategy
+                  - generic: copywriting
+            - link "Faith Driven Talent Faith Driven Talent strategy copywriting branding":
+              - /url: /portfolio/faith-driven-talent
+              - generic:
+                - img "Faith Driven Talent"
+              - generic:
+                - heading "Faith Driven Talent" [level=3]
+                - generic:
+                  - generic: strategy
+                  - generic: copywriting
+                  - generic: branding
+      - contentinfo:
+        - generic:
+          - generic:
+            - generic: We are nectarine
+            - paragraph: We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.
+            - link "More About Nectarine":
+              - /url: /about
+          - generic:
+            - generic:
+              - link "Instagram":
+                - /url: https://instagram.com
+              - link "Linkedin":
+                - /url: https://linkedin.com
+            - link "hello@nectarine.ink":
+              - /url: mailto:hello@nectarine.ink
+        - generic:
+          - img "Nectarine"
+          - generic:
+            - generic: hello@nectarine.ink
+            - generic: © 2026 nectarine studio llc.
+  - button "Open Next.js Dev Tools" [ref=f1e14] [cursor=pointer]

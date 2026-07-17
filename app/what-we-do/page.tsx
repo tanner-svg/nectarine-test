@@ -40,10 +40,12 @@ function WipeLink({ href, overlayColor, textOnHover, className, children }: {
 }
 
 function PortfolioCard({ project, highlightAttr }: { project: Project; highlightAttr: string | null }) {
+  // CSS % padding is always relative to width, so 7.12% here = 10% of this
+  // card's own image height (aspect-ratio 493/351, so height = width * 351/493).
   return (
-    <Link href={`/portfolio/${project.slug}`} className="flex flex-col gap-[20px] group">
+    <Link href={`/portfolio/${project.slug}`} className="flex flex-col gap-[20px] group pb-[7.12%]">
       <div
-        className="w-full rounded-[15px] relative overflow-hidden flex items-end justify-end p-[40px]"
+        className="w-full rounded-[8px] relative overflow-hidden flex items-end justify-end p-[40px]"
         style={{ aspectRatio: "493/351", backgroundColor: "#e8d4b8" }}
       >
         {project.coverMedia.type === "video" ? (
@@ -75,7 +77,7 @@ function PortfolioCard({ project, highlightAttr }: { project: Project; highlight
           {project.attributes.map((attr) => (
             <span
               key={attr}
-              className="font-bel text-[9px] px-[12px] py-[8px] rounded-[15px] transition-colors duration-300"
+              className="font-bel text-[9px] uppercase tracking-[0.155em] px-[12px] py-[8px] rounded-[15px] transition-colors duration-300"
               style={
                 highlightAttr && attr === highlightAttr
                   ? { backgroundColor: "#ffc1a7", color: "#380102", border: "1px solid transparent" }

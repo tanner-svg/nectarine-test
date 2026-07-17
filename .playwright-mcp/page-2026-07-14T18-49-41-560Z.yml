@@ -1,0 +1,280 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link [ref=e3] [cursor=pointer]:
+      - /url: /
+      - img "Nectarine" [ref=e4]
+  - button "Open menu" [ref=e6]
+  - generic [ref=e10]:
+    - generic [ref=e12]:
+      - heading [level=1] [ref=e276]:
+        - text: Make Your Brand
+        - generic [ref=e14]: Sticky
+      - generic [ref=e16]:
+        - paragraph [ref=e17]: Having an unclear or fuzzy brand doesn't just look bad; it bleeds opportunities. Walk away with the strategy, story, and visual identity that makes your brand stick. Grow a brand foundation that cultivates loyal communities and compelling narratives.
+        - generic [ref=e18]:
+          - link "Book a Strategy Call" [ref=e19] [cursor=pointer]:
+            - /url: /contact
+          - link "Explore our Work" [ref=e21] [cursor=pointer]:
+            - /url: /work
+    - generic [ref=e24]:
+      - link "David Bruce Winery David Bruce Winery branding strategy" [ref=e25] [cursor=pointer]:
+        - /url: /portfolio/david-bruce-winery
+        - img "David Bruce Winery" [ref=e27]
+        - generic [ref=e31]:
+          - heading "David Bruce Winery" [level=3] [ref=e32]
+          - generic [ref=e33]:
+            - generic [ref=e34]: branding
+            - generic [ref=e35]: strategy
+      - link "Pinkston for Tennessee Pinkston for Tennessee web design" [ref=e36] [cursor=pointer]:
+        - /url: /portfolio/pinkston-for-tn
+        - img "Pinkston for Tennessee" [ref=e38]
+        - generic [ref=e42]:
+          - heading "Pinkston for Tennessee" [level=3] [ref=e43]
+          - generic [ref=e44]: web design
+      - link "Frontier Operators Frontier Operators strategy copywriting" [ref=e46] [cursor=pointer]:
+        - /url: /portfolio/frontier-operators
+        - img "Frontier Operators" [ref=e48]
+        - generic [ref=e52]:
+          - heading "Frontier Operators" [level=3] [ref=e53]
+          - generic [ref=e54]:
+            - generic [ref=e55]: strategy
+            - generic [ref=e56]: copywriting
+      - link "Faith Driven Talent Faith Driven Talent strategy copywriting branding" [ref=e57] [cursor=pointer]:
+        - /url: /portfolio/faith-driven-talent
+        - img "Faith Driven Talent" [ref=e59]
+        - generic [ref=e63]:
+          - heading "Faith Driven Talent" [level=3] [ref=e64]
+          - generic [ref=e65]:
+            - generic [ref=e66]: strategy
+            - generic [ref=e67]: copywriting
+            - generic [ref=e68]: branding
+    - generic [ref=e70]:
+      - generic [ref=e71]:
+        - generic [ref=e72]: The Fuzz Tax
+        - heading "The Real Cost of an Unclear Brand" [level=2] [ref=e73]
+        - paragraph [ref=e74]: A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag.
+        - paragraph [ref=e75]: You know something isn't landing the way it should. Pitches that almost close. Team members who struggle to explain what you do. Opportunities that go to someone who just told their story better. We call it the "Fuzz Tax", and it's more fixable than you'd think.
+      - generic [ref=e76]:
+        - img "A Tax on Your Opportunities" [ref=e78]
+        - img "A Tax on Your Audience" [ref=e80]
+        - img "A Tax on Your Team" [ref=e82]
+        - img "A Tax on You…" [ref=e84]
+    - generic [ref=e86]:
+      - generic [ref=e87]:
+        - generic [ref=e88]: Strategy & Consultations
+        - paragraph [ref=e89]: You know what you do and why it matters. The hard part is finding the language and visuals that make everyone else see it too.
+        - paragraph [ref=e90]: Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed. Some clients walk away ready to run with it on their own. Others use their session as the launchpad for a longer creative partnership. Either way, you leave with actionable insights to propel your brand forward.
+        - link "Learn More" [ref=e91] [cursor=pointer]:
+          - /url: /workshops-audits
+      - generic [ref=e93]:
+        - generic [ref=e94] [cursor=pointer]:
+          - generic [ref=e95]:
+            - img "Workshop" [ref=e96]
+            - heading "Workshops" [level=3] [ref=e98]
+          - paragraph [ref=e102]: A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can immediately implement across your organization.
+          - link "Schedule a 30 Minute Intro Call" [ref=e103]:
+            - /url: /workshops-audits
+          - generic [ref=e104]:
+            - generic [ref=e105]: The Visual Identity Workshop
+            - generic [ref=e106]: The Brand Narrative Workshop
+            - generic [ref=e107]: The Internal Playbook Workshop
+        - generic [ref=e108] [cursor=pointer]:
+          - generic [ref=e109]:
+            - img "Audit" [ref=e110]
+            - heading "Audits" [level=3] [ref=e112]
+          - paragraph [ref=e116]: A focused call (30-45 minutes) where we run a SWOT analysis on your selected focus area. You'll receive a one-page PDF of performance notes and recommendations shortly after.
+          - link "Schedule an Audit" [ref=e117]:
+            - /url: /workshops-audits
+          - generic [ref=e118]:
+            - generic [ref=e119]: Brand Audits
+            - generic [ref=e120]: Website Audits
+            - generic [ref=e121]: Narrative Audits
+            - generic [ref=e122]: Specific Media Audits
+            - generic [ref=e123]: Videography Audits
+    - generic [ref=e124]:
+      - generic [ref=e125]: p.s. we also have Creative Services
+      - generic [ref=e126]:
+        - generic [ref=e127]:
+          - generic [ref=e128]:
+            - heading "Growth Plans" [level=3] [ref=e129]
+            - paragraph [ref=e130]: Great Brands Need Consistent Creative.
+          - paragraph [ref=e131]: Looking for a dedicated creative partner? Someone who knows your voice, your goals, and your audience well enough to deliver consistent, professional visuals and content? Our monthly plans give you dedicated creative without the overhead.
+          - link "Learn More about Growth Plans" [ref=e132] [cursor=pointer]:
+            - /url: /growth-plans
+        - generic [ref=e134]:
+          - generic [ref=e135]:
+            - heading "Projects & Express Delivery" [level=3] [ref=e136]
+            - paragraph [ref=e137]: Projects À La Carte
+          - paragraph [ref=e138]: Not every season calls for a full partnership. For well-scoped projects and one-time needs, we offer hourly options that give you professional creativity without the commitment.
+          - link "Explore Project Options" [ref=e139] [cursor=pointer]:
+            - /url: /projects
+    - generic [ref=e143]:
+      - generic [ref=e144]:
+        - generic [ref=e145]: What We Do
+        - paragraph [ref=e146]: "Every service we offer is rooted in the same belief: beautiful, intentional work creates good in the world. Whether we're building a brand from the ground up or crafting one asset that needs to be exactly right."
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - img "Design" [ref=e149]
+          - heading "Design" [level=3] [ref=e150]
+          - paragraph [ref=e151]: Logos, brand identity, and visual assets for every format and surface. From packaging and murals to signage, stickers, and banners — if it needs to look good, we're in.
+        - generic [ref=e152]:
+          - img "Copywriting" [ref=e153]
+          - heading "Copywriting" [level=3] [ref=e154]
+          - paragraph [ref=e155]: Mission statements, messaging frameworks, social copy, scripts, and pitch materials. The words that make your brand stick — and actually sound like you.
+        - generic [ref=e156]:
+          - img "Websites" [ref=e157]
+          - heading "Websites" [level=3] [ref=e158]
+          - paragraph [ref=e159]: Custom web design, UX/UI, and high-performance builds on Framer, WordPress, Webflow, and more. Sites that look beautiful and actually convert.
+        - generic [ref=e160]:
+          - img "Videography" [ref=e161]
+          - heading "Videography" [level=3] [ref=e162]
+          - paragraph [ref=e163]: Brand animations, testimonials, explainers, and more. From short-form content to full creative direction — we make brands move.
+        - generic [ref=e164]:
+          - img "Event Design & Media" [ref=e165]
+          - heading "Event Design & Media" [level=3] [ref=e166]
+          - paragraph [ref=e167]: "The full visual scope of events: large-scale graphics, banners, apparel, merch, posters, and print materials that make your brand feel as good in person as it does online."
+        - generic [ref=e168]:
+          - img "Brand Strategy" [ref=e169]
+          - heading "Brand Strategy" [level=3] [ref=e170]
+          - paragraph [ref=e171]: Narrative workshops, positioning sessions, digital audits and AI integration. Clarity on your story, your strategy and how to carry your brand consistently.
+    - generic [ref=e172]:
+      - generic [ref=e173]:
+        - generic:
+          - generic:
+            - blockquote: Nectarine really helped me articulate the vision and motivation for the why behind our brand. We had the instincts — they gave us the words.
+            - paragraph: Patrick Lowndes, Founder, Frontier Operators
+            - link "Read the full story":
+              - /url: /portfolio/frontier-operators
+          - link "Patrick Lowndes":
+            - /url: /portfolio/frontier-operators
+            - img "Patrick Lowndes"
+        - generic [ref=e261]:
+          - generic [ref=e262]:
+            - blockquote [ref=e265]: Working with Nectarine completely transformed how we present ourselves to the world. Sixty years of history, finally looking the part.
+            - paragraph [ref=e266]: Eric Bruce, CEO, David Bruce Winery
+            - link "Read the full story" [ref=e267] [cursor=pointer]:
+              - /url: /portfolio/david-bruce-winery
+          - link [ref=e270] [cursor=pointer]:
+            - /url: /portfolio/david-bruce-winery
+            - img "Eric Bruce" [ref=e271]
+      - generic [ref=e188]:
+        - button [ref=e189]
+        - button [ref=e190]
+    - generic [ref=e194]:
+      - generic [ref=e195]:
+        - generic [ref=e196]:
+          - heading "Contact us" [level=2] [ref=e197]
+          - paragraph [ref=e198]: Send us a message and we'll get back to you within 1-2 business days.
+        - generic [ref=e199]: "[contact-illustration] 492x350"
+      - generic [ref=e201]:
+        - generic [ref=e202]:
+          - generic [ref=e203]:
+            - generic [ref=e204]: Name
+            - textbox "Jane Doe" [ref=e205]
+          - generic [ref=e206]:
+            - generic [ref=e207]: Email
+            - textbox "jane@company.com" [ref=e208]
+          - generic [ref=e209]:
+            - generic [ref=e210]: Subject
+            - textbox "General inquiry" [ref=e211]
+          - generic [ref=e212]:
+            - generic [ref=e213]: Message
+            - textbox "How can we help?" [ref=e214]
+        - button "Submit" [ref=e215]
+    - contentinfo [ref=e216]:
+      - generic [ref=e217]:
+        - generic [ref=e218]:
+          - generic [ref=e219]: We are nectarine
+          - paragraph [ref=e220]: We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.
+          - link "More About Nectarine" [ref=e221] [cursor=pointer]:
+            - /url: /about
+        - generic [ref=e225]:
+          - generic [ref=e226]:
+            - link "Instagram" [ref=e227] [cursor=pointer]:
+              - /url: https://instagram.com
+            - link "Linkedin" [ref=e231] [cursor=pointer]:
+              - /url: https://linkedin.com
+          - link "hello@nectarine.ink" [ref=e235] [cursor=pointer]:
+            - /url: mailto:hello@nectarine.ink
+      - generic [ref=e239]:
+        - img "Nectarine" [ref=e240]
+        - generic [ref=e241]:
+          - generic [ref=e242]: hello@nectarine.ink
+          - generic [ref=e243]: © 2026 nectarine studio llc.
+  - button "Open Next.js Dev Tools" [ref=e249] [cursor=pointer]
+  - alert [ref=e253]
+  - button [ref=e255] [cursor=pointer]:
+    - generic:
+      - generic:
+        - button
+      - generic:
+        - button
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button [disabled]
+      - generic:
+        - button
+      - generic:
+        - button
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - link:
+              - /url: https://agentation.com
+            - paragraph: v3.0.1
+            - button "Switch to light mode"
+          - generic:
+            - generic:
+              - generic: Output Detail
+              - button "Standard"
+            - generic:
+              - generic: React Components
+              - generic:
+                - checkbox [checked]
+            - generic:
+              - generic: Hide Until Restart
+              - generic:
+                - checkbox
+          - generic:
+            - generic: Marker Color
+            - generic:
+              - button "Indigo"
+              - button "Blue"
+              - button "Cyan"
+              - button "Green"
+              - button "Yellow"
+              - button "Orange"
+              - button "Red"
+          - generic:
+            - generic:
+              - generic:
+                - checkbox "Clear on copy/send"
+              - generic: Clear on copy/send
+            - generic:
+              - generic:
+                - checkbox "Block page interactions" [checked]
+              - generic: Block page interactions
+          - button "Manage MCP & Webhooks"
+        - generic:
+          - button "Manage MCP & Webhooks"
+          - generic:
+            - generic: MCP Connection
+            - paragraph:
+              - text: MCP connection allows agents to receive and act on annotations.
+              - link "Learn more":
+                - /url: https://agentation.dev/mcp
+          - generic:
+            - generic:
+              - generic: Webhooks
+              - generic:
+                - generic: Auto-Send
+                - generic:
+                  - checkbox "Auto-Send" [checked] [disabled]
+            - paragraph: The webhook URL will receive live annotation changes and annotation data.
+            - textbox "Webhook URL"

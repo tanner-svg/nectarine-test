@@ -106,7 +106,7 @@ export default function WorkshopsAuditsPage() {
 
             {/* Right */}
             <div className="flex-1 flex flex-col gap-[0px]">
-              <div className="flex-1 bg-[#d9d9d9] rounded-[20px] min-h-[345px] flex items-center justify-center mb-[50px]">
+              <div className="flex-1 bg-[#d9d9d9] rounded-[10px] min-h-[345px] flex items-center justify-center mb-[50px]">
                 <span className="font-bel text-sm text-[#380102]/40">[workshop-photo] 639x345</span>
               </div>
               <div className="flex flex-col">
@@ -200,7 +200,7 @@ export default function WorkshopsAuditsPage() {
                   </div>
 
                   {/* Cover media */}
-                  <Link href={`/portfolio/${t.slug}`} className="flex-1 relative rounded-[15px] overflow-hidden group" style={{ height: "560px" }}>
+                  <Link href={`/portfolio/${t.slug}`} className="flex-1 relative rounded-[8px] overflow-hidden group" style={{ height: "560px" }}>
                     {(() => {
                       const media = t.testimonialMedia ?? t.coverMedia;
                       return media.type === "video" ? (

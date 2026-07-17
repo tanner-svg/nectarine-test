@@ -1,10 +1,63 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, type RefObject, type MutableRefObject } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import { getAllProjects, getFeaturedProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
+
+// Groups a sentence's word spans by rendered line, then drives a per-line
+// reveal (color, opacity, whatever `apply` sets) as the paragraph scrolls
+// up through the viewport. Lines are re-measured on resize since text wraps
+// differently at each breakpoint.
+function useLineReveal(
+  containerRef: RefObject<HTMLElement | null>,
+  wordRefs: MutableRefObject<(HTMLSpanElement | null)[]>,
+  apply: (el: HTMLSpanElement, revealed: boolean) => void
+) {
+  const lineOfWord = useRef<number[]>([]);
+  const [lineCount, setLineCount] = useState(1);
+
+  useEffect(() => {
+    const measure = () => {
+      const els = wordRefs.current;
+      const tops: number[] = [];
+      const lineMap: number[] = [];
+      els.forEach((el) => {
+        if (!el) { lineMap.push(0); return; }
+        const top = el.offsetTop;
+        let lineIdx = tops.findIndex(t => Math.abs(t - top) < 4);
+        if (lineIdx === -1) { tops.push(top); lineIdx = tops.length - 1; }
+        lineMap.push(lineIdx);
+      });
+      lineOfWord.current = lineMap;
+      setLineCount(Math.max(tops.length, 1));
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [wordRefs]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const start = viewportH * 0.85;
+      const end = viewportH * 0.4;
+      const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
+      wordRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const line = lineOfWord.current[i] ?? 0;
+        const threshold = (line + 1) / lineCount;
+        apply(el, progress >= threshold);
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [containerRef, wordRefs, apply, lineCount]);
+}
 
 function ArrowOutward({ color = "#380102", size = 10 }: { color?: string; size?: number }) {
   return (
@@ -23,7 +76,7 @@ function Tag({ children, outline = true, bg, textColor = "#380102", borderColor 
 }) {
   return (
     <span
-      className="font-bel text-[9px] px-[12px] py-[8px] rounded-[15px] whitespace-nowrap"
+      className="font-bel text-[9px] uppercase tracking-[0.155em] px-[12px] py-[8px] rounded-[15px] whitespace-nowrap"
       style={{ color: textColor, backgroundColor: bg, border: outline ? `1px solid ${borderColor}` : undefined }}
     >
       {children}
@@ -34,10 +87,12 @@ function Tag({ children, outline = true, bg, textColor = "#380102", borderColor 
 function PortfolioCard({ project, className }: {
   project: Project; className?: string;
 }) {
+  // Image heights are fixed px per breakpoint (200/260/380), so padding is
+  // fixed px too — 10% of each — rather than a %, which would be relative to width.
   return (
-    <Link href={`/portfolio/${project.slug}`} className={`flex flex-col gap-[20px] group ${className ?? ''}`}>
+    <Link href={`/portfolio/${project.slug}`} className={`flex flex-col gap-[20px] group pb-[20px] sm:pb-[26px] lg:pb-[38px] ${className ?? ''}`}>
       <div
-        className="w-full rounded-[15px] flex items-end justify-end p-4 lg:p-[40px] relative overflow-hidden transition-opacity group-hover:opacity-90 h-[200px] sm:h-[260px] lg:h-[380px]"
+        className="w-full rounded-[8px] flex items-end justify-end p-4 lg:p-[40px] relative overflow-hidden transition-opacity group-hover:opacity-90 h-[200px] sm:h-[260px] lg:h-[380px]"
         style={{ backgroundColor: "#e8d4b8" }}
       >
         {project.coverMedia.type === "video" ? (
@@ -47,14 +102,14 @@ function PortfolioCard({ project, className }: {
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
           <Image
             src={project.coverMedia.url}
             alt={project.title}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         )}
         <div className="relative z-10 w-[38px] h-[38px] rounded-full border border-white flex items-center justify-center" style={{ mixBlendMode: 'difference' }}>
@@ -153,7 +208,7 @@ function PortfolioOverlay({ onClose }: { onClose: () => void }) {
             ))}
           </div>
         </div>
-        <div className="w-full lg:w-[513px] h-[300px] lg:h-[681px] bg-[#d9d9d9] rounded-[25px] flex items-center justify-center flex-shrink-0">
+        <div className="w-full lg:w-[513px] h-[300px] lg:h-[681px] bg-[#d9d9d9] rounded-[13px] flex items-center justify-center flex-shrink-0">
           <span className="text-[#380102]/40 font-bel text-sm">[case-study-image] 513x681</span>
         </div>
       </div>
@@ -182,12 +237,22 @@ const accordionContent = (accentColor: string) => (
   </>
 );
 
+
 export default function HomePage() {
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<'workshops' | 'audits' | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [fuzzIndex, setFuzzIndex] = useState(0);
+  const [fuzzHorizontal, setFuzzHorizontal] = useState(false);
+  const [fuzzDragging, setFuzzDragging] = useState(false);
+  const fuzzTouchStart = useRef(0);
   const parallaxRef = useRef<HTMLElement>(null);
   const parallaxImgRef = useRef<HTMLDivElement>(null);
+  const fuzzSectionRef = useRef<HTMLElement>(null);
+  const revealRef = useRef<HTMLParagraphElement>(null);
+  const revealWordRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const whatWeDoRevealRef = useRef<HTMLParagraphElement>(null);
+  const whatWeDoWordRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const typingWords = ["Sticky", "Fresh", "Grow"];
   const [typedText, setTypedText] = useState("");
@@ -235,6 +300,43 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Strategy section: each line goes cream -> coral as it scrolls into view.
+  const applyColorReveal = useCallback((el: HTMLSpanElement, revealed: boolean) => {
+    el.style.color = revealed ? '#d7432a' : '#f8e4cc';
+  }, []);
+  useLineReveal(revealRef, revealWordRefs, applyColorReveal);
+
+  // What We Do section: each line goes 75% -> 100% opacity as it scrolls into view.
+  const applyOpacityReveal = useCallback((el: HTMLSpanElement, revealed: boolean) => {
+    el.style.opacity = revealed ? '1' : '0.5';
+  }, []);
+  useLineReveal(whatWeDoRevealRef, whatWeDoWordRefs, applyOpacityReveal);
+
+  // Fuzz Tax cards step backward through the deck (reverse order) as the section
+  // scrolls through the viewport, instead of auto-advancing on a timer. Dragging
+  // still works and temporarily overrides the card shown until the next scroll.
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!fuzzSectionRef.current) return;
+      const rect = fuzzSectionRef.current.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, 1 - rect.bottom / (rect.height + viewportH)));
+      const step = Math.min(3, Math.floor(progress * 4));
+      setFuzzIndex((4 - step) % 4);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setFuzzHorizontal(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   const allProjects = getAllProjects();
   const featuredProjects = getFeaturedProjects();
 
@@ -244,6 +346,13 @@ export default function HomePage() {
     }, 6000);
     return () => clearInterval(timer);
   }, [featuredProjects.length]);
+
+  const fuzzCards = [
+    { src: "/.shipstudio/assets/fuzz-card-1.png", alt: "A Tax on Your Opportunities" },
+    { src: "/.shipstudio/assets/fuzz-card-2.png", alt: "A Tax on Your Audience" },
+    { src: "/.shipstudio/assets/fuzz-card-3.png", alt: "A Tax on Your Team" },
+    { src: "/.shipstudio/assets/fuzz-card-4.png", alt: "A Tax on You…" },
+  ];
 
   const services = [
     { icon: "/.shipstudio/assets/design-icon.svg", title: "Design", desc: "Logos, brand identity, and visual assets for every format and surface. From packaging and murals to signage, stickers, and banners — if it needs to look good, we're in." },
@@ -310,86 +419,91 @@ export default function HomePage() {
       </section>
 
       {/* The Fuzz Tax */}
-      <section className="px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]" style={{ backgroundImage: 'url(/.shipstudio/assets/fuzz-tax-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="max-w-[1290px] mx-auto">
-          <div className="bg-[#f8e4cc] rounded-[25px] p-6 sm:p-10 lg:p-[60px] flex flex-col gap-8 lg:gap-[50px]">
+      <section ref={fuzzSectionRef} className="bg-[#f8e4cc] py-5 md:py-0 overflow-hidden">
+        <div className="max-w-[1290px] mx-auto flex flex-col md:flex-row md:items-stretch md:justify-between gap-8 lg:gap-[40px] md:px-8 lg:max-w-screen lg:pl-20 lg:pr-20">
 
-            {/* Header row */}
-            <div className="flex flex-col gap-6 lg:flex-row lg:gap-[60px] lg:items-start">
-              <div className="flex flex-col gap-[10px] lg:flex-1">
-                <span className="font-bel text-[14px] lg:text-[18px] bg-[#d7432a] text-[#f8e4cc] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: '0.1em' }}>
-                  The Fuzz Tax
-                </span>
-                <h2 className="font-bel font-semibold text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.0] text-[#380102]">
-                  The Real Cost of an Unclear Brand
-                </h2>
-              </div>
-              <div className="flex flex-col gap-[16px] lg:flex-1 lg:pt-[10px]">
-                <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
-                  A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag.
-                </p>
-                <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
-                  You know something isn't landing the way it should. Pitches that almost close. Team members who struggle to explain what you do. Opportunities that go to someone who just told their story better. We call it the "Fuzz Tax", and it's more fixable than you'd think.
-                </p>
-              </div>
-            </div>
-
-            {/* Cards 2×2 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-              {/* Card 1 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#98b2bb] hover:border-[#98b2bb] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#98b2bb] group-hover:text-[#380102] transition-colors duration-300">1</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Opportunities</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>You're losing opportunities to competitors you know you're better than.</li>
-                  <li>Dream partnerships stall because your positioning isn't landing in the room.</li>
-                  <li>You lose out on the word-of-mouth and referrals you could've had from the opportunities you've already lost.</li>
-                </ul>
-              </div>
-
-              {/* Card 2 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#ffc1a7] hover:border-[#ffc1a7] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#d7432a] group-hover:text-[#380102] transition-colors duration-300">2</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Audience</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>Your ICPs engage with your materials but don't self-identify as people who need you.</li>
-                  <li>Your content isn't building recognition; it's just filling a feed.</li>
-                  <li>People leave your website without a clear sense of what makes you different.</li>
-                </ul>
-              </div>
-
-              {/* Card 3 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#b79e31] hover:border-[#b79e31] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#b79e31] group-hover:text-[#380102] transition-colors duration-300">3</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on Your Team</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>New hires can't articulate what the company stands for in their first 90 days.</li>
-                  <li>No two people on your team describe what you do the same way.</li>
-                  <li>Your team is doing great work but doesn't have the language to talk about it.</li>
-                </ul>
-              </div>
-
-              {/* Card 4 */}
-              <div className="group bg-[#f7dec1] border-2 border-[#380102] rounded-[15px] p-6 md:p-[40px_50px] flex flex-col gap-[20px] lg:gap-[25px] transition-colors duration-300 hover:bg-[#f9ce6a] hover:border-[#f9ce6a] cursor-pointer">
-                <div className="flex items-center gap-[16px] lg:gap-[24px]">
-                  <span className="font-bel font-semibold text-[60px] lg:text-[95px] leading-none text-[#f9ce6a] group-hover:text-[#380102] transition-colors duration-300">4</span>
-                  <h3 className="font-aleo font-bold text-[20px] lg:text-[28px] leading-[1.2] text-[#380102] flex-1">A Tax on You…</h3>
-                </div>
-                <ul className="font-aleo text-[15px] lg:text-[16px] leading-[1.6] text-[#380102] list-disc pl-[20px] flex flex-col gap-[6px]">
-                  <li>Energy | You're still explaining what you do from scratch + Every new piece of creative starts over because there's no foundation to build from.</li>
-                  <li>Confidence | Missed opportunities chip away at team morale.</li>
-                  <li>Your Vision | You know what your brand should feel like, but translating that into a cohesive visual identity feels out of reach.</li>
-                </ul>
-              </div>
-            </div>
-
+          {/* Left: text */}
+          <div className="px-5 sm:px-10 md:px-0 flex flex-col gap-5 lg:gap-[28px] md:w-[42%] md:flex-shrink-0 md:py-[60px] lg:w-[500px] lg:py-[100px] lg:pr-0 lg:pl-0">
+            <span className="font-bel text-[13px] bg-[#d7432a] text-[#fcf8f3] rounded-full px-[14px] py-[9px] w-fit uppercase" style={{ letterSpacing: '0.12em' }}>
+              The Fuzz Tax
+            </span>
+            <h2 className="font-bel font-semibold text-[52px] sm:text-[60px] lg:text-[80px] leading-[0.95] text-[#380102]">
+              The Real Cost of an Unclear Brand
+            </h2>
+            <p className="font-aleo text-[16px] leading-[1.65] text-[#380102]">
+              A fuzzy or unclear brand doesn't just look bad. Every missed connection, lost pitch, and unconvinced stakeholder has a price tag.
+            </p>
+            <p className="font-aleo text-[16px] leading-[1.65] text-[#380102]">
+              You know something isn't landing the way it should. Pitches that almost close. Team members who struggle to explain what you do. Opportunities that go to someone who just told their story better. We call it the "Fuzz Tax", and it's more fixable than you'd think.
+            </p>
           </div>
+
+          {/* Right: rolodex/waterfall — cards loop top to bottom, tilting -3deg in, flat at rest, +3deg out */}
+          <div
+            className="relative w-full aspect-[1130/770] md:aspect-auto md:h-auto md:self-stretch md:flex-1 lg:flex-none lg:w-[560px] lg:flex-shrink-0 overflow-hidden"
+            style={{
+              ...(fuzzHorizontal ? { aspectRatio: '6 / 5' } : undefined),
+              cursor: fuzzDragging ? 'grabbing' : 'grab',
+            }}
+            onTouchStart={(e) => { fuzzTouchStart.current = fuzzHorizontal ? e.touches[0].clientX : e.touches[0].clientY; }}
+            onTouchEnd={(e) => {
+              const end = fuzzHorizontal ? e.changedTouches[0].clientX : e.changedTouches[0].clientY;
+              const d = end - fuzzTouchStart.current;
+              if (Math.abs(d) > 40) setFuzzIndex(p => d > 0 ? (p + 1) % 4 : (p + 3) % 4);
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              fuzzTouchStart.current = fuzzHorizontal ? e.clientX : e.clientY;
+              setFuzzDragging(true);
+              const handleUp = (ev: MouseEvent) => {
+                const end = fuzzHorizontal ? ev.clientX : ev.clientY;
+                const d = end - fuzzTouchStart.current;
+                if (Math.abs(d) > 40) setFuzzIndex(p => d > 0 ? (p + 1) % 4 : (p + 3) % 4);
+                setFuzzDragging(false);
+                window.removeEventListener('mouseup', handleUp);
+              };
+              window.addEventListener('mouseup', handleUp);
+            }}
+          >
+            {fuzzCards.map((card, i) => {
+              const offset = (fuzzIndex - i + 4) % 4;
+              // 0=active(center) 1=prev(just exited, peeking behind) 2=hidden(parked, invisible) 3=next(about to enter, peeking ahead)
+              // d is the offset along the animation axis (vertical by default, horizontal below 768px)
+              const cfg = {
+                0: { d: -50,  rot: -1, op: 1, z: 4 },
+                3: { d: 20,   rot: -9, op: 1, z: 3 },
+                1: { d: -120, rot: 5,  op: 1, z: 3 },
+                2: { d: 20,   rot: -9, op: 0, z: 1 },
+              }[offset];
+              return (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    width: '90%',
+                    aspectRatio: '1130 / 770',
+                    transform: fuzzHorizontal
+                      ? `translate(${cfg.d}%, -50%) rotate(${cfg.rot}deg)`
+                      : `translate(-50%, ${cfg.d}%) rotate(${cfg.rot}deg)`,
+                    zIndex: cfg.z,
+                    opacity: cfg.op,
+                    transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease',
+                    userSelect: 'none',
+                  }}
+                >
+                  <img
+                    src={card.src}
+                    alt={card.alt}
+                    style={{ width: '100%', height: '100%', borderRadius: '11px', display: 'block', objectFit: 'cover' }}
+                    draggable={false}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
         </div>
       </section>
 
@@ -401,9 +515,18 @@ export default function HomePage() {
             <span className="font-bel text-[14px] lg:text-[18px] text-[#f8e4cc] border border-[#f8e4cc] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: '0.1em' }}>
               Strategy &amp; Consultations
             </span>
-            <p className="font-aleo text-[28px] sm:text-[32px] lg:text-[36px] leading-[1.1]">
+            <p ref={revealRef} className="font-aleo text-[28px] sm:text-[32px] lg:text-[36px] leading-[1.1]">
               <span className="text-[#f8e4cc]">You know what you do and why it matters. </span>
-              <span className="text-[#d7432a]">The hard part is finding the language and visuals that make everyone else see it too.</span>
+              {"The hard part is finding the language and visuals that make everyone else see it too.".split(" ").map((word, i) => (
+                <span
+                  key={i}
+                  ref={(el) => { revealWordRefs.current[i] = el; }}
+                  className="text-[#f8e4cc]"
+                  style={{ transition: 'color 0.4s ease' }}
+                >
+                  {word}{" "}
+                </span>
+              ))}
             </p>
             <p className="font-aleo text-[16px] leading-[1.6] text-[#f8e4cc]">
               Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed. Some clients walk away ready to run with it on their own. Others use their session as the launchpad for a longer creative partnership. Either way, you leave with actionable insights to propel your brand forward.
@@ -490,7 +613,7 @@ export default function HomePage() {
                 href="/workshops-audits"
                 overlayColor="#380102"
                 textOnHover="#fcf8f3"
-                className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[16px] text-[#fcf8f3]"
+                className="bg-[#d7432a] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[16px] text-[#fcf8f3]"
               >
                 Schedule an Audit
               </WipeLink>
@@ -567,8 +690,16 @@ export default function HomePage() {
             <span className="font-bel text-[14px] lg:text-[18px] text-[#380102] border border-[#380102] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: '0.1em' }}>
               What We Do
             </span>
-            <p className="font-aleo text-[26px] sm:text-[30px] lg:text-[36px] leading-[1.1] text-[#380102]">
-              Every service we offer is rooted in the same belief: beautiful, intentional work creates good in the world. Whether we're building a brand from the ground up or crafting one asset that needs to be exactly right.
+            <p ref={whatWeDoRevealRef} className="font-aleo text-[26px] sm:text-[30px] lg:text-[36px] leading-[1.1] text-[#380102]">
+              {"Every service we offer is rooted in the same belief: beautiful, intentional work creates good in the world. Whether we're building a brand from the ground up or crafting one asset that needs to be exactly right.".split(" ").map((word, i) => (
+                <span
+                  key={i}
+                  ref={(el) => { whatWeDoWordRefs.current[i] = el; }}
+                  style={{ opacity: 0.5, transition: 'opacity 0.4s ease' }}
+                >
+                  {word}{" "}
+                </span>
+              ))}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-[30px]">
@@ -617,7 +748,7 @@ export default function HomePage() {
               </div>
 
               {/* Cover media */}
-              <Link href={`/portfolio/${t.slug}`} className="w-full h-[280px] sm:h-[380px] lg:flex-1 lg:h-[560px] relative rounded-[15px] overflow-hidden group">
+              <Link href={`/portfolio/${t.slug}`} className="w-full h-[280px] sm:h-[380px] lg:flex-1 lg:h-[560px] relative rounded-[8px] overflow-hidden group">
                 {(() => {
                   const media = t.testimonialMedia ?? t.coverMedia;
                   return media.type === "video" ? (
@@ -666,7 +797,7 @@ export default function HomePage() {
                     Send us a message and we'll get back to you within 1-2 business days.
                   </p>
                 </div>
-                <div className="hidden lg:flex flex-1 bg-[#f9ce6a] border-2 border-dashed border-[#d7432a]/40 rounded-[20px] min-h-[350px] items-center justify-center">
+                <div className="hidden lg:flex flex-1 bg-[#f9ce6a] border-2 border-dashed border-[#d7432a]/40 rounded-[10px] min-h-[350px] items-center justify-center">
                   <span className="font-bel text-sm text-[#380102]/40">[contact-illustration] 492x350</span>
                 </div>
               </div>

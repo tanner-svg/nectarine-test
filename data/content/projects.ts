@@ -10,15 +10,15 @@ const projects: Project[] = [
       type: "image",
       url: "/.shipstudio/assets/portfolio/NECT_Site_LP-Gif.gif",
     },
-    body: `Lauren Pinkston is running for Governor of Tennessee as an independent — a candidate who believes the state's people deserve better than a system that forces them into two extremes. We built her campaign identity from the ground up: a visual language that feels human, approachable, and unmistakably different from the stiff formality of political design.
-
-The work spanned a full brand system, campaign website, and digital presence. Every design decision was rooted in the same conviction as the campaign itself: that politics can feel like it belongs to regular people.`,
-    attributes: ["web design"],
+    headline: "Designing a Campaign That Put People Before Politics",
+    serviceTags: ["Design"],
+    body: `A campaign built on the belief that Tennessee's citizens deserve better than a political system that forces them to choose between two extremes, Lauren Pinkston is running for Governor as an independent voice for the working Tennessean. Her platform prioritizes practical solutions over party loyalty and neighbors over division, putting the people who make Tennessee work at the heart of every policy conversation. Bringing that vision to life required a creative foundation as people-centered as the campaign itself, from the brand identity and messaging that gave the movement its voice, to the web presence, event design, merchandise, and film work that carried it into communities across the state.`,
+    attributes: ["Identity development","web design","Workshops & Audits","Writing & Copy",],
     clientQuote: {
       text: "Nectarine didn't just design a website — they gave our campaign a soul. The response from voters has been unlike anything we expected.",
       author: "Lauren Pinkston",
       role: "Candidate, Governor of Tennessee",
-      isFeatured: false,
+      isFeatured: true,
     },
   },
   {
@@ -34,9 +34,9 @@ The work spanned a full brand system, campaign website, and digital presence. Ev
       type: "image",
       url: "/.shipstudio/assets/portfolio/FO-Image.jpg",
     },
-    body: `Frontier Operators serves a community of military veterans transitioning into small business ownership — people who've spent careers executing under pressure and now need the language and tools to lead in a civilian market.
-
-We led a full brand narrative engagement: starting with a strategy intensive to surface the stories that matter most, then crafting a voice and messaging framework their team could own. The result is a brand that speaks with earned authority rather than hollow confidence.`,
+    headline: "Kickstarting Economic Growth in Frontier Markets",
+    serviceTags: ["Writing & Copy", "Workshops & Audits"],
+    body: `After conducting an in-depth market study, Patrick Lowndes identified a critical talent gap across businesses in North Africa, the Middle East, and Asia. Despite having economic potential, these companies often lacked experienced operators who knew how to scale organizations effectively from within. Driven by his passion for developing both emerging businesses and young professionals, Lowndes launched Frontier Operators, a venture dedicated to deploying highly trained, strategic operators to support and scale high-potential markets.`,
     attributes: ["strategy", "copywriting"],
     clientQuote: {
       text: "Nectarine really helped me articulate the vision and motivation for the why behind our brand. We had the instincts — they gave us the words.",
@@ -54,6 +54,8 @@ We led a full brand narrative engagement: starting with a strategy intensive to 
       type: "image",
       url: "/.shipstudio/assets/portfolio/David-Bruce-Cover.gif",
     },
+    headline: "Modernizing Six Decades of Winemaking Without Losing the Story",
+    serviceTags: ["Design", "Videography & Media"],
     body: `David Bruce Winery has been producing small-lot Pinot Noir in the Santa Cruz Mountains since 1964. After six decades, the label carried enormous history — but its visual identity hadn't kept pace with the caliber of the wine.
 
 We rebuilt the brand from its strongest asset: the story of a doctor who fell in love with a hillside and started making wine on weekends. The new identity leans into that founding romance — refined but not precious, storied but not stiff. We delivered a full brand refresh including logo system, label design, packaging guidelines, and a brand film that became the centerpiece of their 60th anniversary campaign.`,
@@ -74,13 +76,35 @@ We rebuilt the brand from its strongest asset: the story of a doctor who fell in
       type: "image",
       url: "/.shipstudio/assets/portfolio/faith-driven-cover.jpg",
     },
+    headline: "Building a Brand for an Industry That Rarely Gets to Choose Both",
+    serviceTags: ["Writing & Copy", "Design"],
     body: `Faith Driven Talent connects entertainment industry professionals who want to build careers rooted in their values — a talent agency and community for a segment that has long had to choose between conviction and opportunity.
 
 We partnered with the founding team across strategy, copywriting, and brand identity. Starting with a narrative workshop, we developed the positioning that became the foundation for their pitch materials, website, and outreach. Every touchpoint communicates the same thing: this is a serious industry player that happens to care about something larger than the deal.`,
     attributes: ["strategy", "copywriting", "branding"],
     clientQuote: {
-      text: "The strategy sessions gave us language we didn't even know we were missing. Now everyone on our team speaks about what we do the same way.",
-      author: "Tré Staton",
+      text: "",
+      author: "",
+      role: "Co-Founder, Faith Driven Talent",
+      isFeatured: false,
+    },
+  },
+    {
+    title: "He Who Speaks Out of Turn",
+    slug: "michael-cook",
+    order: 5,
+    galleryFolder: "portfolio/michael-cook",
+    coverMedia: {
+      type: "image",
+      url: "/.shipstudio/assets/portfolio/michael-cook/MC_Paperback_Mock_D.png",
+    },
+    headline: "Mapping the Universe of He Who Speaks Out of Turn",
+    serviceTags: ["Cover Design", "Print Design", "Illustration"],
+    body: `A debut novel spanning time, mythology, and the weight of words spoken and unspoken, He Who Speaks Out of Turn follows a group of unlikely companions racing through time to find a wizard from the far past and prevent a future void of life. Michael Cook built a world rich enough to get lost in, with characters whose journeys demanded to be mapped and a story whose tension deserved a cover worthy of carrying it. The art direction, illustration, and cartography that brought it to life were the result of going deep into that world, learning its geography, its people, and the stakes of every path taken.`,
+    attributes: ["art direction", "illustration", "branding"],
+    clientQuote: {
+      text: "",
+      author: "",
       role: "Co-Founder, Faith Driven Talent",
       isFeatured: false,
     },
