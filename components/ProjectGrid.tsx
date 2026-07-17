@@ -18,10 +18,10 @@ export default function ProjectGrid({ filterAttribute }: Props) {
         <Link
           key={project.slug}
           href={`/work/${project.slug}`}
-          className="group flex flex-col gap-[18px]"
+          className="group flex flex-col gap-[18px] pb-[32px]"
         >
           {/* Cover media */}
-          <div className="relative w-full h-[320px] rounded-[15px] overflow-hidden bg-[#e8d4b8] flex-shrink-0">
+          <div className="relative w-full h-[320px] rounded-[8px] overflow-hidden bg-[#e8d4b8] flex-shrink-0">
             {project.coverMedia.type === "video" ? (
               <video
                 src={project.coverMedia.url}
@@ -57,7 +57,7 @@ export default function ProjectGrid({ filterAttribute }: Props) {
               {project.attributes.map((attr) => (
                 <span
                   key={attr}
-                  className="font-bel text-[9px] uppercase tracking-[0.08em] px-[12px] py-[7px] rounded-full border border-[#380102]/30 text-[#380102]"
+                  className="font-bel text-[9px] uppercase tracking-[0.155em] px-[12px] py-[7px] rounded-full border border-[#380102]/30 text-[#380102]"
                 >
                   {attr}
                 </span>

@@ -54,7 +54,7 @@ export default function Navbar() {
   return (
     <>
       {/* Default navbar */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-5 sm:px-10 lg:px-[75px] h-[80px] lg:h-[110px]">
+      <nav className="absolute top-0 left-0 w-full z-50 flex items-center justify-between px-5 sm:px-10 lg:px-[75px] h-[80px] lg:h-[110px]">
         <Link href="/" className="navbar-logo">
           <Image
             src="/.shipstudio/assets/nectarine-logo-4.svg"
@@ -70,7 +70,7 @@ export default function Navbar() {
       {/* Hamburger / X button — always above curtain (z-[210]) */}
       <button
         onClick={() => open ? closeMenu() : setOpen(true)}
-        className={`fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[44px] h-[44px] lg:w-[50px] lg:h-[50px] flex flex-col items-center justify-center gap-[6px] z-[210] transition-all duration-300 hover:scale-[1.05] ${!open && !isClosing ? 'rounded-full bg-[#d7432a]' : ''}`}
+        className={`navbar-hamburger fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[44px] h-[44px] lg:w-[50px] lg:h-[50px] flex flex-col items-center justify-center gap-[6px] z-[210] transition-all duration-300 hover:scale-[1.05] ${!open && !isClosing ? 'rounded-full bg-[#d7432a]' : ''}`}
         aria-label={open ? "Close menu" : "Open menu"}
       >
         <span

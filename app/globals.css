@@ -69,6 +69,14 @@ body {
   font-family: var(--font-aleo), serif;
 }
 
+/* Hides the persistent hamburger button while a full-screen modal (like the
+   portfolio "Read the Full Story" pop-up) is open. Fades via the button's
+   own existing transition-all class. */
+body.modal-open .navbar-hamburger {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ─── Transition Curtain ──────────────────────────────────────── */
 /*
  * Full-bleed cream panel that masks the route swap.

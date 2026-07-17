@@ -1,0 +1,13 @@
+[     284ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     438ms] [LOG] [HMR] connected @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    3303ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    3309ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    3398ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:60269/.shipstudio/assets/portfolio/faith-driven-cover.jpg:0
+[    6865ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:60269/.shipstudio/assets/portfolio/faith-driven-cover.jpg:0
+[   14824ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:60269/.shipstudio/assets/portfolio/faith-driven-cover.jpg:0
+[   18598ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:60269/.shipstudio/assets/portfolio/faith-driven-cover.jpg:0
+[   28037ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:60269/.shipstudio/assets/portfolio/faith-driven-cover.jpg:0
+[   43462ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   43498ms] [LOG] [Fast Refresh] done in 141ms @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   62579ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   62608ms] [LOG] [Fast Refresh] done in 130ms @ http://localhost:60269/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297

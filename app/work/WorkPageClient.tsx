@@ -37,10 +37,12 @@ function WipeButton({ overlayColor, textOnHover, className, children }: {
 }
 
 function PortfolioCard({ project }: { project: Project }) {
+  // CSS % padding is always relative to width, so 6.667% here = 10% of this
+  // card's own image height (aspect-ratio 3/2, so height = width * 2/3).
   return (
-    <Link href={`/portfolio/${project.slug}`} className="flex flex-col gap-[15px] group">
+    <Link href={`/portfolio/${project.slug}`} className="flex flex-col gap-[15px] group pb-[6.667%]">
       <div
-        className="w-full rounded-[15px] relative overflow-hidden flex items-start justify-end p-[20px]"
+        className="w-full rounded-[8px] relative overflow-hidden flex items-start justify-end p-[20px]"
         style={{ aspectRatio: "3/2", backgroundColor: "#e8d4b8" }}
       >
         {project.coverMedia.type === "video" ? (
@@ -70,7 +72,7 @@ function PortfolioCard({ project }: { project: Project }) {
         </h3>
         <div className="flex flex-wrap gap-[8px]">
           {project.attributes.map((attr) => (
-            <span key={attr} className="font-bel text-[9px] text-[#380102] border border-[#380102] px-[12px] py-[8px] rounded-[15px]">
+            <span key={attr} className="font-bel text-[9px] uppercase tracking-[0.155em] text-[#380102] border border-[#380102] px-[12px] py-[8px] rounded-[15px]">
               {attr}
             </span>
           ))}
@@ -93,7 +95,7 @@ function ContactSection() {
                   Send us a message and we'll get back to you within 1-2 business days.
                 </p>
               </div>
-              <div className="flex-1 bg-[#f9ce6a] border-2 border-dashed border-[#d7432a]/40 rounded-[20px] min-h-[350px] flex items-center justify-center">
+              <div className="flex-1 bg-[#f9ce6a] border-2 border-dashed border-[#d7432a]/40 rounded-[10px] min-h-[350px] flex items-center justify-center">
                 <span className="font-bel text-sm text-[#380102]/40">[contact-illustration] 492x350</span>
               </div>
             </div>
