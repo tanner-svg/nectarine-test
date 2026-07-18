@@ -135,13 +135,13 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className={`font-bel font-semibold text-[52px] sm:text-[65px] lg:text-[85px] leading-none hover:opacity-80 transition-opacity ${pathname === href ? 'text-[#f9ce6a]' : 'text-[#380102]'}`}
+                className={`font-bel font-semibold text-[52px] sm:text-[65px] lg:text-[85px] leading-none text-center hover:text-[#f9ce6a] transition-colors duration-300 ${pathname === href ? 'text-[#f9ce6a]' : 'text-[#380102]'}`}
               >
                 {label}
               </Link>
             ))}
 
-            {/* Secondary links — eyebrow chip style with hover scale */}
+            {/* Secondary links — eyebrow chip style; hovered chip turns yellow */}
             <div
               className="flex items-center gap-[12px] mt-[25px] flex-wrap justify-center"
               onMouseLeave={() => setHoveredChip(null)}
@@ -151,11 +151,12 @@ export default function Navbar() {
                   key={href}
                   href={href}
                   onMouseEnter={() => setHoveredChip(href)}
-                  className="font-bel text-[13px] sm:text-[14px] text-[#fcf8f3] border border-[#fcf8f3]/60 rounded-full px-[15px] py-[9px] uppercase transition-all duration-200"
+                  className="font-bel text-[13px] sm:text-[14px] text-center border rounded-full px-[15px] py-[9px] uppercase transition-all duration-200"
                   style={{
                     letterSpacing: '0.1em',
                     transform: hoveredChip === href ? 'scale(1.05)' : 'scale(1)',
-                    opacity: hoveredChip && hoveredChip !== href ? 0.5 : 1,
+                    color: hoveredChip === href ? '#f9ce6a' : '#fcf8f3',
+                    borderColor: hoveredChip === href ? '#f9ce6a' : 'rgba(252,248,243,0.6)',
                   }}
                 >
                   {label}

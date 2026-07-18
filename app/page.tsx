@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback, type RefObject, type MutableR
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
-import { getAllProjects, getFeaturedProjects } from "@/lib/portfolio";
+import { getHomepageProjects, getFeaturedProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
 
 // Groups a sentence's word spans by rendered line, then drives a per-line
@@ -244,8 +244,6 @@ export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fuzzIndex, setFuzzIndex] = useState(0);
   const [fuzzHorizontal, setFuzzHorizontal] = useState(false);
-  const [fuzzDragging, setFuzzDragging] = useState(false);
-  const fuzzTouchStart = useRef(0);
   const parallaxRef = useRef<HTMLElement>(null);
   const parallaxImgRef = useRef<HTMLDivElement>(null);
   const fuzzSectionRef = useRef<HTMLElement>(null);
@@ -337,7 +335,7 @@ export default function HomePage() {
     return () => mq.removeEventListener('change', update);
   }, []);
 
-  const allProjects = getAllProjects();
+  const homepageProjects = getHomepageProjects();
   const featuredProjects = getFeaturedProjects();
 
   useEffect(() => {
@@ -408,7 +406,7 @@ export default function HomePage() {
       {/* Portfolio Grid */}
       <section className="bg-[#fcf8f3] px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]">
         <div className="max-w-[1290px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[15px]">
-          {allProjects.map((project, i) => (
+          {homepageProjects.map((project, i) => (
             <PortfolioCard
               key={project.slug}
               project={project}
@@ -443,38 +441,21 @@ export default function HomePage() {
             className="relative w-full aspect-[1130/770] md:aspect-auto md:h-auto md:self-stretch md:flex-1 lg:flex-none lg:w-[560px] lg:flex-shrink-0 overflow-hidden"
             style={{
               ...(fuzzHorizontal ? { aspectRatio: '6 / 5' } : undefined),
-              cursor: fuzzDragging ? 'grabbing' : 'grab',
+              cursor: 'pointer',
             }}
-            onTouchStart={(e) => { fuzzTouchStart.current = fuzzHorizontal ? e.touches[0].clientX : e.touches[0].clientY; }}
-            onTouchEnd={(e) => {
-              const end = fuzzHorizontal ? e.changedTouches[0].clientX : e.changedTouches[0].clientY;
-              const d = end - fuzzTouchStart.current;
-              if (Math.abs(d) > 40) setFuzzIndex(p => d > 0 ? (p + 1) % 4 : (p + 3) % 4);
-            }}
-            onMouseDown={(e) => {
-              e.preventDefault();
-              fuzzTouchStart.current = fuzzHorizontal ? e.clientX : e.clientY;
-              setFuzzDragging(true);
-              const handleUp = (ev: MouseEvent) => {
-                const end = fuzzHorizontal ? ev.clientX : ev.clientY;
-                const d = end - fuzzTouchStart.current;
-                if (Math.abs(d) > 40) setFuzzIndex(p => d > 0 ? (p + 1) % 4 : (p + 3) % 4);
-                setFuzzDragging(false);
-                window.removeEventListener('mouseup', handleUp);
-              };
-              window.addEventListener('mouseup', handleUp);
-            }}
+            onClick={() => setFuzzIndex(p => (p + 1) % 4)}
           >
             {fuzzCards.map((card, i) => {
               const offset = (fuzzIndex - i + 4) % 4;
               // 0=active(center) 1=prev(just exited, peeking behind) 2=hidden(parked, invisible) 3=next(about to enter, peeking ahead)
               // d is the offset along the animation axis (vertical by default, horizontal below 768px)
-              const cfg = {
+              const cfgMap: Record<number, { d: number; rot: number; op: number; z: number }> = {
                 0: { d: -50,  rot: -1, op: 1, z: 4 },
                 3: { d: 20,   rot: -9, op: 1, z: 3 },
                 1: { d: -120, rot: 5,  op: 1, z: 3 },
                 2: { d: 20,   rot: -9, op: 0, z: 1 },
-              }[offset];
+              };
+              const cfg = cfgMap[offset];
               return (
                 <div
                   key={i}

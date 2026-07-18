@@ -12,3 +12,12 @@ export function getProjectsByAttribute(attribute: ProjectAttribute): Project[] {
 export function getFeaturedProjects(): Project[] {
   return projects.filter((p) => p.clientQuote.isFeatured);
 }
+
+// Homepage grid is designed for exactly 4 cards, so this always returns at
+// most 4 — even if more than 4 projects are marked showOnHomepage: true.
+export function getHomepageProjects(): Project[] {
+  return projects
+    .filter((p) => p.showOnHomepage)
+    .sort((a, b) => (a.homepageOrder ?? Infinity) - (b.homepageOrder ?? Infinity))
+    .slice(0, 4);
+}

@@ -66,8 +66,14 @@ Projects live in `data/content/projects.ts` using the `Project` type from `types
 - `serviceTags` — which of the six service categories to highlight in the pop-up (`"Design"`, `"Writing & Copy"`, `"Digital & UI Design"`, `"Videography & Media"`, `"Events Design & Media"`, `"Workshops & Audits"`)
 - `galleryFolder` — folder name (inside `.shipstudio/assets/portfolio/`) the project's page pulls its image gallery from
 - `clientQuote` — `{ text, author, role, isFeatured: boolean }` — set `isFeatured: true` to feature in testimonial slider
+- `showOnHomepage` — set to `true` to include this project in the homepage's portfolio grid. The grid always shows at most 4 cards, even if more than 4 projects have this set to `true`.
+- `homepageOrder` — a number controlling where this project appears in the homepage grid (1 = first). Only matters when `showOnHomepage` is `true`; separate from the general `order` field used elsewhere (like the /work page).
 
-Helper functions in `lib/portfolio.ts`: `getAllProjects()`, `getProjectsByAttribute()`, `getFeaturedProjects()`
+Helper functions in `lib/portfolio.ts`: `getAllProjects()`, `getHomepageProjects()`, `getProjectsByAttribute()`, `getFeaturedProjects()`
+
+### Choosing the 4 homepage projects
+
+To change which projects show on the homepage, or reorder them, edit `showOnHomepage` and `homepageOrder` on each project in `data/content/projects.ts` — no other code changes needed. Right now: David Bruce Winery, Pinkston for Tennessee, Frontier Operators, and Faith Driven Talent are shown (in that order); "He Who Speaks Out of Turn" is set to `showOnHomepage: false`.
 
 **Note:** there's also a `content/portfolio/*.mdx` folder in the project with draft-looking project write-ups. Those files aren't connected to the site — no code reads them, `data/content/projects.ts` is the only source the site actually uses. Some of that MDX content has been merged in where it didn't conflict with what's already live (see changelog below); the rest is just sitting there unused.
 
@@ -85,6 +91,10 @@ Current projects: Pinkston for Tennessee (full gallery of 14 images set up as th
 
 Service copy lives in `data/content/services.ts`. Each service has a `label` (button text), `icon` (SVG path), `title`, `description`, `ctaText`, `ctaHref`, and `items` (array of 5 sub-services with title + desc). To update copy for any category, edit that service's entry in this file.
 
+- **2026-07-18:** Fixed the full-screen menu's nav links — on narrower screens, "Workshops & Audits" wraps onto two lines, and the second line ("Audits") was sitting flush-left instead of centered under the line above. All the menu buttons (the big links and the small pill links) now text-align center. Also swapped their hover effect from a plain opacity fade to turning yellow (`#f9ce6a`), matching the site's accent color used elsewhere for the active page.
+- **2026-07-18:** Replaced the Fuzz Tax cards' click-and-drag/swipe gesture with a simple click — clicking anywhere on the card stack now advances to the next card, no dragging needed. The cursor is a plain pointer instead of a grab hand now. Scroll-driven cycling through the section is unchanged.
+- **2026-07-17:** Added a `showOnHomepage` / `homepageOrder` setting to `data/content/projects.ts` so you can pick exactly which projects appear on the homepage (always capped at 4) and control their order there, independent of ordering on other pages. Currently set to show David Bruce Winery, Pinkston for Tennessee, Frontier Operators, and Faith Driven Talent, in that order.
+- **2026-07-17:** Fixed "He Who Speaks Out of Turn" (michael-cook) images not showing up — two things were wrong: the uploaded files were only in `.shipstudio/assets/`, never copied into `public/.shipstudio/assets/` (the folder the site actually serves from), and the cover image path in `data/content/projects.ts` pointed to a filename that didn't match either uploaded file. Copied the files over and fixed the cover path; both the cover and gallery photo show up correctly now.
 - **2026-07-17:** The close button (X) on the project page's "Read the Full Story" pop-up now inverts on hover — it's a plain coral outline circle at rest, and fills solid coral with a cream X when you hover over it.
 - **2026-07-17:** Found a leftover `content/portfolio/*.mdx` folder that isn't wired up to the site (data/content/projects.ts is the real source). Merged the useful, non-conflicting parts into projects.ts: Pinkston for Tennessee's "Read the Full Story" text now includes a fuller case-study narrative (challenge, strategy, identity, copywriting), and Frontier Operators' story/headline were replaced with the MDX version (operator deployment across North Africa/Middle East/Asia, per your call). Left David Bruce Winery's testimonial alone — its MDX file had a completely different name/quote attached (David Morris, financial services) that looked like a mismatched/unrelated draft, not a real update.
 - **2026-07-17:** Portfolio card images now scale up slightly on hover everywhere, matching the behavior that was already on the /work page — added it to the homepage portfolio grid and the Featured Projects cards on individual project pages (/what-we-do already had it).

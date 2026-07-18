@@ -5,6 +5,8 @@ const projects: Project[] = [
     title: "Pinkston for Tennessee",
     slug: "pinkston-for-tn",
     order: 2,
+    showOnHomepage: true,
+    homepageOrder: 2,
     galleryFolder: "portfolio/pinkston-for-tn",
     coverMedia: {
       type: "image",
@@ -25,6 +27,8 @@ const projects: Project[] = [
     title: "Frontier Operators",
     slug: "frontier-operators",
     order: 3,
+    showOnHomepage: true,
+    homepageOrder: 3,
     galleryFolder: "portfolio/frontier-operators",
     coverMedia: {
       type: "image",
@@ -49,6 +53,8 @@ const projects: Project[] = [
     title: "David Bruce Winery",
     slug: "david-bruce-winery",
     order: 1,
+    showOnHomepage: true,
+    homepageOrder: 1,
     galleryFolder: "portfolio/david-bruce-winery",
     coverMedia: {
       type: "image",
@@ -71,6 +77,8 @@ We rebuilt the brand from its strongest asset: the story of a doctor who fell in
     title: "Faith Driven Talent",
     slug: "faith-driven-talent",
     order: 4,
+    showOnHomepage: true,
+    homepageOrder: 4,
     galleryFolder: "portfolio/faith-driven-talent",
     coverMedia: {
       type: "image",
@@ -92,11 +100,12 @@ We partnered with the founding team across strategy, copywriting, and brand iden
     {
     title: "He Who Speaks Out of Turn",
     slug: "michael-cook",
-    order: 5,
+    order: 0,
+    showOnHomepage: false,
     galleryFolder: "portfolio/michael-cook",
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/michael-cook/MC_Paperback_Mock_D.png",
+      url: "/.shipstudio/assets/portfolio/michael-cook/MC_Paperback_6x9_1.png",
     },
     headline: "Mapping the Universe of He Who Speaks Out of Turn",
     serviceTags: ["Cover Design", "Print Design", "Illustration"],
