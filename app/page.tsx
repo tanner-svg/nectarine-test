@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback, type RefObject, type MutableR
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import AutoplayVideo from "@/components/AutoplayVideo";
 import { getHomepageProjects, getFeaturedProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
 
@@ -96,12 +97,8 @@ function PortfolioCard({ project, className }: {
         style={{ backgroundColor: "#e8d4b8" }}
       >
         {project.coverMedia.type === "video" ? (
-          <video
+          <AutoplayVideo
             src={project.coverMedia.url}
-            autoPlay
-            loop
-            muted
-            playsInline
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
@@ -733,12 +730,8 @@ export default function HomePage() {
                 {(() => {
                   const media = t.testimonialMedia ?? t.coverMedia;
                   return media.type === "video" ? (
-                    <video
+                    <AutoplayVideo
                       src={media.url}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                   ) : (

@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# playwright debug output
+.playwright-mcp/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
@@ -58,6 +61,3 @@ public/.shipstudio/assets/**/*.mov
 .shipstudio/assets/**/9ebc97f*
 public/.shipstudio/assets/**/6e4de06*
 public/.shipstudio/assets/**/9ebc97f*
-
-# ShipStudio metadata
-.shipstudio/

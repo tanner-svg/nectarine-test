@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import AutoplayVideo from "@/components/AutoplayVideo";
 import { getFeaturedProjects } from "@/lib/portfolio";
 
 function ArrowOutward({ color = "#380102", size = 10 }: { color?: string; size?: number }) {
@@ -204,12 +205,8 @@ export default function WorkshopsAuditsPage() {
                     {(() => {
                       const media = t.testimonialMedia ?? t.coverMedia;
                       return media.type === "video" ? (
-                        <video
+                        <AutoplayVideo
                           src={media.url}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
                           className="absolute inset-0 w-full h-full object-cover"
                         />
                       ) : (

@@ -26,9 +26,9 @@ const projects: Project[] = [
   {
     title: "Frontier Operators",
     slug: "frontier-operators",
-    order: 3,
+    order: 4,
     showOnHomepage: true,
-    homepageOrder: 3,
+    homepageOrder: 4,
     galleryFolder: "portfolio/frontier-operators",
     coverMedia: {
       type: "image",
@@ -56,6 +56,7 @@ const projects: Project[] = [
     showOnHomepage: true,
     homepageOrder: 1,
     galleryFolder: "portfolio/david-bruce-winery",
+    galleryRowPattern: [1, 2, 1, 2],
     coverMedia: {
       type: "image",
       url: "/.shipstudio/assets/portfolio/David-Bruce-Cover.gif",
@@ -76,16 +77,16 @@ We rebuilt the brand from its strongest asset: the story of a doctor who fell in
   {
     title: "Faith Driven Talent",
     slug: "faith-driven-talent",
-    order: 4,
+    order: 3,
     showOnHomepage: true,
-    homepageOrder: 4,
+    homepageOrder: 3,
     galleryFolder: "portfolio/faith-driven-talent",
     coverMedia: {
-      type: "image",
-      url: "/.shipstudio/assets/portfolio/faith-driven-cover.jpg",
+      type: "video",
+      url: "/.shipstudio/assets/portfolio/faith-driven-talent/Hero-Video_1.mp4",
     },
     headline: "Building a Brand for an Industry That Rarely Gets to Choose Both",
-    serviceTags: ["Writing & Copy", "Design"],
+    serviceTags: ["Writing & Copy", "Design", "Digital & UI Design"],
     body: `Faith Driven Talent connects entertainment industry professionals who want to build careers rooted in their values — a talent agency and community for a segment that has long had to choose between conviction and opportunity.
 
 We partnered with the founding team across strategy, copywriting, and brand identity. Starting with a narrative workshop, we developed the positioning that became the foundation for their pitch materials, website, and outreach. Every touchpoint communicates the same thing: this is a serious industry player that happens to care about something larger than the deal.`,
@@ -100,12 +101,13 @@ We partnered with the founding team across strategy, copywriting, and brand iden
     {
     title: "He Who Speaks Out of Turn",
     slug: "michael-cook",
-    order: 0,
+    order: 6,
     showOnHomepage: false,
     galleryFolder: "portfolio/michael-cook",
+    galleryRowPattern: [1, 1, 3, 1, 1],
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/michael-cook/MC_Paperback_6x9_1.png",
+      url: "/.shipstudio/assets/portfolio/michael-cook/MC-Hero_1.gif",
     },
     headline: "Mapping the Universe of He Who Speaks Out of Turn",
     serviceTags: ["Cover Design", "Print Design", "Illustration"],

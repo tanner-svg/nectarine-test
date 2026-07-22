@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import AutoplayVideo from "@/components/AutoplayVideo";
 import type { Project } from "@/types/portfolio";
 
 function ArrowOutward({ color = "#380102", size = 12 }: { color?: string; size?: number }) {
@@ -46,9 +47,8 @@ function PortfolioCard({ project }: { project: Project }) {
         style={{ aspectRatio: "3/2", backgroundColor: "#e8d4b8" }}
       >
         {project.coverMedia.type === "video" ? (
-          <video
+          <AutoplayVideo
             src={project.coverMedia.url}
-            autoPlay loop muted playsInline
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (

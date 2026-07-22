@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import AutoplayVideo from "@/components/AutoplayVideo";
 import type { Project } from "@/types/portfolio";
 import type { GalleryItem } from "@/lib/portfolio-gallery";
 
@@ -42,12 +43,12 @@ function aspectForRow(count: number) {
   return "aspect-square";
 }
 
-function GalleryGrid({ items }: { items: GalleryItem[] }) {
+function GalleryGrid({ items, rowPattern = ROW_PATTERN }: { items: GalleryItem[]; rowPattern?: number[] }) {
   const rows: GalleryItem[][] = [];
   let i = 0;
   let patternIdx = 0;
   while (i < items.length) {
-    const count = ROW_PATTERN[patternIdx % ROW_PATTERN.length];
+    const count = rowPattern[patternIdx % rowPattern.length];
     rows.push(items.slice(i, i + count));
     i += count;
     patternIdx++;
@@ -60,7 +61,7 @@ function GalleryGrid({ items }: { items: GalleryItem[] }) {
           {row.map((item, ii) => (
             <div key={ii} className={`relative w-full rounded-[8px] lg:rounded-[13px] overflow-hidden bg-[#e8d4b8] ${aspectForRow(row.length)}`}>
               {item.type === "video" ? (
-                <video src={item.url} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <AutoplayVideo src={item.url} className="absolute inset-0 w-full h-full object-cover" />
               ) : (
                 <Image src={item.url} alt="" fill className="object-cover" />
               )}
@@ -166,7 +167,7 @@ function FeaturedCard({ project }: { project: Project }) {
     <Link href={`/portfolio/${project.slug}`} className="flex flex-col gap-[15px] group pb-[10%]">
       <div className="relative w-full aspect-square rounded-[8px] overflow-hidden bg-[#e8d4b8]">
         {project.coverMedia.type === "video" ? (
-          <video src={project.coverMedia.url} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <AutoplayVideo src={project.coverMedia.url} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
         ) : (
           <Image src={project.coverMedia.url} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
         )}
@@ -230,11 +231,11 @@ export default function PortfolioDetailClient({ project, gallery, otherProjects 
           {/* Gallery */}
           <div className="flex-1 w-full">
             {gallery.length > 0 ? (
-              <GalleryGrid items={gallery} />
+              <GalleryGrid items={gallery} rowPattern={project.galleryRowPattern} />
             ) : (
               <div className="relative w-full aspect-[3/2] rounded-[13px] overflow-hidden bg-[#e8d4b8]">
                 {project.coverMedia.type === "video" ? (
-                  <video src={project.coverMedia.url} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                  <AutoplayVideo src={project.coverMedia.url} className="absolute inset-0 w-full h-full object-cover" />
                 ) : (
                   <Image src={project.coverMedia.url} alt={project.title} fill className="object-cover" />
                 )}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import AutoplayVideo from "@/components/AutoplayVideo";
 import { getAllProjects, getProjectsByAttribute } from "@/lib/portfolio";
 import type { ProjectAttribute } from "@/types/portfolio";
 
@@ -23,12 +24,8 @@ export default function ProjectGrid({ filterAttribute }: Props) {
           {/* Cover media */}
           <div className="relative w-full h-[320px] rounded-[8px] overflow-hidden bg-[#e8d4b8] flex-shrink-0">
             {project.coverMedia.type === "video" ? (
-              <video
+              <AutoplayVideo
                 src={project.coverMedia.url}
-                autoPlay
-                loop
-                muted
-                playsInline
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
             ) : (

@@ -28,6 +28,8 @@ export interface Project {
   coverMedia: CoverMedia;
   testimonialMedia?: CoverMedia;
   galleryFolder?: string;
+  /** Row layout for the gallery bento grid, e.g. [1,1,3,1,1] = single, single, three-across, single, single. Repeats if there are more images than the pattern covers. Falls back to the site-wide default pattern. */
+  galleryRowPattern?: number[];
   /** Short punchy phrase shown on the project detail page and its "read the full story" modal. Falls back to `title`. */
   headline?: string;
   /** Which of the six service categories to highlight in the "read the full story" modal. */
