@@ -705,13 +705,22 @@ export default function HomePage() {
                   {t.clientQuote.text}
                 </blockquote>
                 <p className="font-bel text-[16px] lg:text-[18px] text-[#380102]">{t.clientQuote.author}, {t.clientQuote.role}</p>
-                <Link
-                  href={`/portfolio/${t.slug}`}
-                  className="flex items-center gap-[10px] bg-[#d7432a] rounded-full px-[15px] py-[10px] w-fit font-bel text-[16px] lg:text-[18px] text-[#fcf8f3] uppercase hover:opacity-90 transition-opacity"
-                  style={{ letterSpacing: '0.1em' }}
-                >
-                  Read the full story <ArrowOutward color="#fcf8f3" size={12} />
-                </Link>
+                {t.slug === "sojourn-turkey" || t.slug === "swl" ? (
+                  <span
+                    className="flex items-center gap-[10px] bg-[#ffc1a7] rounded-full px-[15px] py-[10px] w-fit font-bel text-[16px] lg:text-[18px] text-[#d7432a] uppercase"
+                    style={{ letterSpacing: '0.1em' }}
+                  >
+                    Story Coming Soon
+                  </span>
+                ) : (
+                  <Link
+                    href={`/portfolio/${t.slug}`}
+                    className="flex items-center gap-[10px] bg-[#d7432a] rounded-full px-[15px] py-[10px] w-fit font-bel text-[16px] lg:text-[18px] text-[#fcf8f3] uppercase hover:opacity-90 transition-opacity"
+                    style={{ letterSpacing: '0.1em' }}
+                  >
+                    Read the full story <ArrowOutward color="#fcf8f3" size={12} />
+                  </Link>
+                )}
               </div>
 
               {/* Cover media */}

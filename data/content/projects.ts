@@ -156,7 +156,7 @@ We partnered with the founding team across strategy, copywriting, and brand iden
     galleryRowPattern: [1, 1, 3, 1, 1],
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/swl/Sojourn-Cover-Still.png",
+      url: "/.shipstudio/assets/portfolio/swl/SWL_Image.avif",
     },
     headline: "Mapping the Universe of He Who Speaks Out of Turn",
     serviceTags: ["Cover Design", "Print Design", "Illustration"],
