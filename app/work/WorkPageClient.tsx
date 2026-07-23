@@ -84,19 +84,23 @@ function PortfolioCard({ project }: { project: Project }) {
 
 function ContactSection() {
   return (
-    <section className="bg-[#f8e4cc] px-[75px] py-[75px]">
+    <section className="bg-[#f8e4cc] px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]">
       <div className="max-w-[1290px] mx-auto">
-        <div className="bg-[#f9ce6a] rounded-[25px] p-[65px_75px] flex flex-col gap-[60px]">
-          <div className="flex gap-[48px] items-start">
-            <div className="flex-1 flex flex-col gap-[48px]">
+        <div className="bg-[#f9ce6a] rounded-[25px] p-6 sm:p-10 lg:p-[65px_75px] flex flex-col gap-8 lg:gap-[60px]">
+          <div className="flex flex-col gap-8 lg:flex-row lg:gap-[48px] lg:items-start">
+            <div className="flex-1 flex flex-col gap-6 lg:gap-[32px]">
+              <Image
+                src="/.shipstudio/assets/Contact-Illustration.png"
+                alt=""
+                width={207}
+                height={154}
+                className="w-[160px] lg:w-[210px] h-auto"
+              />
               <div>
-                <h2 className="font-aleo text-[36px] leading-[1.1] text-[#380102]">Contact us</h2>
-                <p className="font-aleo text-[18px] text-[#380102] opacity-75 mt-[8px]">
+                <h2 className="font-aleo text-[28px] lg:text-[36px] leading-[1.1] text-[#380102]">Contact us</h2>
+                <p className="font-aleo text-[16px] lg:text-[18px] text-[#380102] opacity-75 mt-[8px]">
                   Send us a message and we'll get back to you within 1-2 business days.
                 </p>
-              </div>
-              <div className="flex-1 bg-[#f9ce6a] border-2 border-dashed border-[#d7432a]/40 rounded-[10px] min-h-[350px] flex items-center justify-center">
-                <span className="font-bel text-sm text-[#380102]/40">[contact-illustration] 492x350</span>
               </div>
             </div>
             <div className="flex-1 flex flex-col gap-[20px]">
@@ -125,7 +129,7 @@ function ContactSection() {
                 </div>
               </div>
               <WipeButton
-                overlayColor="#d7432a"
+                overlayColor="#380102"
                 textOnHover="#f9ce6a"
                 className="w-full bg-[#380102] rounded-[12px] py-[15px] font-bel text-[18px] text-[#f9ce6a]"
               >

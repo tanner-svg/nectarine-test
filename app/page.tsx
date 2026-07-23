@@ -307,15 +307,20 @@ export default function HomePage() {
   }, []);
   useLineReveal(whatWeDoRevealRef, whatWeDoWordRefs, applyOpacityReveal);
 
-  // Fuzz Tax cards step backward through the deck (reverse order) as the section
-  // scrolls through the viewport, instead of auto-advancing on a timer. Dragging
-  // still works and temporarily overrides the card shown until the next scroll.
+  // Fuzz Tax cards step backward through the deck (reverse order) as the user
+  // scrolls past the section, but card #1 stays put by default until the
+  // section is centered in the viewport — progress only starts ramping once
+  // the user scrolls beyond that centered point, not from the moment the
+  // section first appears. Clicking still works and temporarily overrides
+  // the card shown until the next scroll.
   useEffect(() => {
     const handleScroll = () => {
       if (!fuzzSectionRef.current) return;
       const rect = fuzzSectionRef.current.getBoundingClientRect();
       const viewportH = window.innerHeight;
-      const progress = Math.min(1, Math.max(0, 1 - rect.bottom / (rect.height + viewportH)));
+      const topAtCenter = (viewportH - rect.height) / 2;
+      const halfRange = (viewportH + rect.height) / 2;
+      const progress = Math.min(1, Math.max(0, (topAtCenter - rect.top) / halfRange));
       const step = Math.min(3, Math.floor(progress * 4));
       setFuzzIndex((4 - step) % 4);
     };
@@ -380,7 +385,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-[15px]">
               <WipeLink
-                href="/contact"
+                href="https://calendar.app.google/7PP2JtLPDtK5qhiw5"
                 overlayColor="#380102"
                 textOnHover="#f9ce6a"
                 className="flex-1 flex items-center justify-center gap-[10px] bg-[#f9ce6a] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] font-bel text-[16px] lg:text-[18px] text-[#380102]"
@@ -510,12 +515,12 @@ export default function HomePage() {
               Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed. Some clients walk away ready to run with it on their own. Others use their session as the launchpad for a longer creative partnership. Either way, you leave with actionable insights to propel your brand forward.
             </p>
             <WipeLink
-              href="/workshops-audits"
+              href="https://calendar.app.google/7PP2JtLPDtK5qhiw5"
               overlayColor="#380102"
               textOnHover="#f9ce6a"
-              className="flex items-center justify-center bg-[#f9ce6a] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] w-full lg:w-[200px] font-bel text-[16px] lg:text-[18px] text-[#380102] transition-all duration-300 hover:ring-2 hover:ring-[#f9ce6a] hover:ring-offset-2 hover:ring-offset-[#380102]"
+              className="flex items-center justify-center bg-[#f9ce6a] rounded-[15px] py-[16px] lg:py-[20px] px-[30px] lg:px-[40px] w-full lg:w-fit font-bel text-[16px] lg:text-[18px] text-[#380102] transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-[#f9ce6a] hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-[#f9ce6a]"
             >
-              Learn More
+              Schedule an Intro Call
             </WipeLink>
           </div>
 
@@ -548,14 +553,6 @@ export default function HomePage() {
               <p className="font-aleo text-[16px] leading-[1.6] text-[#f8e4cc]">
                 A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can immediately implement across your organization.
               </p>
-              <WipeLink
-                href="/workshops-audits"
-                overlayColor="#f9ce6a"
-                textOnHover="#380102"
-                className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[16px] text-[#fcf8f3]"
-              >
-                Schedule a 30 Minute Intro Call
-              </WipeLink>
               <div className="flex flex-wrap gap-[10px]">
                 {["The Visual Identity Workshop", "The Brand Narrative Workshop", "The Internal Playbook Workshop"].map((t) => (
                   <span key={t} className="font-bel text-[9px] text-[#d7432a] bg-[#ffc1a7] px-[12px] py-[8px] rounded-[15px]">{t}</span>
@@ -587,14 +584,6 @@ export default function HomePage() {
               <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
                 A focused call (30-45 minutes) where we run a SWOT analysis on your selected focus area. You'll receive a one-page PDF of performance notes and recommendations shortly after.
               </p>
-              <WipeLink
-                href="/workshops-audits"
-                overlayColor="#380102"
-                textOnHover="#fcf8f3"
-                className="bg-[#d7432a] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[16px] text-[#fcf8f3]"
-              >
-                Schedule an Audit
-              </WipeLink>
               <div className="flex flex-wrap gap-[10px]">
                 {["Brand Audits", "Website Audits", "Narrative Audits", "Specific Media Audits", "Videography Audits"].map((t) => (
                   <span key={t} className="font-bel text-[9px] text-[#380102] bg-[#f8e4cc] px-[12px] py-[8px] rounded-[15px]">{t}</span>
@@ -764,15 +753,19 @@ export default function HomePage() {
         <div className="max-w-[1290px] mx-auto w-full">
           <div className="bg-[#f9ce6a] rounded-[25px] p-6 sm:p-10 lg:p-[65px_75px] flex flex-col gap-8 lg:gap-[60px]">
             <div className="flex flex-col gap-8 lg:flex-row lg:gap-[48px] lg:items-start">
-              <div className="flex-1 flex flex-col gap-6 lg:gap-[48px]">
+              <div className="flex-1 flex flex-col gap-6 lg:gap-[32px]">
+                <Image
+                  src="/.shipstudio/assets/Contact-Illustration.png"
+                  alt=""
+                  width={207}
+                  height={154}
+                  className="w-[160px] lg:w-[210px] h-auto"
+                />
                 <div>
                   <h2 className="font-aleo text-[28px] lg:text-[36px] leading-[1.1] text-[#380102]">Contact us</h2>
                   <p className="font-aleo text-[16px] lg:text-[18px] text-[#380102] opacity-75 mt-[8px]">
                     Send us a message and we'll get back to you within 1-2 business days.
                   </p>
-                </div>
-                <div className="hidden lg:flex flex-1 bg-[#f9ce6a] border-2 border-dashed border-[#d7432a]/40 rounded-[10px] min-h-[350px] items-center justify-center">
-                  <span className="font-bel text-sm text-[#380102]/40">[contact-illustration] 492x350</span>
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-[20px]">

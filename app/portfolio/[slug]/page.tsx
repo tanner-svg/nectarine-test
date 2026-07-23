@@ -17,6 +17,11 @@ export default async function PortfolioDetailPage({
   if (!project) notFound();
 
   const gallery = project.galleryFolder ? getGalleryImages(project.galleryFolder) : [];
+  if (project.galleryEmbeds) {
+    for (const embed of [...project.galleryEmbeds].sort((a, b) => b.insertAt - a.insertAt)) {
+      gallery.splice(embed.insertAt, 0, { url: embed.url, type: "embed" });
+    }
+  }
   const otherProjects = getAllProjects().filter((p) => p.slug !== slug).slice(0, 3);
 
   return <PortfolioDetailClient project={project} gallery={gallery} otherProjects={otherProjects} />;

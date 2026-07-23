@@ -9,6 +9,12 @@ export function getProjectsByAttribute(attribute: ProjectAttribute): Project[] {
   return projects.filter((p) => p.attributes.includes(attribute));
 }
 
+// Projects with showOnWorkPage: false stay everywhere else (homepage,
+// testimonials, their own detail page) — this only controls the /work grid.
+export function getWorkPageProjects(): Project[] {
+  return getAllProjects().filter((p) => p.showOnWorkPage !== false);
+}
+
 export function getFeaturedProjects(): Project[] {
   return projects.filter((p) => p.clientQuote.isFeatured);
 }

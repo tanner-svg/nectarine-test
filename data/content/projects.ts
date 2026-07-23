@@ -10,7 +10,7 @@ const projects: Project[] = [
     galleryFolder: "portfolio/pinkston-for-tn",
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/NECT_Site_LP-Gif.gif",
+      url: "/.shipstudio/assets/portfolio/pinkston-for-tn/pinkston-for-tn_1.gif",
     },
     headline: "Designing a Campaign That Put People Before Politics",
     serviceTags: ["Design"],
@@ -20,7 +20,7 @@ const projects: Project[] = [
       text: "Nectarine didn't just design a website — they gave our campaign a soul. The response from voters has been unlike anything we expected.",
       author: "Lauren Pinkston",
       role: "Candidate, Governor of Tennessee",
-      isFeatured: true,
+      isFeatured: false,
     },
   },
   {
@@ -30,9 +30,13 @@ const projects: Project[] = [
     showOnHomepage: true,
     homepageOrder: 4,
     galleryFolder: "portfolio/frontier-operators",
+    galleryRowPattern: [1, 2, 1, 3, 1, 1, 1, 2, 1],
+    galleryEmbeds: [{ insertAt: 3, url: "https://player.vimeo.com/video/1212301805" }],
+    galleryColumnWidths: [{ rowIndex: 3, widths: [1.4, 0.7, 1] }],
+    galleryItemFit: [{ index: 5, fit: "contain" }],
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/FO-Image.jpg",
+      url: "/.shipstudio/assets/portfolio/frontier-operators/FO_Hero_1.gif",
     },
     testimonialMedia: {
       type: "image",
@@ -43,7 +47,7 @@ const projects: Project[] = [
     body: `After conducting an in-depth market study, Patrick Lowndes identified a critical talent gap across businesses in North Africa, the Middle East, and Asia. Despite having economic potential, these companies often lacked experienced operators who knew how to scale organizations effectively from within. Driven by his passion for developing both emerging businesses and young professionals, Lowndes launched Frontier Operators, a venture dedicated to deploying highly trained, strategic operators to support and scale high-potential markets.`,
     attributes: ["strategy", "copywriting"],
     clientQuote: {
-      text: "Nectarine really helped me articulate the vision and motivation for the why behind our brand. We had the instincts — they gave us the words.",
+      text: "Nectarine really helped me articulate the vision and motivation for the why behind our brand.",
       author: "Patrick Lowndes",
       role: "Founder, Frontier Operators",
       isFeatured: true,
@@ -71,7 +75,7 @@ We rebuilt the brand from its strongest asset: the story of a doctor who fell in
       text: "Working with Nectarine completely transformed how we present ourselves to the world. Sixty years of history, finally looking the part.",
       author: "Eric Bruce",
       role: "CEO, David Bruce Winery",
-      isFeatured: true,
+      isFeatured: false,
     },
   },
   {
@@ -118,6 +122,51 @@ We partnered with the founding team across strategy, copywriting, and brand iden
       author: "",
       role: "Co-Founder, Faith Driven Talent",
       isFeatured: false,
+    },
+  },
+  {
+    title: "Sojourn Turkey",
+    slug: "sojourn-turkey",
+    order: 7,
+    showOnHomepage: false,
+    galleryFolder: "portfolio/sojourn-turkey",
+    galleryRowPattern: [1, 1, 3, 1, 1],
+    coverMedia: {
+      type: "image",
+      url: "/.shipstudio/assets/portfolio/sojourn-turkey/Sojourn-Cover.gif",
+    },
+    headline: "Mapping the Universe of He Who Speaks Out of Turn",
+    serviceTags: ["Cover Design", "Print Design", "Illustration"],
+    body: `s.`,
+    attributes: ["art direction", "branding"],
+    clientQuote: {
+      text: "The team at Nectarine responded expertly to our tight timeline... communication was smooth and deliverables were on time and even ahead of schedule.",
+      author: "Angela Vannoy",
+      role: "CEO",
+      isFeatured: true,
+    },
+  }, 
+   
+    {
+    title: "Showered With Love",
+    slug: "swl",
+    order: 8,
+    showOnHomepage: false,
+    galleryFolder: "portfolio/swl",
+    galleryRowPattern: [1, 1, 3, 1, 1],
+    coverMedia: {
+      type: "image",
+      url: "/.shipstudio/assets/portfolio/swl/Sojourn-Cover-Still.png",
+    },
+    headline: "Mapping the Universe of He Who Speaks Out of Turn",
+    serviceTags: ["Cover Design", "Print Design", "Illustration"],
+    body: `s.`,
+    attributes: ["art direction", "branding"],
+    clientQuote: {
+      text: "Nectarine was very professional, knowledgeable and very easy to work with.",
+      author: "Mary Marsili",
+      role: "CEO of Showered with Love",
+      isFeatured: true,
     },
   },
 ];

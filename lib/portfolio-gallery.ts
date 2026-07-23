@@ -8,7 +8,7 @@ const VIDEO_EXT = /\.(mp4|mov|webm)$/i;
 
 export interface GalleryItem {
   url: string;
-  type: "image" | "video";
+  type: "image" | "video" | "embed";
 }
 
 export function getGalleryImages(galleryFolder: string): GalleryItem[] {

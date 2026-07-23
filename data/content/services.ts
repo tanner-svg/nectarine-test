@@ -25,7 +25,7 @@ const services: Service[] = [
     description:
       "Logos, brand identity, and visual assets for every format and surface. From packaging and murals to signage, stickers, and banners.",
     ctaText: "Schedule an Audit",
-    ctaHref: "/contact",
+    ctaHref: "https://calendar.app.google/7PP2JtLPDtK5qhiw5",
     items: [
       { title: "Brand Identity", desc: "Logo design, brand guides, and visual identity refreshes." },
       { title: "Print Design", desc: "Banners, signage, stickers, flyers, murals, packaging, vehicle wraps, posters, and menus." },

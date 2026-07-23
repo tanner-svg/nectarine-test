@@ -94,14 +94,6 @@ export default function WorkshopsAuditsPage() {
                 <p className="font-aleo text-[18px] leading-[1.4] text-[#fcf8f3]">
                   A 1-3 hour collaborative deep dive with your leadership or creative team. Within two weeks of the session, you'll receive a multi-page custom strategy guide with recommendations and resources you can act on immediately.
                 </p>
-                <WipeLink
-                  href="/contact"
-                  overlayColor="#f9ce6a"
-                  textOnHover="#380102"
-                  className="bg-[#380102] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[18px] text-[#fcf8f3]"
-                >
-                  Schedule a 30 Minute Intro Call
-                </WipeLink>
               </div>
             </div>
 
@@ -138,14 +130,6 @@ export default function WorkshopsAuditsPage() {
               <p className="font-aleo text-[18px] leading-[1.4] text-[#380102]">
                 A focused 30-45 minute call where we run a SWOT analysis on your selected focus area. You'll receive a one-page PDF of performance notes and recommendations shortly after.
               </p>
-              <WipeLink
-                href="/contact"
-                overlayColor="#380102"
-                textOnHover="#fcf8f3"
-                className="bg-[#d7432a] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[18px] text-[#fcf8f3]"
-              >
-                Schedule an Audit
-              </WipeLink>
             </div>
 
             {/* Right: audit list */}

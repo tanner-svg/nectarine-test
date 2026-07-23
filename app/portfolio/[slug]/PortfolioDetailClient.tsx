@@ -37,13 +37,24 @@ function CloseIcon() {
 // (full-width, full-width, full-width, pair, full-width, pair, full-width, triple, pair...).
 const ROW_PATTERN = [1, 1, 1, 2, 1, 2, 1, 3, 2];
 
-function aspectForRow(count: number) {
-  if (count === 1) return "aspect-[3/2]";
-  if (count === 2) return "aspect-[6/5]";
+function aspectForRow(row: GalleryItem[]) {
+  if (row.length === 1 && row[0].type === "embed") return "aspect-video";
+  if (row.length === 1) return "aspect-[3/2]";
+  if (row.length === 2) return "aspect-[6/5]";
   return "aspect-square";
 }
 
-function GalleryGrid({ items, rowPattern = ROW_PATTERN }: { items: GalleryItem[]; rowPattern?: number[] }) {
+function GalleryGrid({
+  items,
+  rowPattern = ROW_PATTERN,
+  columnWidths,
+  itemFit,
+}: {
+  items: GalleryItem[];
+  rowPattern?: number[];
+  columnWidths?: { rowIndex: number; widths: number[] }[];
+  itemFit?: { index: number; fit: "contain" }[];
+}) {
   const rows: GalleryItem[][] = [];
   let i = 0;
   let patternIdx = 0;
@@ -54,21 +65,40 @@ function GalleryGrid({ items, rowPattern = ROW_PATTERN }: { items: GalleryItem[]
     patternIdx++;
   }
 
+  let flatIndex = 0;
+
   return (
     <div className="flex flex-col gap-[15px] lg:gap-[25px]">
-      {rows.map((row, ri) => (
-        <div key={ri} className="grid gap-[15px] lg:gap-[25px]" style={{ gridTemplateColumns: `repeat(${row.length}, 1fr)` }}>
-          {row.map((item, ii) => (
-            <div key={ii} className={`relative w-full rounded-[8px] lg:rounded-[13px] overflow-hidden bg-[#e8d4b8] ${aspectForRow(row.length)}`}>
+      {rows.map((row, ri) => {
+        const widths = columnWidths?.find((c) => c.rowIndex === ri)?.widths;
+        return (
+        <div
+          key={ri}
+          className="grid gap-[15px] lg:gap-[25px]"
+          style={{ gridTemplateColumns: widths ? widths.map((w) => `${w}fr`).join(" ") : `repeat(${row.length}, 1fr)` }}
+        >
+          {row.map((item, ii) => {
+            const fit = itemFit?.find((f) => f.index === flatIndex)?.fit ?? "cover";
+            flatIndex++;
+            return (
+            <div key={ii} className={`relative w-full rounded-[8px] lg:rounded-[13px] overflow-hidden bg-[#e8d4b8] ${aspectForRow(row)}`}>
               {item.type === "video" ? (
                 <AutoplayVideo src={item.url} className="absolute inset-0 w-full h-full object-cover" />
+              ) : item.type === "embed" ? (
+                <iframe
+                  src={item.url}
+                  className="absolute inset-0 w-full h-full border-0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                />
               ) : (
-                <Image src={item.url} alt="" fill className="object-cover" />
+                <Image src={item.url} alt="" fill className={fit === "contain" ? "object-contain" : "object-cover"} />
               )}
             </div>
-          ))}
+            );
+          })}
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -231,7 +261,12 @@ export default function PortfolioDetailClient({ project, gallery, otherProjects 
           {/* Gallery */}
           <div className="flex-1 w-full">
             {gallery.length > 0 ? (
-              <GalleryGrid items={gallery} rowPattern={project.galleryRowPattern} />
+              <GalleryGrid
+                items={gallery}
+                rowPattern={project.galleryRowPattern}
+                columnWidths={project.galleryColumnWidths}
+                itemFit={project.galleryItemFit}
+              />
             ) : (
               <div className="relative w-full aspect-[3/2] rounded-[13px] overflow-hidden bg-[#e8d4b8]">
                 {project.coverMedia.type === "video" ? (

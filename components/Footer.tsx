@@ -23,8 +23,8 @@ export default function Footer({ variant = "dark" }: FooterProps) {
         {/* Left: About blurb */}
         <div className="flex flex-col gap-[20px] w-full lg:w-[582px]">
           <span
-            style={{ color: textColor, borderColor }}
-            className="font-bel text-[16px] lg:text-[18px] border rounded-full px-[15px] py-[10px] w-fit"
+            style={{ color: textColor, borderColor, letterSpacing: '0.1em' }}
+            className="font-bel text-[14px] lg:text-[18px] border rounded-full px-[15px] py-[10px] w-fit uppercase"
           >
             We are nectarine
           </span>
@@ -39,24 +39,11 @@ export default function Footer({ variant = "dark" }: FooterProps) {
           </Link>
         </div>
 
-        {/* Right: Social + email */}
-        <div className="flex-1 flex items-center justify-start lg:justify-center gap-[25px] lg:gap-[49px]">
-          <div className="flex flex-col gap-[5px]">
-            <Link href="https://instagram.com" target="_blank" className="flex items-center gap-[10px]">
-              <span className="font-bel text-[18px]" style={{ color: accentColor }}>Instagram</span>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="#d7432a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
-            <Link href="https://linkedin.com" target="_blank" className="flex items-center gap-[10px]">
-              <span className="font-bel text-[18px]" style={{ color: accentColor }}>Linkedin</span>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="#d7432a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
-          </div>
+        {/* Right: email */}
+        <div className="flex-1 flex items-center justify-start lg:justify-end">
           <Link
             href="mailto:hello@nectarine.ink"
+            target="_blank"
             style={{ backgroundColor: emailBg }}
             className="flex items-center gap-[10px] rounded-full px-[15px] py-[10px]"
           >
@@ -78,7 +65,19 @@ export default function Footer({ variant = "dark" }: FooterProps) {
           className="w-full h-auto"
         />
         <div className="flex items-center justify-between">
-          <span className="font-bel text-[18px]" style={{ color: accentColor }}>hello@nectarine.ink</span>
+          <div className="flex items-center gap-[20px]">
+            <Link href="https://www.linkedin.com/company/nectarineink" target="_blank" className="font-bel text-[18px]" style={{ color: accentColor }}>
+              LinkedIn
+            </Link>
+            <Link
+              href="https://www.linkedin.com/jobs/nectarine-jobs-worldwide?f_C=104156262&trk=top-card_top-card-primary-button-top-card-primary-cta&position=1&pageNum=0"
+              target="_blank"
+              className="font-bel text-[18px]"
+              style={{ color: accentColor }}
+            >
+              Careers
+            </Link>
+          </div>
           <span className="font-bel text-[18px]" style={{ color: accentColor }}>© 2026 nectarine studio llc.</span>
         </div>
       </div>
