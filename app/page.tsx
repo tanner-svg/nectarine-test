@@ -555,7 +555,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-wrap gap-[10px]">
                 {["The Visual Identity Workshop", "The Brand Narrative Workshop", "The Internal Playbook Workshop"].map((t) => (
-                  <span key={t} className="font-bel text-[9px] text-[#d7432a] bg-[#ffc1a7] px-[12px] py-[8px] rounded-[15px]">{t}</span>
+                  <span key={t} className="font-bel text-[9px] uppercase tracking-[0.155em] text-[#d7432a] bg-[#ffc1a7] px-[12px] py-[8px] rounded-[15px]">{t}</span>
                 ))}
               </div>
             </div>
@@ -586,7 +586,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-wrap gap-[10px]">
                 {["Brand Audits", "Website Audits", "Narrative Audits", "Specific Media Audits", "Videography Audits"].map((t) => (
-                  <span key={t} className="font-bel text-[9px] text-[#380102] bg-[#f8e4cc] px-[12px] py-[8px] rounded-[15px]">{t}</span>
+                  <span key={t} className="font-bel text-[9px] uppercase tracking-[0.155em] text-[#380102] bg-[#f8e4cc] px-[12px] py-[8px] rounded-[15px]">{t}</span>
                 ))}
               </div>
             </div>
@@ -608,14 +608,6 @@ export default function HomePage() {
             <p className="font-aleo text-[16px] leading-[1.6] text-[#f8e4cc]">
               Looking for a dedicated creative partner? Someone who knows your voice, your goals, and your audience well enough to deliver consistent, professional visuals and content? Our monthly plans give you dedicated creative without the overhead.
             </p>
-            <WipeLink
-              href="/growth-plans"
-              overlayColor="#fcf8f3"
-              textOnHover="#380102"
-              className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[15px] text-white w-full lg:w-[426px]"
-            >
-              Learn More about Growth Plans
-            </WipeLink>
           </div>
           <div className="hidden lg:block w-[1px] h-[264px] border border-black" />
           <div className="flex-1 flex flex-col gap-[10px]">
@@ -626,16 +618,16 @@ export default function HomePage() {
             <p className="font-aleo text-[16px] leading-[1.6] text-[#f8e4cc]">
               Not every season calls for a full partnership. For well-scoped projects and one-time needs, we offer hourly options that give you professional creativity without the commitment.
             </p>
-            <WipeLink
-              href="/projects"
-              overlayColor="#fcf8f3"
-              textOnHover="#380102"
-              className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[15px] text-white w-full lg:w-[426px]"
-            >
-              Explore Project Options
-            </WipeLink>
           </div>
         </div>
+        <WipeLink
+          href="https://calendar.app.google/7PP2JtLPDtK5qhiw5"
+          overlayColor="#fcf8f3"
+          textOnHover="#380102"
+          className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[15px] text-white w-full lg:w-[426px]"
+        >
+          Learn More
+        </WipeLink>
       </section>
 
       {/* Parallax section */}
