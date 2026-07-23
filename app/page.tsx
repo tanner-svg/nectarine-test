@@ -697,49 +697,61 @@ export default function HomePage() {
               }}
             >
               {/* Quote */}
-              <div className="flex-1 flex flex-col gap-4 lg:gap-[20px]">
-                <svg width="44" height="39" viewBox="0 0 44 39" fill="none">
-                  <path d="M0 39V23.4C0 17.4 1.4 12.4 4.2 8.4C7 4.2 11.2 1.4 16.8 0L19.6 5.4C16.4 6.2 13.8 7.8 11.8 10.2C9.8 12.4 8.8 15 8.8 18H16.8V39H0ZM27.2 39V23.4C27.2 17.4 28.6 12.4 31.4 8.4C34.2 4.2 38.4 1.4 44 0L46.8 5.4C43.6 6.2 41 7.8 39 10.2C37 12.4 36 15 36 18H44V39H27.2Z" fill="#d7432a"/>
-                </svg>
-                <blockquote className="font-aleo font-semibold text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.1] text-[#380102]">
-                  {t.clientQuote.text}
-                </blockquote>
-                <p className="font-bel text-[16px] lg:text-[18px] text-[#380102]">{t.clientQuote.author}, {t.clientQuote.role}</p>
-                {t.slug === "sojourn-turkey" || t.slug === "swl" ? (
-                  <span
-                    className="flex items-center gap-[10px] bg-[#ffc1a7] rounded-full px-[15px] py-[10px] w-fit font-bel text-[16px] lg:text-[18px] text-[#d7432a] uppercase"
-                    style={{ letterSpacing: '0.1em' }}
-                  >
-                    Story Coming Soon
-                  </span>
+              {(() => {
+                const comingSoon = t.slug === "sojourn-turkey" || t.slug === "swl";
+                const media = t.testimonialMedia ?? t.coverMedia;
+                const mediaContent = media.type === "video" ? (
+                  <AutoplayVideo
+                    src={media.url}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                 ) : (
-                  <Link
-                    href={`/portfolio/${t.slug}`}
-                    className="flex items-center gap-[10px] bg-[#d7432a] rounded-full px-[15px] py-[10px] w-fit font-bel text-[16px] lg:text-[18px] text-[#fcf8f3] uppercase hover:opacity-90 transition-opacity"
-                    style={{ letterSpacing: '0.1em' }}
-                  >
-                    Read the full story <ArrowOutward color="#fcf8f3" size={12} />
-                  </Link>
-                )}
-              </div>
+                  <Image src={media.url} alt={t.clientQuote.author} fill className="object-cover" />
+                );
+                return (
+                  <>
+                    <div className="flex-1 flex flex-col gap-4 lg:gap-[20px]">
+                      <svg width="44" height="39" viewBox="0 0 44 39" fill="none">
+                        <path d="M0 39V23.4C0 17.4 1.4 12.4 4.2 8.4C7 4.2 11.2 1.4 16.8 0L19.6 5.4C16.4 6.2 13.8 7.8 11.8 10.2C9.8 12.4 8.8 15 8.8 18H16.8V39H0ZM27.2 39V23.4C27.2 17.4 28.6 12.4 31.4 8.4C34.2 4.2 38.4 1.4 44 0L46.8 5.4C43.6 6.2 41 7.8 39 10.2C37 12.4 36 15 36 18H44V39H27.2Z" fill="#d7432a"/>
+                      </svg>
+                      <blockquote className="font-aleo font-semibold text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.1] text-[#380102]">
+                        {t.clientQuote.text}
+                      </blockquote>
+                      <p className="font-bel text-[16px] lg:text-[18px] text-[#380102]">{t.clientQuote.author}, {t.clientQuote.role}</p>
+                      {comingSoon ? (
+                        <span
+                          className="flex items-center gap-[10px] bg-[#ffc1a7] rounded-full px-[15px] py-[10px] w-fit font-bel text-[16px] lg:text-[18px] text-[#d7432a] uppercase"
+                          style={{ letterSpacing: '0.1em' }}
+                        >
+                          Story Coming Soon
+                        </span>
+                      ) : (
+                        <Link
+                          href={`/portfolio/${t.slug}`}
+                          className="flex items-center gap-[10px] bg-[#d7432a] rounded-full px-[15px] py-[10px] w-fit font-bel text-[16px] lg:text-[18px] text-[#fcf8f3] uppercase hover:opacity-90 transition-opacity"
+                          style={{ letterSpacing: '0.1em' }}
+                        >
+                          Read the full story <ArrowOutward color="#fcf8f3" size={12} />
+                        </Link>
+                      )}
+                    </div>
 
-              {/* Cover media */}
-              <Link href={`/portfolio/${t.slug}`} className="w-full h-[280px] sm:h-[380px] lg:flex-1 lg:h-[560px] relative rounded-[8px] overflow-hidden group">
-                {(() => {
-                  const media = t.testimonialMedia ?? t.coverMedia;
-                  return media.type === "video" ? (
-                    <AutoplayVideo
-                      src={media.url}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  ) : (
-                    <Image src={media.url} alt={t.clientQuote.author} fill className="object-cover" />
-                  );
-                })()}
-                <div className="absolute top-[20px] right-[20px] lg:top-[40px] lg:right-[40px] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" style={{ mixBlendMode: 'difference' }}>
-                  <ArrowOutward color="#ffffff" size={25} />
-                </div>
-              </Link>
+                    {/* Cover media */}
+                    {comingSoon ? (
+                      <div className="w-full h-[280px] sm:h-[380px] lg:flex-1 lg:h-[560px] relative rounded-[8px] overflow-hidden">
+                        {mediaContent}
+                      </div>
+                    ) : (
+                      <Link href={`/portfolio/${t.slug}`} className="w-full h-[280px] sm:h-[380px] lg:flex-1 lg:h-[560px] relative rounded-[8px] overflow-hidden group">
+                        {mediaContent}
+                        <div className="absolute top-[20px] right-[20px] lg:top-[40px] lg:right-[40px] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" style={{ mixBlendMode: 'difference' }}>
+                          <ArrowOutward color="#ffffff" size={25} />
+                        </div>
+                      </Link>
+                    )}
+                  </>
+                );
+              })()}
             </div>
           ))}
         </div>
