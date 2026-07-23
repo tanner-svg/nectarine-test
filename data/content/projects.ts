@@ -8,6 +8,7 @@ const projects: Project[] = [
     showOnHomepage: true,
     homepageOrder: 2,
     galleryFolder: "portfolio/pinkston-for-tn",
+    galleryEmbeds: [{ insertAt: 2, url: "https://player.vimeo.com/video/1212456078" }],
     coverMedia: {
       type: "image",
       url: "/.shipstudio/assets/portfolio/pinkston-for-tn/pinkston-for-tn_1.gif",
@@ -62,14 +63,12 @@ const projects: Project[] = [
     galleryFolder: "portfolio/david-bruce-winery",
     galleryRowPattern: [1, 2, 1, 2],
     coverMedia: {
-      type: "image",
-      url: "/.shipstudio/assets/portfolio/David-Bruce-Cover.gif",
+      type: "video",
+      url: "/.shipstudio/assets/portfolio/david-bruce-winery/David-Bruce-Cover_1.mp4",
     },
-    headline: "Modernizing Six Decades of Winemaking Without Losing the Story",
+    headline: "Celebrating Five Decades of Legacy Winemaking",
     serviceTags: ["Design", "Videography & Media"],
-    body: `David Bruce Winery has been producing small-lot Pinot Noir in the Santa Cruz Mountains since 1964. After six decades, the label carried enormous history — but its visual identity hadn't kept pace with the caliber of the wine.
-
-We rebuilt the brand from its strongest asset: the story of a doctor who fell in love with a hillside and started making wine on weekends. The new identity leans into that founding romance — refined but not precious, storied but not stiff. We delivered a full brand refresh including logo system, label design, packaging guidelines, and a brand film that became the centerpiece of their 60th anniversary campaign.`,
+    body: `David Bruce Winery has been producing small-lot Pinot Noir in the Santa Cruz Mountains since 1964. In partnership with BFX Commerce, we helped develop set of bottle and crate designsf for the of the 50th anniversary of the Judgement of Paris.`,
     attributes: ["branding", "strategy"],
     clientQuote: {
       text: "Working with Nectarine completely transformed how we present ourselves to the world. Sixty years of history, finally looking the part.",

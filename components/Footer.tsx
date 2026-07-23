@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,6 +8,7 @@ interface FooterProps {
 }
 
 export default function Footer({ variant = "dark" }: FooterProps) {
+  const [emailHovered, setEmailHovered] = useState(false);
   const isDark = variant === "dark";
   const bg = isDark ? "#380102" : "#f7dec1";
   const textColor = isDark ? "#fcf8f3" : "#380102";
@@ -31,12 +34,6 @@ export default function Footer({ variant = "dark" }: FooterProps) {
           <p style={{ color: textColor }} className="font-aleo text-[26px] sm:text-[30px] lg:text-[36px] leading-[1.1]">
             We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.
           </p>
-          <Link href="/about" className="flex items-center gap-[10px] w-fit">
-            <span className="font-bel text-[16px] lg:text-[18px]" style={{ color: accentColor }}>More About Nectarine</span>
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <path d="M1 9L9 1M9 1H1M9 1V9" stroke="#d7432a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </Link>
         </div>
 
         {/* Right: email */}
@@ -45,11 +42,19 @@ export default function Footer({ variant = "dark" }: FooterProps) {
             href="mailto:hello@nectarine.ink"
             target="_blank"
             style={{ backgroundColor: emailBg }}
-            className="flex items-center gap-[10px] rounded-full px-[15px] py-[10px]"
+            className="relative overflow-hidden flex items-center gap-[10px] rounded-full px-[15px] py-[10px]"
+            onMouseEnter={() => setEmailHovered(true)}
+            onMouseLeave={() => setEmailHovered(false)}
           >
-            <span className="font-bel text-[18px]" style={{ color: emailTextColor }}>hello@nectarine.ink</span>
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <path d="M1 9L9 1M9 1H1M9 1V9" stroke={emailTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <span
+              className="absolute inset-0 transition-[clip-path] duration-500 ease-in-out pointer-events-none"
+              style={{ backgroundColor: "#f9ce6a", clipPath: emailHovered ? "circle(150% at 0% 50%)" : "circle(0% at 0% 50%)" }}
+            />
+            <span className="relative z-10 font-bel text-[18px]" style={{ color: emailHovered ? "#380102" : emailTextColor, transition: "color 0.5s ease-in-out" }}>
+              hello@nectarine.ink
+            </span>
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="relative z-10">
+              <path d="M1 9L9 1M9 1H1M9 1V9" stroke={emailHovered ? "#380102" : emailTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.5s ease-in-out" }} />
             </svg>
           </Link>
         </div>
@@ -66,13 +71,18 @@ export default function Footer({ variant = "dark" }: FooterProps) {
         />
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-[20px]">
-            <Link href="https://www.linkedin.com/company/nectarineink" target="_blank" className="font-bel text-[18px]" style={{ color: accentColor }}>
+            <Link
+              href="https://www.linkedin.com/company/nectarineink"
+              target="_blank"
+              className="font-bel text-[18px] transition-colors duration-300 hover:!text-[#f9ce6a]"
+              style={{ color: accentColor }}
+            >
               LinkedIn
             </Link>
             <Link
               href="https://www.linkedin.com/jobs/nectarine-jobs-worldwide?f_C=104156262&trk=top-card_top-card-primary-button-top-card-primary-cta&position=1&pageNum=0"
               target="_blank"
-              className="font-bel text-[18px]"
+              className="font-bel text-[18px] transition-colors duration-300 hover:!text-[#f9ce6a]"
               style={{ color: accentColor }}
             >
               Careers

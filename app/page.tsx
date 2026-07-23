@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import AutoplayVideo from "@/components/AutoplayVideo";
+import ContactForm from "@/components/ContactForm";
 import { getHomepageProjects, getFeaturedProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
 
@@ -148,34 +149,6 @@ function WipeLink({ href, overlayColor, textOnHover, className, children, onClic
         {children}
       </span>
     </Link>
-  );
-}
-
-function WipeButton({ overlayColor, textOnHover, className, children, onClick }: {
-  overlayColor: string; textOnHover: string;
-  className?: string; children: React.ReactNode; onClick?: () => void;
-}) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <button
-      type="button"
-      className={`relative overflow-hidden uppercase ${className ?? ''}`}
-      style={{ letterSpacing: '0.1em' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-    >
-      <span
-        className="absolute inset-0 transition-[clip-path] duration-500 ease-in-out pointer-events-none"
-        style={{ backgroundColor: overlayColor, clipPath: hovered ? 'circle(150% at 0% 50%)' : 'circle(0% at 0% 50%)' }}
-      />
-      <span
-        className="relative z-10"
-        style={{ color: hovered ? textOnHover : 'inherit', transition: 'color 0.5s ease-in-out' }}
-      >
-        {children}
-      </span>
-    </button>
   );
 }
 
@@ -781,39 +754,7 @@ export default function HomePage() {
                   </p>
                 </div>
               </div>
-              <div className="flex-1 flex flex-col gap-[20px]">
-                <div className="flex flex-col gap-[16px]">
-                  {[
-                    { label: "Name", placeholder: "Jane Doe", type: "text" },
-                    { label: "Email", placeholder: "jane@company.com", type: "email" },
-                    { label: "Subject", placeholder: "General inquiry", type: "text" },
-                  ].map((field) => (
-                    <div key={field.label} className="flex flex-col gap-[8px]">
-                      <label className="font-inter font-semibold text-[13px] text-[#380102]">{field.label}</label>
-                      <input
-                        type={field.type}
-                        placeholder={field.placeholder}
-                        className="border border-[#380102] rounded-[12px] px-[14px] h-[48px] font-inter text-[14px] text-[#380102] placeholder-[#380102]/45 bg-transparent outline-none focus:ring-2 focus:ring-[#380102]/20"
-                      />
-                    </div>
-                  ))}
-                  <div className="flex flex-col gap-[8px]">
-                    <label className="font-inter font-semibold text-[13px] text-[#380102]">Message</label>
-                    <textarea
-                      placeholder="How can we help?"
-                      rows={6}
-                      className="border border-[#380102] rounded-[12px] p-[14px] font-inter text-[14px] text-[#380102] placeholder-[#380102]/45 bg-transparent outline-none focus:ring-2 focus:ring-[#380102]/20 resize-none"
-                    />
-                  </div>
-                </div>
-                <WipeButton
-                  overlayColor="#380102"
-                  textOnHover="#f9ce6a"
-                  className="w-full bg-[#380102] rounded-[12px] py-[15px] font-bel text-[18px] text-[#f9ce6a]"
-                >
-                  Submit
-                </WipeButton>
-              </div>
+              <ContactForm />
             </div>
           </div>
         </div>

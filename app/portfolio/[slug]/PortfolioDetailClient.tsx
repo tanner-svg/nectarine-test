@@ -7,14 +7,6 @@ import AutoplayVideo from "@/components/AutoplayVideo";
 import type { Project } from "@/types/portfolio";
 import type { GalleryItem } from "@/lib/portfolio-gallery";
 
-const SERVICE_TAGS = [
-  "Design",
-  "Writing & Copy",
-  "Digital & UI Design",
-  "Videography & Media",
-  "Events Design & Media",
-  "Workshops & Audits",
-];
 
 function ArrowOutward({ color = "#380102", size = 10 }: { color?: string; size?: number }) {
   return (
@@ -166,17 +158,15 @@ function StoryModal({ project, onClose }: { project: Project; onClose: () => voi
               ))}
             </div>
             <div className="flex flex-wrap justify-center gap-[10px]">
-              {SERVICE_TAGS.map((tag) => {
-                const active = project.serviceTags?.includes(tag);
+              {project.serviceTags?.map((tag) => {
                 return (
                   <span
                     key={tag}
                     className="font-bel text-[13px] lg:text-[14px] uppercase px-[15px] py-[10px] rounded-full"
                     style={{
                       letterSpacing: "0.08em",
-                      ...(active
-                        ? { backgroundColor: "#ffc1a7", color: "#380102" }
-                        : { border: "1px solid #380102", color: "#380102" }),
+                      backgroundColor: "#ffc1a7",
+                      color: "#380102",
                     }}
                   >
                     {tag}
