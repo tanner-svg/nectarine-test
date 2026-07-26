@@ -45,7 +45,7 @@ function PortfolioCard({ project }: { project: Project }) {
         </div>
       </div>
       <div className="flex flex-col gap-[10px]">
-        <h3 className="font-aleo font-bold text-[32px] leading-[1.1] text-[#380102] group-hover:text-[#d7432a] transition-colors duration-300">
+        <h3 className="font-aleo font-bold text-[26px] lg:text-[32px] leading-[1.1] text-[#380102] group-hover:text-[#d7432a] transition-colors duration-300">
           {project.title}
         </h3>
         <div className="flex flex-wrap gap-[8px]">
@@ -62,7 +62,7 @@ function PortfolioCard({ project }: { project: Project }) {
 
 function ContactSection() {
   return (
-    <section className="bg-[#f8e4cc] px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]">
+    <section className="px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]" style={{ backgroundImage: 'linear-gradient(to bottom, #FCF8F3 50%, #380102 50%)', backgroundColor: '#F8E4CC' }}>
       <div className="max-w-[1290px] mx-auto">
         <div className="bg-[#f9ce6a] rounded-[25px] p-6 sm:p-10 lg:p-[65px_75px] flex flex-col gap-8 lg:gap-[60px]">
           <div className="flex flex-col gap-8 lg:flex-row lg:gap-[48px] lg:items-start">
@@ -98,24 +98,24 @@ export default function WorkPageClient({ projects }: Props) {
     <div className="bg-[#fcf8f3]">
 
       {/* Hero */}
-      <section className="px-[75px] pt-[150px] pb-[60px]">
-        <div className="max-w-[1290px] mx-auto flex flex-col gap-[25px]">
+      <section className="px-5 sm:px-10 lg:px-[75px] pt-[90px] lg:pt-[150px] pb-10 lg:pb-[60px]">
+        <div className="max-w-[1290px] mx-auto flex flex-col gap-5 lg:gap-[25px]">
           <span
-            className="font-bel text-[14px] text-[#380102] border border-[#380102] rounded-full px-[15px] py-[8px] w-fit uppercase"
+            className="font-bel text-[clamp(0.6875rem,0.58rem+0.46vw,0.875rem)] text-[#380102] border border-[#380102] rounded-full px-[12px] py-[6px] lg:px-[15px] lg:py-[8px] w-fit uppercase"
             style={{ letterSpacing: "0.1em" }}
           >
             Our Work
           </span>
-          <h1 className="font-aleo font-bold text-[48px] leading-[1.25] max-w-[860px] xl:font-semibold xl:max-w-[860px] xl:text-4xl">
+          <h1 className="font-aleo font-bold text-[clamp(1.75rem,1.54rem+0.9vw,2.25rem)] leading-[1.25] max-w-[860px] xl:font-semibold xl:max-w-[860px]">
             <span className="text-[#380102] xl:font-semibold">You know what you do and why it matters. </span>
             <span className="text-[#d7432a]">The hard part is finding the language and visuals that make everyone else see it too.</span>
           </h1>
         </div>
       </section>
 
-      {/* 2-column portfolio grid */}
-      <section className="px-[75px] pb-[75px]">
-        <div className="max-w-[1290px] mx-auto grid grid-cols-2 gap-[25px]">
+      {/* Portfolio grid */}
+      <section className="px-5 sm:px-10 lg:px-[75px] pb-10 lg:pb-[75px]">
+        <div className="max-w-[1290px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[25px]">
           {projects.map((project) => (
             <PortfolioCard key={project.slug} project={project} />
           ))}

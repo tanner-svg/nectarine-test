@@ -139,7 +139,7 @@ We partnered with the founding team across strategy, copywriting, and brand iden
     body: `s.`,
     attributes: ["art direction", "branding"],
     clientQuote: {
-      text: "The team at Nectarine responded expertly to our tight timeline... communication was smooth and deliverables were on time and even ahead of schedule.",
+      text: "Nectarine responded expertly... communication was smooth and deliverables were on time and even ahead of schedule.",
       author: "Angela Vannoy",
       role: "CEO",
       isFeatured: true,
@@ -151,6 +151,7 @@ We partnered with the founding team across strategy, copywriting, and brand iden
     slug: "swl",
     order: 8,
     showOnHomepage: false,
+    showOnWorkPage: false,
     galleryFolder: "portfolio/swl",
     galleryRowPattern: [1, 1, 3, 1, 1],
     coverMedia: {

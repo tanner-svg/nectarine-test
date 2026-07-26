@@ -342,7 +342,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="bg-[#fcf8f3] pt-[90px] lg:pt-[150px] px-5 sm:px-10 lg:px-[75px] pb-0 flex flex-col gap-8 lg:gap-[75px]">
         <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-[75px]">
-          <h1 className="font-bel font-semibold text-[52px] sm:text-[64px] lg:text-[85px] leading-[1.03] text-[#380102] w-full lg:w-[580px] lg:flex-shrink-0">
+          <h1 className="font-bel font-semibold text-[52px] lg:text-[85px] leading-[1.03] text-[#380102] w-full lg:w-[580px] lg:flex-shrink-0">
             Make Your Brand{" "}
             <span className="text-[#d7432a] inline-flex items-baseline">
               {typedText}
@@ -352,7 +352,7 @@ export default function HomePage() {
               />
             </span>
           </h1>
-          <div className="flex-1 flex flex-col gap-5 lg:gap-[24px]">
+          <div className="flex-1 flex flex-col gap-5 lg:gap-[24px] min-w-0">
             <p className="font-aleo text-[16px] leading-[1.6] text-[#380102]">
               Having an unclear or fuzzy brand doesn't just look bad; it bleeds opportunities. Walk away with the strategy, story, and visual identity that makes your brand stick. Grow a brand foundation that cultivates loyal communities and compelling narratives.
             </p>
@@ -655,9 +655,9 @@ export default function HomePage() {
               className="flex flex-col-reverse gap-8 lg:flex-row lg:gap-[60px] lg:items-center w-full transition-opacity duration-700 ease-in-out"
               style={{
                 opacity: i === currentSlide ? 1 : 0,
-                position: i === 0 ? 'relative' : 'absolute',
-                top: i === 0 ? undefined : 0,
-                left: i === 0 ? undefined : 0,
+                position: i === currentSlide ? 'relative' : 'absolute',
+                top: i === currentSlide ? undefined : 0,
+                left: i === currentSlide ? undefined : 0,
                 pointerEvents: i === currentSlide ? 'auto' : 'none',
               }}
             >
@@ -735,7 +735,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact */}
-      <section className="px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]" style={{ backgroundImage: 'url(/.shipstudio/assets/contact-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <section className="px-5 sm:px-10 lg:px-[75px] py-10 lg:py-[75px]" style={{ backgroundImage: 'linear-gradient(to bottom, #F7DEC1 50%, #380102 50%)', backgroundColor: '#F8E4CC' }}>
         <div className="max-w-[1290px] mx-auto w-full">
           <div className="bg-[#f9ce6a] rounded-[25px] p-6 sm:p-10 lg:p-[65px_75px] flex flex-col gap-8 lg:gap-[60px]">
             <div className="flex flex-col gap-8 lg:flex-row lg:gap-[48px] lg:items-start">

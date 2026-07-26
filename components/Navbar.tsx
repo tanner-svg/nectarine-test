@@ -60,30 +60,30 @@ export default function Navbar() {
             alt="Nectarine"
             width={286}
             height={50}
-            className="h-[38px] lg:h-[50px] w-auto"
+            className="h-[32px] lg:h-[50px] w-auto"
           />
         </Link>
-        <div className="w-[44px] h-[44px] lg:w-[50px] lg:h-[50px]" />
+        <div className="w-[35px] h-[35px] lg:w-[40px] lg:h-[40px]" />
       </nav>
 
       {/* Hamburger / X button — always above curtain (z-[210]) */}
       <button
         onClick={() => open ? closeMenu() : setOpen(true)}
-        className={`navbar-hamburger fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[44px] h-[44px] lg:w-[50px] lg:h-[50px] flex flex-col items-center justify-center gap-[6px] z-[210] transition-all duration-300 hover:scale-[1.05] ${!open && !isClosing ? 'rounded-full bg-[#d7432a]' : ''}`}
+        className={`navbar-hamburger fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[35px] h-[35px] lg:w-[40px] lg:h-[40px] flex flex-col items-center justify-center gap-[5px] z-[210] transition-all duration-300 hover:scale-[1.05] ${!open && !isClosing ? 'rounded-full bg-[#d7432a]' : ''}`}
         aria-label={open ? "Close menu" : "Open menu"}
       >
         <span
-          className="block w-[32px] h-[2px] bg-[#fcf8f3] origin-center"
+          className="block w-[26px] h-[2px] bg-[#fcf8f3] origin-center"
           style={{
             transition: 'transform 0.35s ease-in-out',
-            transform: open && !isClosing ? 'translateY(4px) rotate(45deg)' : 'none',
+            transform: open && !isClosing ? 'translateY(3.5px) rotate(45deg)' : 'none',
           }}
         />
         <span
-          className="block w-[32px] h-[2px] bg-[#fcf8f3] origin-center"
+          className="block w-[26px] h-[2px] bg-[#fcf8f3] origin-center"
           style={{
             transition: 'transform 0.35s ease-in-out',
-            transform: open && !isClosing ? 'translateY(-4px) rotate(-45deg)' : 'none',
+            transform: open && !isClosing ? 'translateY(-3.5px) rotate(-45deg)' : 'none',
           }}
         />
       </button>
@@ -104,7 +104,7 @@ export default function Navbar() {
 
           {/* Logo — own layer, React-driven opacity transition (no position change) */}
           <div
-            className="absolute top-[20px] lg:top-[30px] left-5 sm:left-10 lg:left-[75px] z-20"
+            className="absolute top-[24px] lg:top-[30px] left-5 sm:left-10 lg:left-[75px] z-20"
             style={{
               opacity: logoVisible ? 1 : 0,
               transition: isClosing ? 'opacity 0.2s ease-in' : 'opacity 0.55s ease-out',
@@ -116,7 +116,7 @@ export default function Navbar() {
                 alt="Nectarine"
                 width={299}
                 height={51}
-                className="h-[44px] lg:h-[51px] w-auto"
+                className="h-[32px] lg:h-[50px] w-auto"
               />
             </Link>
           </div>
