@@ -128,6 +128,7 @@ We partnered with the founding team across strategy, copywriting, and brand iden
     slug: "sojourn-turkey",
     order: 7,
     showOnHomepage: false,
+    showOnWorkPage: false,
     galleryFolder: "portfolio/sojourn-turkey",
     galleryRowPattern: [1, 1, 3, 1, 1],
     coverMedia: {

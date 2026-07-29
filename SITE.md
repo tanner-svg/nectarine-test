@@ -72,6 +72,8 @@ Projects live in `data/content/projects.ts` using the `Project` type from `types
 
 Helper functions in `lib/portfolio.ts`: `getAllProjects()`, `getHomepageProjects()`, `getWorkPageProjects()`, `getProjectsByAttribute()`, `getFeaturedProjects()`
 
+Currently hidden from the /work page grid: Showered With Love, Sojourn Turkey (both still appear in the homepage testimonial slider).
+
 ### Choosing the 4 homepage projects
 
 To change which projects show on the homepage, or reorder them, edit `showOnHomepage` and `homepageOrder` on each project in `data/content/projects.ts` — no other code changes needed. Right now: David Bruce Winery, Pinkston for Tennessee, Frontier Operators, and Faith Driven Talent are shown (in that order); "He Who Speaks Out of Turn" is set to `showOnHomepage: false`.
