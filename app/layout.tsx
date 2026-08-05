@@ -7,6 +7,7 @@ import MainContent from "@/components/MainContent";
 import { TransitionProvider } from "@/components/TransitionContext";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
 
 const belanosima = Belanosima({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased ${belanosima.variable} ${aleo.variable} ${inter.variable}`}>
         <SmoothScroll />
+        <CustomCursor />
         <Navbar />
         <TransitionProvider>
           <PageTransition />

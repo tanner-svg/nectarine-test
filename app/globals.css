@@ -188,3 +188,11 @@ body.modal-open .navbar-hamburger {
 
 .page-entered > div > footer,
 .page-entered > footer                  { animation-delay: 0.88s; }
+
+/* Custom cursor: native pointer is hidden only once the JS-driven cursor
+   has actually mounted (see components/CustomCursor.tsx), so a failed
+   script never leaves visitors with no cursor at all. */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}

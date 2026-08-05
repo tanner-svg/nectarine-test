@@ -25,6 +25,7 @@
 
 - **Navbar** (`components/Navbar.tsx`) — Fixed top bar with Nectarine logo + red hamburger button. Click hamburger to open full-screen coral menu with nav links. Has two logo states: default (nectarine-logo-4.svg) and menu-open (nectarine-logo-5.svg).
 - **Footer** (`components/Footer.tsx`) — Two variants: `variant="dark"` (burgundy bg, used on most pages) and `variant="light"` (pale peach bg, used on Workshops page). Contains company blurb, social links, email button, and large wordmark logo.
+- **Custom Cursor** (`components/CustomCursor.tsx`) — Replaces the normal mouse pointer site-wide with two illustrated leaf shapes: a solid burgundy "shadow" that trails a beat behind, and a cream/burgundy outlined cursor on top that tracks the mouse closely. Both ease smoothly toward the pointer each frame rather than snapping instantly, which is what creates the soft lag. Only activates on devices with a real mouse (trackpad/mouse pointer) — phones and tablets keep their normal touch behavior, no code changes needed there.
 
 ## Assets
 
