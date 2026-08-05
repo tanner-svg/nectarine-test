@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 // The main cursor tracks the real pointer 1:1 — no lerp, no lag. Only the
 // shadow layer eases toward the pointer each frame, which is what creates
 // its trailing motion.
-const SHADOW_EASE = 0.12;
+const SHADOW_EASE = 0.24;
 
 // Fixed pixel dimensions (15% smaller than the source SVGs) — never derived
 // from viewport units, so the cursor stays the same size at every screen size.
