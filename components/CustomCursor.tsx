@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// Lerp factors control how quickly each layer catches up to the real mouse
-// position each frame — lower = more lag. The shadow trails noticeably
-// behind the main cursor, giving it that soft eased "chasing" motion.
-const CURSOR_EASE = 0.35;
+// The main cursor tracks the real pointer 1:1 — no lerp, no lag. Only the
+// shadow layer eases toward the pointer each frame, which is what creates
+// its trailing motion.
 const SHADOW_EASE = 0.12;
 
-// Rotation eases at the same relative rates as position, so the shadow's
-// tilt lags the main cursor's the same way its position does.
+// Rotation still eases smoothly even though the main cursor's position
+// doesn't — this is what keeps the tilt looking springy rather than snapping.
 const CURSOR_ROTATION_EASE = 0.25;
 const SHADOW_ROTATION_EASE = 0.15;
 const ROTATION_SENSITIVITY = 2.2; // degrees of tilt per px of horizontal movement per frame
@@ -69,8 +68,8 @@ export default function CustomCursor() {
 
     let rafId: number;
     const tick = () => {
-      cursorPos.x += (target.x - cursorPos.x) * CURSOR_EASE;
-      cursorPos.y += (target.y - cursorPos.y) * CURSOR_EASE;
+      cursorPos.x = target.x;
+      cursorPos.y = target.y;
       shadowPos.x += (target.x - shadowPos.x) * SHADOW_EASE;
       shadowPos.y += (target.y - shadowPos.y) * SHADOW_EASE;
 
