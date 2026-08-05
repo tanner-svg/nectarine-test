@@ -7,21 +7,12 @@ import { useEffect, useRef, useState } from "react";
 // its trailing motion.
 const SHADOW_EASE = 0.12;
 
-// Rotation still eases smoothly even though the main cursor's position
-// doesn't — this is what keeps the tilt looking springy rather than snapping.
-const CURSOR_ROTATION_EASE = 0.25;
-const SHADOW_ROTATION_EASE = 0.15;
-const ROTATION_SENSITIVITY = 2.2; // degrees of tilt per px of horizontal movement per frame
-const MAX_ROTATION = 12; // degrees — keeps the tilt "slight"
-
 // Fixed pixel dimensions (15% smaller than the source SVGs) — never derived
 // from viewport units, so the cursor stays the same size at every screen size.
 const CURSOR_WIDTH = 45 * 0.85;
 const CURSOR_HEIGHT = 67 * 0.85;
 const SHADOW_WIDTH = 43 * 0.85;
 const SHADOW_HEIGHT = 64 * 0.85;
-
-const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -39,10 +30,6 @@ export default function CustomCursor() {
     const target = { x: -100, y: -100 };
     const cursorPos = { ...target };
     const shadowPos = { ...target };
-    let cursorRotation = 0;
-    let shadowRotation = 0;
-    let prevCursorX = cursorPos.x;
-    let prevShadowX = shadowPos.x;
     let hasMoved = false;
 
     const handleMove = (e: MouseEvent) => {
@@ -54,8 +41,6 @@ export default function CustomCursor() {
         cursorPos.y = target.y;
         shadowPos.x = target.x;
         shadowPos.y = target.y;
-        prevCursorX = target.x;
-        prevShadowX = target.x;
       }
       setVisible(true);
     };
@@ -73,24 +58,11 @@ export default function CustomCursor() {
       shadowPos.x += (target.x - shadowPos.x) * SHADOW_EASE;
       shadowPos.y += (target.y - shadowPos.y) * SHADOW_EASE;
 
-      // Tilt left/right based on horizontal travel direction each frame,
-      // clamped to a subtle range and eased so the angle doesn't snap.
-      const cursorTargetRotation = clamp((cursorPos.x - prevCursorX) * ROTATION_SENSITIVITY, -MAX_ROTATION, MAX_ROTATION);
-      cursorRotation += (cursorTargetRotation - cursorRotation) * CURSOR_ROTATION_EASE;
-      prevCursorX = cursorPos.x;
-
-      const shadowTargetRotation = clamp((shadowPos.x - prevShadowX) * ROTATION_SENSITIVITY, -MAX_ROTATION, MAX_ROTATION);
-      shadowRotation += (shadowTargetRotation - shadowRotation) * SHADOW_ROTATION_EASE;
-      prevShadowX = shadowPos.x;
-
-      // transform-origin is set to the top-left corner (0 0) in the JSX below,
-      // so rotate() pivots there and translate3d keeps that corner pinned to
-      // the tracked position regardless of the current tilt.
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) rotate(${cursorRotation.toFixed(2)}deg)`;
+        cursorRef.current.style.transform = `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0)`;
       }
       if (shadowRef.current) {
-        shadowRef.current.style.transform = `translate3d(${shadowPos.x}px, ${shadowPos.y}px, 0) rotate(${shadowRotation.toFixed(2)}deg)`;
+        shadowRef.current.style.transform = `translate3d(${shadowPos.x}px, ${shadowPos.y}px, 0)`;
       }
       rafId = requestAnimationFrame(tick);
     };
@@ -117,7 +89,7 @@ export default function CustomCursor() {
       <div
         ref={shadowRef}
         className="absolute top-0 left-0 will-change-transform"
-        style={{ transform: "translate3d(-100px, -100px, 0)", transformOrigin: "0 0", mixBlendMode: "multiply" }}
+        style={{ transform: "translate3d(-100px, -100px, 0)", mixBlendMode: "multiply" }}
       >
         <svg width={SHADOW_WIDTH} height={SHADOW_HEIGHT} viewBox="0 0 43 64" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3.41613 0.00390076C1.30764 -0.0747309 0.1428 1.05216 0.0253055 3.15269C-0.104422 5.47263 0.302278 7.79477 0.348899 10.0954C0.47072 16.103 1.17053 22.0823 1.14206 28.0977C1.13793 28.9631 1.08064 29.8319 1.108 30.6974C1.2154 33.0766 1.65601 35.5543 1.65057 37.9342C1.64407 40.7227 1.0916 43.5323 1.3063 46.3513C1.35325 46.907 1.24667 48.2231 1.64548 48.6704C2.6472 49.7939 4.22341 49.826 5.53778 49.8663C7.80159 49.9356 9.391 49.1947 11.3318 48.1498C12.1395 47.7148 12.9 47.4903 13.6585 46.9625C13.6634 47.0197 13.6693 47.0766 13.6758 47.1337C14.0441 50.1178 14.803 53.2576 15.8414 56.0802C16.1134 56.7714 16.1999 57.9607 16.479 58.5995C17.3228 60.5306 18.1091 63.8109 20.7465 63.5862C22.93 63.4004 24.594 63.2403 26.647 62.3806C27.3688 62.0781 28.3961 61.9661 29.14 61.6652C29.9597 61.2067 31.4906 60.8949 32.2575 60.4943C33.7451 59.7179 36.7859 58.9981 37.7411 57.7049C38.4814 56.0805 37.4957 55.2064 36.7683 53.9116L33.9591 48.7948C33.4931 47.955 33.1941 47.2157 32.8299 46.339C32.6431 45.8533 32.2851 45.339 32.1149 44.859C31.5964 43.3977 30.8545 42.0974 30.3184 40.6413C33.1755 40.4822 36.0023 39.9703 38.7335 39.1161C39.3783 38.9215 40.2079 38.7111 40.7401 38.3134C41.5847 37.6822 42.089 36.5377 42.2173 35.5169C42.2631 34.9906 42.4039 34.2103 41.9963 33.7865C40.1382 31.8529 38.1845 29.9821 36.2371 28.1367C35.6958 27.6237 35.0562 27.1815 34.5027 26.6839L24.1126 17.1978C23.4089 16.5624 22.8073 15.8467 22.0668 15.2227C20.8359 14.2157 19.5406 13.1974 18.2532 12.2668C17.0902 11.4261 16.2575 10.8439 15.2849 9.77339C14.5901 9.00869 13.7294 8.27583 13.019 7.5032C12.4588 6.94932 11.6552 6.51917 11.0992 5.97847C9.765 4.68123 8.39115 3.46776 6.92801 2.31971C6.39684 1.90285 6.00175 1.28885 5.3968 0.883215C4.69415 0.412083 4.26965 0.109119 3.41613 0.00390076Z" fill="#380102"/>
@@ -128,7 +100,7 @@ export default function CustomCursor() {
       <div
         ref={cursorRef}
         className="absolute top-0 left-0 will-change-transform"
-        style={{ transform: "translate3d(-100px, -100px, 0)", transformOrigin: "0 0" }}
+        style={{ transform: "translate3d(-100px, -100px, 0)" }}
       >
         <svg width={CURSOR_WIDTH} height={CURSOR_HEIGHT} viewBox="0 0 45 67" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4.4264 1.86228C2.31788 1.78365 1.15309 2.91147 1.03562 5.01205C0.905956 7.33175 1.31251 9.65339 1.35917 11.9538C1.48098 17.9615 2.18185 23.9415 2.15335 29.957C2.14922 30.8224 2.09092 31.6903 2.11826 32.5557C2.22564 34.9351 2.66627 37.4126 2.66083 39.7926C2.65439 42.5812 2.1019 45.3915 2.31662 48.2107C2.36349 48.7666 2.25707 50.0826 2.6558 50.5297C3.65751 51.6531 5.2338 51.6853 6.5481 51.7257C8.81185 51.7949 10.4014 51.054 12.3421 50.0091C13.1498 49.5742 13.9103 49.3496 14.6688 48.8219C14.6737 48.8791 14.6796 48.9359 14.6861 48.9931C15.0544 51.977 15.8143 55.116 16.8526 57.9385C17.1246 58.6297 17.2102 59.819 17.4893 60.4579C18.3331 62.3889 19.1193 65.6703 21.7568 65.4455C23.9405 65.2598 25.605 65.0989 27.6583 64.239C28.38 63.9365 29.4065 63.8244 30.1502 63.5235C30.97 63.0651 32.501 62.7542 33.2679 62.3536C34.7554 61.5772 37.7961 60.8575 38.7514 59.5643C39.4921 57.9396 38.506 57.065 37.7786 55.77L34.9703 50.6531C34.5045 49.8135 34.2053 49.0747 33.8412 48.1983C33.6544 47.7126 33.2955 47.1984 33.1252 46.7184C32.6068 45.257 31.8648 43.9567 31.3287 42.5006C34.1859 42.3416 37.0125 41.8287 39.7438 40.9745C40.3885 40.7799 41.2182 40.5704 41.7504 40.1727C42.5952 39.5415 43.0994 38.3963 43.2276 37.3753C43.2734 36.8489 43.4142 36.0696 43.0067 35.6458C41.1484 33.7121 39.1949 31.8406 37.2473 29.9951C36.706 29.4821 36.0664 29.0399 35.5129 28.5423L25.123 19.0572C24.4192 18.4218 23.8176 17.7061 23.0771 17.0821C21.8463 16.0751 20.5518 15.0567 19.2645 14.1261C18.1013 13.2852 17.268 12.7034 16.2952 11.6327C15.6004 10.868 14.7397 10.1352 14.0293 9.36256C13.4691 8.80868 12.6665 8.37843 12.1105 7.83778C10.7762 6.54039 9.40161 5.32723 7.93832 4.17907C7.4071 3.76221 7.01211 3.14823 6.40711 2.74257C5.70434 2.27136 5.28012 1.96748 4.4264 1.86228Z" fill="#FCF8F3"/>
