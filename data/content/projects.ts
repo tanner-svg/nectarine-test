@@ -13,7 +13,7 @@ const projects: Project[] = [
       type: "image",
       url: "/.shipstudio/assets/portfolio/pinkston-for-tn/pinkston-for-tn_7.png",
     },
-    socialImage: "/.shipstudio/assets/portfolio/social/pinkston-for-tn_7.png",
+    socialImage: "/.shipstudio/assets/portfolio/social/pinkston-for-tn_7.jpg",
     headline: "Designing a Campaign That Put People Before Politics",
     serviceTags: ["Design"],
     body: `A campaign built on the belief that Tennessee's citizens deserve better than a political system that forces them to choose between two extremes, Lauren Pinkston is running for Governor as an independent voice for the working Tennessean. Her platform prioritizes practical solutions over party loyalty and neighbors over division, putting the people who make Tennessee work at the heart of every policy conversation. Bringing that vision to life required a creative foundation as people-centered as the campaign itself, from the brand identity and messaging that gave the movement its voice, to the web presence, event design, merchandise, and film work that carried it into communities across the state.`,

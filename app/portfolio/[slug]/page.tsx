@@ -16,16 +16,44 @@ interface SocialImage {
   height?: number;
 }
 
-// Reads width/height straight out of the PNG header (IHDR chunk) so the page
-// can publish explicit og:image:width/height tags — LinkedIn's crawler is
-// more reliable about actually showing the image when it doesn't have to
-// measure it itself. All of this site's fallback photos are PNGs; anything
-// else (e.g. a future jpg) just publishes without explicit dimensions.
-function readPngDimensions(absPath: string): { width: number; height: number } | undefined {
+function readPngDimensions(buf: Buffer): { width: number; height: number } | undefined {
+  if (buf.length < 24 || buf.readUInt32BE(0) !== 0x89504e47) return undefined;
+  return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+}
+
+function readJpegDimensions(buf: Buffer): { width: number; height: number } | undefined {
+  if (buf.length < 4 || buf[0] !== 0xff || buf[1] !== 0xd8) return undefined;
+  let offset = 2;
+  while (offset + 9 < buf.length) {
+    if (buf[offset] !== 0xff) {
+      offset++;
+      continue;
+    }
+    const marker = buf[offset + 1];
+    // Markers with no payload (TEM, RST0-RST7) — just skip the marker itself.
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) {
+      offset += 2;
+      continue;
+    }
+    const segmentLength = buf.readUInt16BE(offset + 2);
+    // SOF0-SOF15 (excluding DHT/JPG/DAC, which reuse the 0xC4/0xC8/0xCC codes) carry the frame dimensions.
+    const isStartOfFrame = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+    if (isStartOfFrame) {
+      return { height: buf.readUInt16BE(offset + 5), width: buf.readUInt16BE(offset + 7) };
+    }
+    offset += 2 + segmentLength;
+  }
+  return undefined;
+}
+
+// Reads width/height straight out of the image's own header so the page can
+// publish explicit og:image:width/height tags — LinkedIn's crawler is more
+// reliable about actually showing the image when it doesn't have to measure
+// it itself.
+function readImageDimensions(absPath: string): { width: number; height: number } | undefined {
   try {
     const buf = fs.readFileSync(absPath);
-    if (buf.length < 24 || buf.readUInt32BE(0) !== 0x89504e47) return undefined;
-    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+    return readPngDimensions(buf) ?? readJpegDimensions(buf);
   } catch {
     return undefined;
   }
@@ -51,7 +79,7 @@ function pickStillGalleryImage(gallery: GalleryItem[]): SocialImage | undefined 
       ? withinLimit.sort((a, b) => b.bytes - a.bytes)[0]
       : stills.sort((a, b) => a.bytes - b.bytes)[0]; // all oversized; smallest is least bad
 
-  const dimensions = readPngDimensions(path.join(process.cwd(), "public", best.url));
+  const dimensions = readImageDimensions(path.join(process.cwd(), "public", best.url));
   return { url: best.url, ...dimensions };
 }
 
@@ -82,7 +110,7 @@ export async function generateMetadata({
     : (galleryStill ?? (project.coverMedia.type === "image" ? { url: project.coverMedia.url } : undefined));
 
   const socialImage: SocialImage | undefined = project.socialImage
-    ? { url: project.socialImage, ...readPngDimensions(path.join(process.cwd(), "public", project.socialImage)) }
+    ? { url: project.socialImage, ...readImageDimensions(path.join(process.cwd(), "public", project.socialImage)) }
     : autoImage;
 
   const title = project.headline || project.title;
