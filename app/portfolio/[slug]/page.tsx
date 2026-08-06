@@ -1,8 +1,29 @@
+import fs from "fs";
+import path from "path";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAllProjects } from "@/lib/portfolio";
-import { getGalleryImages } from "@/lib/portfolio-gallery";
+import { getGalleryImages, type GalleryItem } from "@/lib/portfolio-gallery";
 import PortfolioDetailClient from "./PortfolioDetailClient";
+
+const STATIC_IMAGE_EXT = /\.(png|jpe?g|webp)$/i;
+
+// Among static candidates, prefer the largest file — in practice that's a
+// real photo rather than a small mockup/icon graphic, which is what tends to
+// get skipped over when picking "the first static image" by gallery order.
+function pickStillGalleryImage(gallery: GalleryItem[]): string | undefined {
+  const images = gallery.filter((item) => item.type === "image");
+  const stills = images.filter((item) => STATIC_IMAGE_EXT.test(item.url));
+  const candidates = stills.length > 0 ? stills : images;
+  if (candidates.length === 0) return undefined;
+
+  return candidates
+    .map((item) => ({
+      url: item.url,
+      bytes: fs.statSync(path.join(process.cwd(), "public", item.url)).size,
+    }))
+    .sort((a, b) => b.bytes - a.bytes)[0].url;
+}
 
 export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }));
@@ -18,11 +39,13 @@ export async function generateMetadata({
   if (!project) return {};
 
   // The cover video itself can't be used as a social preview image, so fall
-  // back to the first real photo in the gallery for those projects.
+  // back to a photo from the gallery for those projects. LinkedIn's crawler
+  // in particular doesn't render animated GIFs reliably as preview images,
+  // so prefer a still (jpg/png/webp) over a GIF when the gallery has both.
   const socialImage =
     project.coverMedia.type === "image"
       ? project.coverMedia.url
-      : (project.galleryFolder ? getGalleryImages(project.galleryFolder) : []).find((item) => item.type === "image")?.url;
+      : pickStillGalleryImage(project.galleryFolder ? getGalleryImages(project.galleryFolder) : []);
 
   const title = project.headline || project.title;
 
