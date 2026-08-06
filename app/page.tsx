@@ -94,7 +94,7 @@ function PortfolioCard({ project, className }: {
   return (
     <Link href={`/portfolio/${project.slug}`} className={`flex flex-col gap-[20px] group pb-[20px] sm:pb-[26px] lg:pb-[38px] ${className ?? ''}`}>
       <div
-        className="w-full rounded-[8px] flex items-end justify-end p-4 lg:p-[40px] relative overflow-hidden transition-opacity group-hover:opacity-90 h-[200px] sm:h-[260px] lg:h-[380px]"
+        className="portfolio-cover-hover w-full rounded-[8px] flex items-end justify-end p-4 lg:p-[40px] relative overflow-hidden transition-opacity group-hover:opacity-90 h-[200px] sm:h-[260px] lg:h-[380px]"
         style={{ backgroundColor: "#e8d4b8" }}
       >
         {project.coverMedia.type === "video" ? (
@@ -707,7 +707,7 @@ export default function HomePage() {
                         {mediaContent}
                       </div>
                     ) : (
-                      <Link href={`/portfolio/${t.slug}`} className="w-full h-[280px] sm:h-[380px] lg:flex-1 lg:h-[560px] relative rounded-[8px] overflow-hidden group">
+                      <Link href={`/portfolio/${t.slug}`} className="portfolio-cover-hover w-full h-[280px] sm:h-[380px] lg:flex-1 lg:h-[560px] relative rounded-[8px] overflow-hidden group">
                         {mediaContent}
                         <div className="absolute top-[20px] right-[20px] lg:top-[40px] lg:right-[40px] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" style={{ mixBlendMode: 'difference' }}>
                           <ArrowOutward color="#ffffff" size={25} />

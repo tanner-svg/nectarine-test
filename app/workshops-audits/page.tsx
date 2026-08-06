@@ -185,7 +185,7 @@ export default function WorkshopsAuditsPage() {
                   </div>
 
                   {/* Cover media */}
-                  <Link href={`/portfolio/${t.slug}`} className="flex-1 relative rounded-[8px] overflow-hidden group" style={{ height: "560px" }}>
+                  <Link href={`/portfolio/${t.slug}`} className="portfolio-cover-hover flex-1 relative rounded-[8px] overflow-hidden group" style={{ height: "560px" }}>
                     {(() => {
                       const media = t.testimonialMedia ?? t.coverMedia;
                       return media.type === "video" ? (

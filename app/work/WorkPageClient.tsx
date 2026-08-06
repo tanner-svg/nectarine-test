@@ -21,7 +21,7 @@ function PortfolioCard({ project }: { project: Project }) {
   return (
     <Link href={`/portfolio/${project.slug}`} className="flex flex-col gap-[15px] group pb-[6.667%]">
       <div
-        className="w-full rounded-[8px] relative overflow-hidden flex items-start justify-end p-[20px]"
+        className="portfolio-cover-hover w-full rounded-[8px] relative overflow-hidden flex items-start justify-end p-[20px]"
         style={{ aspectRatio: "3/2", backgroundColor: "#e8d4b8" }}
       >
         {project.coverMedia.type === "video" ? (

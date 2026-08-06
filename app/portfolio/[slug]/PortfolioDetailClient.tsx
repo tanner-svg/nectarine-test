@@ -185,7 +185,7 @@ function FeaturedCard({ project }: { project: Project }) {
   // Image is aspect-square, so width == height here — 10% is correct as-is.
   return (
     <Link href={`/portfolio/${project.slug}`} className="flex flex-col gap-[15px] group pb-[10%]">
-      <div className="relative w-full aspect-square rounded-[8px] overflow-hidden bg-[#e8d4b8]">
+      <div className="portfolio-cover-hover relative w-full aspect-square rounded-[8px] overflow-hidden bg-[#e8d4b8]">
         {project.coverMedia.type === "video" ? (
           <AutoplayVideo src={project.coverMedia.url} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
         ) : (

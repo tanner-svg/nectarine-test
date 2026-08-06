@@ -68,7 +68,7 @@ const projects: Project[] = [
     },
     headline: "Celebrating Five Decades of Legacy Winemaking",
     serviceTags: ["Design", "Videography & Media"],
-    body: `David Bruce Winery has been producing small-lot Pinot Noir in the Santa Cruz Mountains since 1964. In partnership with BFX Commerce, we helped develop set of bottle and crate designsf for the of the 50th anniversary of the Judgement of Paris.`,
+    body: `David Bruce Winery has been producing small-lot Pinot Noir in the Santa Cruz Mountains since 1964. In partnership with BFX Commerce, we helped develop set of bottle and crate designs for the of the 50th anniversary of the Judgement of Paris.`,
     attributes: ["branding", "strategy"],
     clientQuote: {
       text: "Working with Nectarine completely transformed how we present ourselves to the world. Sixty years of history, finally looking the part.",
