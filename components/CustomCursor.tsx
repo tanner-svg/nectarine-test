@@ -7,12 +7,13 @@ import { useEffect, useRef, useState } from "react";
 // its trailing motion.
 const SHADOW_EASE = 0.24;
 
-// Fixed pixel dimensions (15% smaller than the source SVGs) — never derived
-// from viewport units, so the cursor stays the same size at every screen size.
-const CURSOR_WIDTH = 45 * 0.85;
-const CURSOR_HEIGHT = 67 * 0.85;
-const SHADOW_WIDTH = 43 * 0.85;
-const SHADOW_HEIGHT = 64 * 0.85;
+// Fixed pixel dimensions (two successive 15% reductions from the source SVGs,
+// ~28% smaller total) — never derived from viewport units, so the cursor
+// stays the same size at every screen size.
+const CURSOR_WIDTH = 45 * 0.85 * 0.85;
+const CURSOR_HEIGHT = 67 * 0.85 * 0.85;
+const SHADOW_WIDTH = 43 * 0.85 * 0.85;
+const SHADOW_HEIGHT = 64 * 0.85 * 0.85;
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
