@@ -8,18 +8,18 @@ import { useEffect, useRef, useState } from "react";
 const SHADOW_EASE = 0.24;
 
 // Fixed pixel dimensions (two successive 15% reductions from the source SVGs,
-// ~28% smaller total) — never derived from viewport units, so the cursor
-// stays the same size at every screen size.
-const CURSOR_WIDTH = 45 * 0.85 * 0.85;
-const CURSOR_HEIGHT = 67 * 0.85 * 0.85;
-const SHADOW_WIDTH = 43 * 0.85 * 0.85;
-const SHADOW_HEIGHT = 64 * 0.85 * 0.85;
+// plus a further 5% reduction, ~31% smaller total) — never derived from
+// viewport units, so the cursor stays the same size at every screen size.
+const CURSOR_WIDTH = 45 * 0.85 * 0.85 * 0.95;
+const CURSOR_HEIGHT = 67 * 0.85 * 0.85 * 0.95;
+const SHADOW_WIDTH = 43 * 0.85 * 0.85 * 0.95;
+const SHADOW_HEIGHT = 64 * 0.85 * 0.85 * 0.95;
 
 // The larger illustrated pair swapped in while hovering a portfolio cover
 // image (any element with the "portfolio-cover-hover" class) — rendered at
-// its native size, no shrink applied.
-const PORTFOLIO_CURSOR_WIDTH = 61;
-const PORTFOLIO_CURSOR_HEIGHT = 89;
+// its native size minus the same 5% reduction applied to the default pair.
+const PORTFOLIO_CURSOR_WIDTH = 61 * 0.95;
+const PORTFOLIO_CURSOR_HEIGHT = 89 * 0.95;
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
