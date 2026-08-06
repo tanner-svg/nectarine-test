@@ -68,17 +68,22 @@ export async function generateMetadata({
   const project = getAllProjects().find((p) => p.slug === slug);
   if (!project) return {};
 
-  // Always prefer a real JPG/PNG still from the gallery — this covers video
-  // covers (no image at all) as well as GIF/AVIF covers, neither of which
-  // social crawlers (LinkedIn especially) render reliably as previews. Only
-  // if a project's gallery has no JPG/PNG at all do we fall back to whatever
-  // the cover itself is, so there's still some preview image rather than none.
+  // An explicit `socialImage` on the project always wins. Otherwise, prefer
+  // a real JPG/PNG still from the gallery — this covers video covers (no
+  // image at all) as well as GIF/AVIF covers, neither of which social
+  // crawlers (LinkedIn especially) render reliably as previews. Only if a
+  // project's gallery has no JPG/PNG at all do we fall back to whatever the
+  // cover itself is, so there's still some preview image rather than none.
   const gallery = project.galleryFolder ? getGalleryImages(project.galleryFolder) : [];
   const galleryStill = pickStillGalleryImage(gallery);
   const coverIsJpgPng = project.coverMedia.type === "image" && JPG_PNG_EXT.test(project.coverMedia.url);
-  const socialImage: SocialImage | undefined = coverIsJpgPng
+  const autoImage: SocialImage | undefined = coverIsJpgPng
     ? { url: project.coverMedia.url }
     : (galleryStill ?? (project.coverMedia.type === "image" ? { url: project.coverMedia.url } : undefined));
+
+  const socialImage: SocialImage | undefined = project.socialImage
+    ? { url: project.socialImage, ...readPngDimensions(path.join(process.cwd(), "public", project.socialImage)) }
+    : autoImage;
 
   const title = project.headline || project.title;
   const ogImage = socialImage && {

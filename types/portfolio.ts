@@ -46,6 +46,8 @@ export interface Project {
   homepageOrder?: number;
   /** Set to false to hide this project from the /work page grid. Defaults to true (shown). Doesn't affect the homepage, testimonials, or the project's own detail page — those are controlled separately. */
   showOnWorkPage?: boolean;
+  /** Explicit JPG/PNG to use as this project's social share preview (og:image), e.g. "/.shipstudio/assets/portfolio/social/pinkston-for-tn.jpg". Overrides the automatic cover/gallery-based fallback. Falls back to that automatic pick if left out. */
+  socialImage?: string;
   body: string;
   attributes: ProjectAttribute[];
   clientQuote: ClientQuote;

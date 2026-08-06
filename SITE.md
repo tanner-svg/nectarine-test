@@ -71,6 +71,7 @@ Projects live in `data/content/projects.ts` using the `Project` type from `types
 - `showOnHomepage` — set to `true` to include this project in the homepage's portfolio grid. The grid always shows at most 4 cards, even if more than 4 projects have this set to `true`.
 - `homepageOrder` — a number controlling where this project appears in the homepage grid (1 = first). Only matters when `showOnHomepage` is `true`; separate from the general `order` field used elsewhere (like the /work page).
 - `showOnWorkPage` — set to `false` to hide a project from the /work page grid specifically. It stays everywhere else — homepage, testimonials, and its own project page are unaffected. Leave it out (or `true`) to keep showing it there; this is the default.
+- `socialImage` — explicit JPG/PNG to use for this project's social share preview (see "Social share images" below). Leave it out to have one picked automatically from the gallery.
 
 Helper functions in `lib/portfolio.ts`: `getAllProjects()`, `getHomepageProjects()`, `getWorkPageProjects()`, `getProjectsByAttribute()`, `getFeaturedProjects()`
 
@@ -92,9 +93,17 @@ Images and short video clips (`.png`, `.jpg`, `.gif`, `.webp`, `.mp4`, `.mov`, `
 
 ### Social share images
 
-Each project page sets its own preview image and title for when the link is shared on iMessage, Slack, LinkedIn, Twitter/X, etc. (`app/portfolio/[slug]/page.tsx`, `generateMetadata`). Every project always uses a real JPG/PNG still from its own gallery folder — never a GIF or AVIF, and never the cover video — because LinkedIn's crawler in particular doesn't render those reliably as previews. Among the JPG/PNGs in a project's gallery, it picks the largest one under ~4MB (comfortably under LinkedIn's file-size limit), which in practice means a real photo rather than a small mockup/icon graphic, and reads the image's actual width/height to include in the preview tags — LinkedIn's crawler is more reliable about showing the image when it doesn't have to measure it itself. Nothing to configure; it follows `coverMedia` and `galleryFolder` automatically as those change.
+Each project page sets its own preview image and title for when the link is shared on iMessage, Slack, LinkedIn, Twitter/X, etc. (`app/portfolio/[slug]/page.tsx`, `generateMetadata`).
 
-**Two projects don't have a compliant image yet:** Sojourn Turkey and Showered With Love — each currently only has a single GIF/AVIF file in its folder (no JPG/PNG at all), so their share previews still fall back to that file for now. Add a numbered JPG or PNG to `.shipstudio/assets/portfolio/sojourn-turkey/` or `.../swl/` (and the matching `public/.shipstudio/assets/...` copy) to fix those.
+**To pick the exact image yourself:** add a JPG or PNG to `.shipstudio/assets/portfolio/social/` (plus the matching copy in `public/.shipstudio/assets/portfolio/social/` — same rule as every other asset), then set that project's `socialImage` field in `data/content/projects.ts` to point at it, e.g.:
+```ts
+socialImage: "/.shipstudio/assets/portfolio/social/pinkston-for-tn.jpg",
+```
+This is a standalone folder just for share-preview images — separate from each project's gallery folder — so you can crop/pick something specifically meant to look good as a link preview rather than reusing a gallery photo. Whatever you set here always wins.
+
+**If a project has no `socialImage` set,** it falls back to picking one automatically: a real JPG/PNG still from the project's own gallery folder — never a GIF or AVIF, and never the cover video — because LinkedIn's crawler in particular doesn't render those reliably as previews. Among the JPG/PNGs in a project's gallery, it picks the largest one under ~4MB (comfortably under LinkedIn's file-size limit), which in practice means a real photo rather than a small mockup/icon graphic. Either way (explicit or automatic), the page reads the image's actual width/height to include in the preview tags — LinkedIn's crawler is more reliable about showing the image when it doesn't have to measure it itself.
+
+**Two projects don't have a compliant automatic image yet:** Sojourn Turkey and Showered With Love — each currently only has a single GIF/AVIF file in its folder (no JPG/PNG at all), so their share previews still fall back to that file unless you set `socialImage` for them directly.
 
 **After deploying, LinkedIn's own cache may still show the old preview for a URL you've already tested.** Run the page's URL through LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/) to force it to re-fetch.
 
