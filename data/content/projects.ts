@@ -89,6 +89,7 @@ const projects: Project[] = [
       type: "video",
       url: "/.shipstudio/assets/portfolio/faith-driven-talent/Hero-Video_1.mp4",
     },
+    socialImage: "/.shipstudio/assets/portfolio/social/FDT_Identity_Editable_2.jpg",
     headline: "Building a Brand for an Industry That Rarely Gets to Choose Both",
     serviceTags: ["Writing & Copy", "Design", "Digital & UI Design"],
     body: `Faith Driven Talent connects entertainment industry professionals who want to build careers rooted in their values — a talent agency and community for a segment that has long had to choose between conviction and opportunity.
@@ -113,6 +114,7 @@ We partnered with the founding team across strategy, copywriting, and brand iden
       type: "image",
       url: "/.shipstudio/assets/portfolio/michael-cook/MC-Hero_1.gif",
     },
+    socialImage: "/.shipstudio/assets/portfolio/social/MC_Social-Image.jpg",
     headline: "Mapping the Universe of He Who Speaks Out of Turn",
     serviceTags: ["Cover Design", "Print Design", "Illustration"],
     body: `A debut novel spanning time, mythology, and the weight of words spoken and unspoken, He Who Speaks Out of Turn follows a group of unlikely companions racing through time to find a wizard from the far past and prevent a future void of life. Michael Cook built a world rich enough to get lost in, with characters whose journeys demanded to be mapped and a story whose tension deserved a cover worthy of carrying it. The art direction, illustration, and cartography that brought it to life were the result of going deep into that world, learning its geography, its people, and the stakes of every path taken.`,
