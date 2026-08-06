@@ -89,6 +89,10 @@ Example: `pinkston-for-tn_1.png`, `pinkston-for-tn_2.png`, `pinkston-for-tn_3.pn
 
 Images and short video clips (`.png`, `.jpg`, `.gif`, `.webp`, `.mp4`, `.mov`, `.webm`) both work. As with all assets, files need to exist in both `.shipstudio/assets/portfolio/<folder>/` and `public/.shipstudio/assets/portfolio/<folder>/` to show up on the site.
 
+### Social share images
+
+Each project page now sets its own preview image and title for when the link is shared on iMessage, Slack, Twitter/X, etc. (`app/portfolio/[slug]/page.tsx`, `generateMetadata`). It uses the project's `coverMedia` image automatically — since a video file can't be used as a share preview, projects with a video cover (David Bruce Winery, Faith Driven Talent) instead use the first real photo in their gallery folder. Nothing to configure; it follows `coverMedia` and `galleryFolder` automatically as those change.
+
 Current projects: Pinkston for Tennessee (full gallery of 14 images set up as the example — see `.shipstudio/assets/portfolio/pinkston-for-tn/`), Frontier Operators, David Bruce Winery (video cover), Faith Driven Talent. Featured (in testimonials): Frontier Operators + David Bruce Winery. Only Pinkston has real gallery images so far — the other three will show just their cover image on their project page until numbered files are added to their folders.
 
 ## Service Content

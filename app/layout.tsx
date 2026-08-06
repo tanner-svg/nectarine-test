@@ -32,6 +32,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.nectarine.ink"),
   title: "Nectarine Studio",
   description: "We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.",
 };

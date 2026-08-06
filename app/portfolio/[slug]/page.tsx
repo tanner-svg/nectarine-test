@@ -1,10 +1,36 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getAllProjects } from "@/lib/portfolio";
 import { getGalleryImages } from "@/lib/portfolio-gallery";
 import PortfolioDetailClient from "./PortfolioDetailClient";
 
 export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getAllProjects().find((p) => p.slug === slug);
+  if (!project) return {};
+
+  // The cover video itself can't be used as a social preview image, so fall
+  // back to the first real photo in the gallery for those projects.
+  const socialImage =
+    project.coverMedia.type === "image"
+      ? project.coverMedia.url
+      : (project.galleryFolder ? getGalleryImages(project.galleryFolder) : []).find((item) => item.type === "image")?.url;
+
+  const title = project.headline || project.title;
+
+  return {
+    title,
+    openGraph: { title, images: socialImage ? [{ url: socialImage }] : undefined },
+    twitter: { card: "summary_large_image", title, images: socialImage ? [socialImage] : undefined },
+  };
 }
 
 export default async function PortfolioDetailPage({
