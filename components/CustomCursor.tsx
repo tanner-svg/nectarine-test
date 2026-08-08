@@ -59,9 +59,25 @@ export default function CustomCursor() {
     const handleLeave = () => setVisible(false);
     const handleEnter = () => setVisible(true);
 
+    // The browser never sends mousemove into the parent page once the
+    // pointer crosses into an iframe's own document (cross-origin iframes
+    // like the /audit embed give us zero visibility into pointer position
+    // there), which otherwise leaves our cursor frozen mid-page. mouseover/
+    // mouseout on the iframe element itself still fire in the parent
+    // document at the boundary, so we use those to hand off to the native
+    // system cursor for as long as the pointer is over the iframe.
+    const handleIframeOver = (e: MouseEvent) => {
+      if ((e.target as HTMLElement | null)?.tagName === "IFRAME") setVisible(false);
+    };
+    const handleIframeOut = (e: MouseEvent) => {
+      if ((e.target as HTMLElement | null)?.tagName === "IFRAME") setVisible(true);
+    };
+
     window.addEventListener("mousemove", handleMove);
     document.documentElement.addEventListener("mouseleave", handleLeave);
     document.documentElement.addEventListener("mouseenter", handleEnter);
+    document.addEventListener("mouseover", handleIframeOver);
+    document.addEventListener("mouseout", handleIframeOut);
 
     let rafId: number;
     const tick = () => {
@@ -84,6 +100,8 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", handleMove);
       document.documentElement.removeEventListener("mouseleave", handleLeave);
       document.documentElement.removeEventListener("mouseenter", handleEnter);
+      document.removeEventListener("mouseover", handleIframeOver);
+      document.removeEventListener("mouseout", handleIframeOut);
       document.documentElement.classList.remove("custom-cursor-active");
       cancelAnimationFrame(rafId);
     };
