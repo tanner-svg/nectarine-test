@@ -20,6 +20,7 @@
 - **Individual Project Page** (`/portfolio/[slug]`) — Every portfolio image and featured-project link across the site (homepage bento grid, testimonial slider, /work, /what-we-do, Workshops & Audits) opens one of these. Left column has the project name, headline, and a "Read the Full Story" button that stays pinned in place while you scroll the image gallery on the right, releasing once you reach the Featured Projects strip at the bottom. The button opens a pop-up with the full case study text and which services applied (highlighted pills). See "Portfolio Data Schema" below for how the gallery images and pop-up content are set.
 - **What We Do** (`/what-we-do`) — Service category hero with 6 filter buttons (Design, Writing & Copy, Digital & UI Design, Videography & Media, Events Design & Media, Workshops & Audits). Clicking a button animates the service detail section below it (icon, title, description, CTA, and list of sub-services). Auto-cycles every 4 seconds. Featured Services static cards (AI Brand Kit, Print & Production) below that. Static portfolio grid at the bottom shows all projects.
 - **Workshops & Audits** (`/workshops-audits`) — Hero on dark burgundy, Workshops card (coral/red), Audits card (salmon), testimonial, light footer
+- **Brand Audit** (`/audit`) — Embeds the external Brand Audit tool (https://brand-audit.pages.dev/) full-screen below the navbar via an iframe. To change which tool is embedded, edit the `src` URL in `app/audit/page.tsx`.
 
 ## Components
 
