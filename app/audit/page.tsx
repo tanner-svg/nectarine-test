@@ -12,7 +12,7 @@ export default function AuditPage() {
             from its top-left corner so the embedded content renders 20%
             bigger while still exactly filling the visible area. */}
         <iframe
-          src="https://brand-audit.tanner-a09.workers.dev/"
+          src="https://brand-audit.pages.dev/"
           title="Brand Audit"
           className="border-0 origin-top-left"
           style={{ width: "calc(100% / 1.2)", height: "calc(100% / 1.2)", transform: "scale(1.2)" }}
