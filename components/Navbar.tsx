@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 // linked here. Add them back to this array to restore them.
 const mainLinks = [
   { href: '/work', label: 'Our Work' },
+  { href: '/audit', label: 'Audit Tool' },
 ];
 
 // Hidden from the menu for now, alongside mainLinks above — add entries
