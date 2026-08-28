@@ -186,6 +186,38 @@ function PortfolioOverlay({ onClose }: { onClose: () => void }) {
   );
 }
 
+function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[300] flex items-center justify-center p-4 lg:p-[50px] bg-black/40"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-[#fcf8f3] rounded-[25px] p-4 lg:p-[30px] w-full max-w-[900px] h-[90vh] flex flex-col gap-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between flex-shrink-0">
+          <h2 className="font-aleo text-[24px] lg:text-[32px] text-[#380102]">Workshop Offerings</h2>
+          <button onClick={onClose} aria-label="Close">
+            <Image src="/.shipstudio/assets/cancel.svg" alt="Close" width={36} height={36} />
+          </button>
+        </div>
+        <iframe
+          src="/.shipstudio/assets/NECT_Workshop-Offerings_Q3-2026.pdf"
+          title="Workshop Offerings PDF"
+          className="w-full flex-1 rounded-[13px] border-0 bg-white"
+        />
+      </div>
+    </div>
+  );
+}
+
 const accordionContent = (accentColor: string) => (
   <>
     <p className="font-aleo text-[16px] leading-[1.6]" style={{ color: accentColor === '#f8e4cc' ? '#f8e4cc' : '#f8e4cc' }}>
@@ -210,6 +242,7 @@ const accordionContent = (accentColor: string) => (
 
 export default function HomePage() {
   const [overlayOpen, setOverlayOpen] = useState(false);
+  const [workshopModalOpen, setWorkshopModalOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<'workshops' | 'audits' | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fuzzIndex, setFuzzIndex] = useState(0);
@@ -531,6 +564,14 @@ export default function HomePage() {
                   <span key={t} className="font-bel text-[9px] uppercase tracking-[0.155em] text-[#d7432a] bg-[#ffc1a7] px-[12px] py-[8px] rounded-[15px]">{t}</span>
                 ))}
               </div>
+              <button
+                onClick={() => setWorkshopModalOpen(true)}
+                className="self-start flex items-center gap-[10px] bg-[#f8e4cc] text-[#d7432a] font-bel text-[13px] uppercase rounded-full px-[20px] py-[12px] transition-transform duration-300 hover:scale-[1.05]"
+                style={{ letterSpacing: '0.1em' }}
+              >
+                Learn More
+                <ArrowOutward color="#d7432a" size={12} />
+              </button>
             </div>
 
             {/* Audits card */}
@@ -763,6 +804,7 @@ export default function HomePage() {
       <Footer variant="dark" />
 
       {overlayOpen && <PortfolioOverlay onClose={() => setOverlayOpen(false)} />}
+      {workshopModalOpen && <WorkshopPdfModal onClose={() => setWorkshopModalOpen(false)} />}
     </div>
   );
 }
