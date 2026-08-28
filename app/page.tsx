@@ -254,20 +254,32 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
   }, []);
 
   return (
-    <div
-      className="fixed inset-0 z-[300] flex items-center justify-center p-4 lg:p-[50px] bg-black/40"
-      onClick={onClose}
-    >
-      <div
-        className="relative bg-white rounded-[25px] p-4 lg:p-[30px] w-[80vw] h-[90vh] flex flex-col gap-4"
-        onClick={(e) => e.stopPropagation()}
+    <div className="fixed inset-0 z-[300] bg-white flex flex-col">
+      {/* Logo — same position/size as the site navbar's default (light) state */}
+      <div className="absolute top-0 left-0 w-full flex items-center px-5 sm:px-10 lg:px-[75px] h-[80px] lg:h-[110px] pointer-events-none">
+        <Link href="/" onClick={onClose} className="pointer-events-auto">
+          <Image
+            src="/.shipstudio/assets/nectarine-logo-4.svg"
+            alt="Nectarine"
+            width={286}
+            height={50}
+            className="h-[32px] lg:h-[50px] w-auto"
+          />
+        </Link>
+      </div>
+
+      {/* Close button — same position/size as the navbar hamburger it replaces */}
+      <button
+        onClick={onClose}
+        aria-label="Close"
+        className="fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[35px] h-[35px] lg:w-[40px] lg:h-[40px] flex flex-col items-center justify-center gap-[5px] z-[310] transition-transform duration-300 hover:scale-[1.05]"
       >
-        <div className="flex items-center justify-between flex-shrink-0">
-          <h2 className="font-aleo text-[24px] lg:text-[32px] text-[#380102]">Workshop Offerings</h2>
-          <button onClick={onClose} aria-label="Close">
-            <Image src="/.shipstudio/assets/cancel.svg" alt="Close" width={36} height={36} />
-          </button>
-        </div>
+        <span className="block w-[26px] h-[2px] bg-[#380102]" style={{ transform: 'translateY(3.5px) rotate(45deg)' }} />
+        <span className="block w-[26px] h-[2px] bg-[#380102]" style={{ transform: 'translateY(-3.5px) rotate(-45deg)' }} />
+      </button>
+
+      <div className="flex-1 min-h-0 pt-[80px] lg:pt-[110px] px-5 sm:px-10 lg:px-[75px] pb-5 sm:pb-10 lg:pb-[50px] flex flex-col gap-4">
+        <h2 className="font-aleo text-[24px] lg:text-[32px] text-[#380102] flex-shrink-0">Workshop Offerings</h2>
         <div className="relative flex-1 min-h-0">
           {status === "loading" && (
             <div className="absolute inset-0 flex items-center justify-center rounded-[13px] bg-white">
