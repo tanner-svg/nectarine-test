@@ -206,7 +206,7 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
     let cancelled = false;
     (async () => {
       const pdfjsLib = await import("pdfjs-dist");
-      pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf-worker/pdf.worker.min.mjs";
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdfjs/pdfjs-core.min.mjs";
       const container = containerRef.current;
       if (!container) return;
       try {
