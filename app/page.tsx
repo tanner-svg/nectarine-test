@@ -186,8 +186,11 @@ function PortfolioOverlay({ onClose }: { onClose: () => void }) {
   );
 }
 
+const WORKSHOP_PDF_URL = "/.shipstudio/assets/NECT_Workshop-Offerings_Q3-2026.pdf";
+
 function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
-  const [loaded, setLoaded] = useState(false);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -195,13 +198,54 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  // Renders each page to its own white canvas (instead of embedding the PDF
+  // in an iframe) so the backdrop behind the pages is a color we control —
+  // the browser's built-in PDF viewer always draws its own gray canvas that
+  // can't be restyled from the parent page.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const pdfjsLib = await import("pdfjs-dist");
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf-worker/pdf.worker.min.mjs";
+      const container = containerRef.current;
+      if (!container) return;
+      try {
+        const doc = await pdfjsLib.getDocument({ url: WORKSHOP_PDF_URL }).promise;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        for (let i = 1; i <= doc.numPages; i++) {
+          if (cancelled) return;
+          const page = await doc.getPage(i);
+          const targetWidth = container.clientWidth;
+          const unscaledViewport = page.getViewport({ scale: 1 });
+          const scale = (targetWidth / unscaledViewport.width) * dpr;
+          const viewport = page.getViewport({ scale });
+          const canvas = document.createElement("canvas");
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          canvas.style.width = "100%";
+          canvas.style.height = "auto";
+          canvas.style.display = "block";
+          const ctx = canvas.getContext("2d");
+          if (!ctx) continue;
+          await page.render({ canvasContext: ctx, viewport, background: "#ffffff" }).promise;
+          if (cancelled) return;
+          container.appendChild(canvas);
+          if (i === 1) setStatus("ready");
+        }
+      } catch {
+        if (!cancelled) setStatus("error");
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <div
       className="fixed inset-0 z-[300] flex items-center justify-center p-4 lg:p-[50px] bg-black/40"
       onClick={onClose}
     >
       <div
-        className="relative bg-[#fcf8f3] rounded-[25px] p-4 lg:p-[30px] w-full max-w-[900px] h-[90vh] flex flex-col gap-4"
+        className="relative bg-[#fcf8f3] rounded-[25px] p-4 lg:p-[30px] w-[80vw] h-[90vh] flex flex-col gap-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between flex-shrink-0">
@@ -210,8 +254,8 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
             <Image src="/.shipstudio/assets/cancel.svg" alt="Close" width={36} height={36} />
           </button>
         </div>
-        <div className="relative flex-1">
-          {!loaded && (
+        <div className="relative flex-1 min-h-0">
+          {status === "loading" && (
             <div className="absolute inset-0 flex items-center justify-center rounded-[13px] bg-white">
               <div
                 className="w-[36px] h-[36px] rounded-full border-[3px] border-[#f8e4cc] border-t-[#d7432a] animate-spin"
@@ -220,12 +264,18 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
               />
             </div>
           )}
-          <iframe
-            src="/.shipstudio/assets/NECT_Workshop-Offerings_Q3-2026.pdf"
-            title="Workshop Offerings PDF"
-            onLoad={() => setLoaded(true)}
-            className="w-full h-full rounded-[13px] border-0 bg-white"
-            style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.2s ease' }}
+          {status === "error" && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-[13px] bg-white p-6 text-center">
+              <p className="font-aleo text-[#380102]">This PDF couldn&apos;t be loaded.</p>
+              <a href={WORKSHOP_PDF_URL} target="_blank" rel="noopener noreferrer" className="font-bel text-[13px] uppercase text-[#d7432a] underline">
+                Open it in a new tab
+              </a>
+            </div>
+          )}
+          <div
+            ref={containerRef}
+            className="w-full h-full overflow-y-auto rounded-[13px] bg-white flex flex-col items-center gap-4 p-4"
+            style={{ opacity: status === "ready" ? 1 : 0, transition: 'opacity 0.2s ease' }}
           />
         </div>
       </div>
