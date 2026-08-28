@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import AutoplayVideo from "@/components/AutoplayVideo";
 import ContactForm from "@/components/ContactForm";
 import { getHomepageProjects, getFeaturedProjects } from "@/lib/portfolio";
-import { lenisRef } from "@/lib/lenis";
 import type { Project } from "@/types/portfolio";
 
 // Groups a sentence's word spans by rendered line, then drives a per-line
@@ -187,129 +186,6 @@ function PortfolioOverlay({ onClose }: { onClose: () => void }) {
   );
 }
 
-const WORKSHOP_PDF_URL = "/.shipstudio/assets/NECT_Workshop-Offerings_Q3-2026.pdf";
-
-function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  // Freeze the page behind the pop-up: lock body overflow (covers keyboard
-  // scrolling) and pause Lenis (it otherwise preventDefaults wheel/touch
-  // scroll itself, bypassing the overflow lock).
-  useEffect(() => {
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    lenisRef.current?.stop();
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      lenisRef.current?.start();
-    };
-  }, []);
-
-  // Renders each page to its own white canvas (instead of embedding the PDF
-  // in an iframe) so the backdrop behind the pages is a color we control —
-  // the browser's built-in PDF viewer always draws its own gray canvas that
-  // can't be restyled from the parent page.
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const pdfjsLib = await import("pdfjs-dist");
-      pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdfjs/pdfjs-core.min.mjs";
-      const container = containerRef.current;
-      if (!container) return;
-      try {
-        const doc = await pdfjsLib.getDocument({ url: WORKSHOP_PDF_URL }).promise;
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        for (let i = 1; i <= doc.numPages; i++) {
-          if (cancelled) return;
-          const page = await doc.getPage(i);
-          const targetWidth = container.clientWidth;
-          const unscaledViewport = page.getViewport({ scale: 1 });
-          const scale = (targetWidth / unscaledViewport.width) * dpr;
-          const viewport = page.getViewport({ scale });
-          const canvas = document.createElement("canvas");
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
-          canvas.style.width = "100%";
-          canvas.style.height = "auto";
-          canvas.style.display = "block";
-          const ctx = canvas.getContext("2d");
-          if (!ctx) continue;
-          await page.render({ canvasContext: ctx, viewport, background: "#ffffff" }).promise;
-          if (cancelled) return;
-          container.appendChild(canvas);
-          if (i === 1) setStatus("ready");
-        }
-      } catch {
-        if (!cancelled) setStatus("error");
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
-
-  return (
-    <div className="fixed inset-0 z-[300] bg-white flex flex-col">
-      {/* Logo — same position/size as the site navbar's default (light) state */}
-      <div className="absolute top-0 left-0 w-full flex items-center px-5 sm:px-10 lg:px-[75px] h-[80px] lg:h-[110px] pointer-events-none">
-        <Link href="/" onClick={onClose} className="pointer-events-auto">
-          <Image
-            src="/.shipstudio/assets/nectarine-logo-4.svg"
-            alt="Nectarine"
-            width={286}
-            height={50}
-            className="h-[32px] lg:h-[50px] w-auto"
-          />
-        </Link>
-      </div>
-
-      {/* Close button — same position/size as the navbar hamburger it replaces */}
-      <button
-        onClick={onClose}
-        aria-label="Close"
-        className="fixed top-[18px] lg:top-[30px] right-5 sm:right-10 lg:right-[75px] w-[35px] h-[35px] lg:w-[40px] lg:h-[40px] flex flex-col items-center justify-center gap-[5px] z-[310] transition-transform duration-300 hover:scale-[1.05]"
-      >
-        <span className="block w-[26px] h-[2px] bg-[#380102]" style={{ transform: 'translateY(3.5px) rotate(45deg)' }} />
-        <span className="block w-[26px] h-[2px] bg-[#380102]" style={{ transform: 'translateY(-3.5px) rotate(-45deg)' }} />
-      </button>
-
-      <div className="flex-1 min-h-0 pt-[80px] lg:pt-[110px] px-5 sm:px-10 lg:px-[75px] pb-5 sm:pb-10 lg:pb-[50px] flex flex-col gap-4">
-        <h2 className="font-aleo text-[24px] lg:text-[32px] text-[#380102] flex-shrink-0">Workshop Offerings</h2>
-        <div className="relative flex-1 min-h-0">
-          {status === "loading" && (
-            <div className="absolute inset-0 flex items-center justify-center rounded-[13px] bg-white">
-              <div
-                className="w-[36px] h-[36px] rounded-full border-[3px] border-[#f8e4cc] border-t-[#d7432a] animate-spin"
-                role="status"
-                aria-label="Loading PDF"
-              />
-            </div>
-          )}
-          {status === "error" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-[13px] bg-white p-6 text-center">
-              <p className="font-aleo text-[#380102]">This PDF couldn&apos;t be loaded.</p>
-              <a href={WORKSHOP_PDF_URL} target="_blank" rel="noopener noreferrer" className="font-bel text-[13px] uppercase text-[#d7432a] underline">
-                Open it in a new tab
-              </a>
-            </div>
-          )}
-          <div
-            ref={containerRef}
-            data-lenis-prevent
-            className="w-full h-full overflow-y-auto rounded-[13px] bg-white flex flex-col items-center gap-4 p-4"
-            style={{ opacity: status === "ready" ? 1 : 0, transition: 'opacity 0.2s ease' }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 const accordionContent = (accentColor: string) => (
   <>
     <p className="font-aleo text-[16px] leading-[1.6]" style={{ color: accentColor === '#f8e4cc' ? '#f8e4cc' : '#f8e4cc' }}>
@@ -334,7 +210,6 @@ const accordionContent = (accentColor: string) => (
 
 export default function HomePage() {
   const [overlayOpen, setOverlayOpen] = useState(false);
-  const [workshopModalOpen, setWorkshopModalOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<'workshops' | 'audits' | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fuzzIndex, setFuzzIndex] = useState(0);
@@ -656,14 +531,16 @@ export default function HomePage() {
                   <span key={t} className="font-bel text-[9px] uppercase tracking-[0.155em] text-[#d7432a] bg-[#ffc1a7] px-[12px] py-[8px] rounded-[15px]">{t}</span>
                 ))}
               </div>
-              <button
-                onClick={() => setWorkshopModalOpen(true)}
+              <Link
+                href="https://drive.google.com/file/d/1K0P396HHpAZ_HImNaumAVMP1Iq7Buaaa/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="self-start flex items-center gap-[10px] bg-[#f8e4cc] text-[#d7432a] font-bel text-[13px] uppercase rounded-full px-[20px] py-[12px] transition-transform duration-300 hover:scale-[1.05]"
                 style={{ letterSpacing: '0.1em' }}
               >
                 Learn More
                 <ArrowOutward color="#d7432a" size={12} />
-              </button>
+              </Link>
             </div>
 
             {/* Audits card */}
@@ -896,7 +773,6 @@ export default function HomePage() {
       <Footer variant="dark" />
 
       {overlayOpen && <PortfolioOverlay onClose={() => setOverlayOpen(false)} />}
-      {workshopModalOpen && <WorkshopPdfModal onClose={() => setWorkshopModalOpen(false)} />}
     </div>
   );
 }
