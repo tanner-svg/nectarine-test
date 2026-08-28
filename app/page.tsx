@@ -187,6 +187,8 @@ function PortfolioOverlay({ onClose }: { onClose: () => void }) {
 }
 
 function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
+  const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
@@ -208,11 +210,24 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
             <Image src="/.shipstudio/assets/cancel.svg" alt="Close" width={36} height={36} />
           </button>
         </div>
-        <iframe
-          src="/.shipstudio/assets/NECT_Workshop-Offerings_Q3-2026.pdf"
-          title="Workshop Offerings PDF"
-          className="w-full flex-1 rounded-[13px] border-0 bg-white"
-        />
+        <div className="relative flex-1">
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center rounded-[13px] bg-white">
+              <div
+                className="w-[36px] h-[36px] rounded-full border-[3px] border-[#f8e4cc] border-t-[#d7432a] animate-spin"
+                role="status"
+                aria-label="Loading PDF"
+              />
+            </div>
+          )}
+          <iframe
+            src="/.shipstudio/assets/NECT_Workshop-Offerings_Q3-2026.pdf"
+            title="Workshop Offerings PDF"
+            onLoad={() => setLoaded(true)}
+            className="w-full h-full rounded-[13px] border-0 bg-white"
+            style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.2s ease' }}
+          />
+        </div>
       </div>
     </div>
   );
