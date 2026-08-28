@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AutoplayVideo from "@/components/AutoplayVideo";
 import ContactForm from "@/components/ContactForm";
 import { getHomepageProjects, getFeaturedProjects } from "@/lib/portfolio";
+import { lenisRef } from "@/lib/lenis";
 import type { Project } from "@/types/portfolio";
 
 // Groups a sentence's word spans by rendered line, then drives a per-line
@@ -197,6 +198,19 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
+
+  // Freeze the page behind the pop-up: lock body overflow (covers keyboard
+  // scrolling) and pause Lenis (it otherwise preventDefaults wheel/touch
+  // scroll itself, bypassing the overflow lock).
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    lenisRef.current?.stop();
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      lenisRef.current?.start();
+    };
+  }, []);
 
   // Renders each page to its own white canvas (instead of embedding the PDF
   // in an iframe) so the backdrop behind the pages is a color we control —
