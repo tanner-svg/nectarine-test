@@ -245,7 +245,7 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative bg-[#fcf8f3] rounded-[25px] p-4 lg:p-[30px] w-[80vw] h-[90vh] flex flex-col gap-4"
+        className="relative bg-white rounded-[25px] p-4 lg:p-[30px] w-[80vw] h-[90vh] flex flex-col gap-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between flex-shrink-0">
@@ -274,6 +274,7 @@ function WorkshopPdfModal({ onClose }: { onClose: () => void }) {
           )}
           <div
             ref={containerRef}
+            data-lenis-prevent
             className="w-full h-full overflow-y-auto rounded-[13px] bg-white flex flex-col items-center gap-4 p-4"
             style={{ opacity: status === "ready" ? 1 : 0, transition: 'opacity 0.2s ease' }}
           />
