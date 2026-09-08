@@ -59,3 +59,6 @@ next-env.d.ts
 .shipstudio/assets/**/9ebc97f*
 public/.shipstudio/assets/**/6e4de06*
 public/.shipstudio/assets/**/9ebc97f*
+
+# ShipStudio metadata
+.shipstudio/

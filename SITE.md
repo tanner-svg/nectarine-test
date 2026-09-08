@@ -21,6 +21,18 @@
 - **What We Do** (`/what-we-do`) — Service category hero with 6 filter buttons (Design, Writing & Copy, Digital & UI Design, Videography & Media, Events Design & Media, Workshops & Audits). Clicking a button animates the service detail section below it (icon, title, description, CTA, and list of sub-services). Auto-cycles every 4 seconds. Featured Services static cards (AI Brand Kit, Print & Production) below that. Static portfolio grid at the bottom shows all projects.
 - **Workshops & Audits** (`/workshops-audits`) — Hero on dark burgundy, Workshops card (coral/red), Audits card (salmon), testimonial, light footer
 - **Brand Audit** (`/audit`) — Embeds the external Brand Audit tool (https://brand-audit.pages.dev/) full-screen below the navbar via an iframe. To change which tool is embedded, edit the `src` URL in `app/audit/page.tsx`.
+- **Blog** (`/blog`) — Currently hidden from the main menu (still works if visited directly at /blog — see Recent Changes). One post is pinned as the "Featured" hero at the top (full excerpt preview, big cover). Below that: a live search box and category filter pills (Branding, Copywriting, Web Design, Strategy, Case Studies), then a grid of every other post — search and filters apply instantly, no page reload. See "Blog Data" below for how to add/edit posts.
+- **Individual Blog Post** (`/blog/[slug]`) — Category, title, date, author, and read time (auto-calculated from word count) at the top, then the full post body, then a "More from the Blog" strip linking to 3 other posts.
+
+## Blog Data
+
+All posts live in `data/content/blog.ts` as a list — no CMS, just edit the file directly.
+
+- **To add a post:** copy an existing entry in the list and fill in `slug` (used in the URL, e.g. `my-post` → `/blog/my-post`), `title`, `excerpt` (shown on cards and in search results), `category` (must be one of: Branding, Copywriting, Web Design, Strategy, Case Studies — or add a new one in `types/blog.ts`), `date`, `author`, and `body` (paragraphs separated by a blank line). It shows up automatically — no other code changes needed.
+- **To change the featured post:** move `featured: true` from its current post to a different one (only one post should have it).
+- **Cover art:** since there's no blog photography yet, each post shows a colored block with a service icon (`coverColor` + `coverIcon` fields) instead of a photo — matching the site's existing placeholder pattern. Swap in a real photo later by changing how `BlogCover` renders in `app/blog/BlogPageClient.tsx` and the cover section in `app/blog/[slug]/page.tsx`.
+- **Read time** is calculated automatically from each post's word count — no field to maintain.
+- Added "Blog" to the main menu (`components/Navbar.tsx`).
 
 ## Components
 
@@ -80,7 +92,7 @@ Currently hidden from the /work page grid: Showered With Love, Sojourn Turkey (b
 
 ### Choosing the 4 homepage projects
 
-To change which projects show on the homepage, or reorder them, edit `showOnHomepage` and `homepageOrder` on each project in `data/content/projects.ts` — no other code changes needed. Right now: David Bruce Winery, Pinkston for Tennessee, Frontier Operators, and Faith Driven Talent are shown (in that order); "He Who Speaks Out of Turn" is set to `showOnHomepage: false`.
+To change which projects show on the homepage, or reorder them, edit `showOnHomepage` and `homepageOrder` on each project in `data/content/projects.ts` — no other code changes needed. Right now: David Bruce Winery, Pinkston for Tennessee, Frontier Operators, and Faithful Talent are shown (in that order); "He Who Speaks Out of Turn" is set to `showOnHomepage: false`.
 
 **Note:** there's also a `content/portfolio/*.mdx` folder in the project with draft-looking project write-ups. Those files aren't connected to the site — no code reads them, `data/content/projects.ts` is the only source the site actually uses. Some of that MDX content has been merged in where it didn't conflict with what's already live (see changelog below); the rest is just sitting there unused.
 
@@ -108,7 +120,7 @@ This is a standalone folder just for share-preview images — separate from each
 
 **After deploying, LinkedIn's own cache may still show the old preview for a URL you've already tested.** Run the page's URL through LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/) to force it to re-fetch.
 
-Current projects: Pinkston for Tennessee (full gallery of 14 images set up as the example — see `.shipstudio/assets/portfolio/pinkston-for-tn/`), Frontier Operators, David Bruce Winery (video cover), Faith Driven Talent. Featured (in testimonials): Frontier Operators + David Bruce Winery. Only Pinkston has real gallery images so far — the other three will show just their cover image on their project page until numbered files are added to their folders.
+Current projects: Pinkston for Tennessee (full gallery of 14 images set up as the example — see `.shipstudio/assets/portfolio/pinkston-for-tn/`), Frontier Operators, David Bruce Winery (video cover), Faithful Talent. Featured (in testimonials): Frontier Operators + David Bruce Winery. Only Pinkston has real gallery images so far — the other three will show just their cover image on their project page until numbered files are added to their folders.
 
 ## Service Content
 
@@ -196,6 +208,9 @@ Service copy lives in `data/content/services.ts`. Each service has a `label` (bu
 - **2026-08-17:** Added the Google Analytics tracking tag (ID `G-V3LK17ZGFC`) to the site-wide layout, so it loads on every page — including any new pages created in the future. To change the tracking ID, edit the two `G-V3LK17ZGFC` occurrences in `app/layout.tsx`.
 - **2026-08-28:** Added a "Learn More" button to the Workshops card on the homepage, originally opening an in-page PDF viewer pop-up. After a few rounds of refinement (full-width scrolling, background color, a full-screen takeover version), simplified it back to a plain link that opens the workshop offerings deck (on Google Drive) in a new tab.
 - **2026-09-08:** Gave every page its own unique page title and search-engine description (previously every page shared the homepage's, which SEO tools like SEMrush flag as "duplicate meta descriptions"). Updated: `/what-we-do`, `/work`, `/workshops-audits`, `/audit`, and every individual project page (`/portfolio/[slug]`). To edit a project page's description, add/change `metaDescription` on that project in `data/content/projects.ts`. To edit one of the other pages' description, look for `export const metadata` in that page's `page.tsx` (or `layout.tsx` for What We Do and Workshops & Audits, since those pages are interactive and can't hold metadata directly).
+- **2026-09-08:** Built a new Blog system at `/blog` with 6 starter posts covering branding, copywriting, web design, strategy, and a behind-the-scenes case study on the Pinkston for Tennessee campaign. Featured post sits at the top with a full preview; below that, a live search box and category filter pills narrow down the rest of the posts instantly. Added "Blog" to the main menu. See "Blog Data" above for how to add or edit posts.
+- **2026-09-08:** Hid "Blog" from the main menu again. The page and all its posts still exist and work at /blog — it's just not linked in the nav. To bring it back, add `{ href: '/blog', label: 'Blog' }` back to the `mainLinks` list at the top of `components/Navbar.tsx`.
+- **2026-09-08:** Renamed the "Faith Driven Talent" project to "Faithful Talent" and rewrote its case study text (both paragraphs on its project page). The asset folder is unchanged (still `.shipstudio/assets/portfolio/faith-driven-talent/`, since that's just where the files live on disk), but the page URL is now `/portfolio/faithful-talent` — the old `/portfolio/faith-driven-talent` link no longer works, so update it anywhere it was shared externally (e.g. social posts, other websites linking in).
 
 ## How to Customize
 

@@ -22,6 +22,10 @@
   font-family: var(--font-inter), sans-serif;
 }
 
+@utility font-marker {
+  font-family: var(--font-marker), cursive;
+}
+
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }

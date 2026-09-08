@@ -11,7 +11,7 @@ const projects: Project[] = [
     galleryEmbeds: [{ insertAt: 2, url: "https://player.vimeo.com/video/1212456078" }],
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/pinkston-for-tn/pinkston-for-tn_7.png",
+      url: "/.shipstudio/assets/portfolio/pinkston-for-tn/pinkston-for-tn_7.jpeg",
     },
     socialImage: "/.shipstudio/assets/portfolio/social/pinkston-for-tn_7.jpg",
     headline: "Designing a Campaign That Put People Before Politics",
@@ -82,8 +82,8 @@ const projects: Project[] = [
     },
   },
   {
-    title: "Faith Driven Talent",
-    slug: "faith-driven-talent",
+    title: "Faithful Talent",
+    slug: "faithful-talent",
     order: 3,
     showOnHomepage: true,
     homepageOrder: 3,
@@ -94,16 +94,16 @@ const projects: Project[] = [
     },
     socialImage: "/.shipstudio/assets/portfolio/social/FDT_Identity_Editable_2.jpg",
     headline: "Building a Brand for an Industry That Rarely Gets to Choose Both",
-    metaDescription: "Brand strategy, copywriting, and identity for Faith Driven Talent, an agency built for entertainment professionals who lead with their values.",
+    metaDescription: "Brand strategy, naming, copywriting, and identity for Faithful Talent, a network for professionals who lead with their values.",
     serviceTags: ["Writing & Copy", "Design", "Digital & UI Design"],
-    body: `Faith Driven Talent connects entertainment industry professionals who want to build careers rooted in their values — a talent agency and community for a segment that has long had to choose between conviction and opportunity.
+    body: `Faithful Talent is a network connecting professionals who want to build careers rooted in their values - bridging the gap between heart level conviction and marketplace opportunity.
 
-We partnered with the founding team across strategy, copywriting, and brand identity. Starting with a narrative workshop, we developed the positioning that became the foundation for their pitch materials, website, and outreach. Every touchpoint communicates the same thing: this is a serious industry player that happens to care about something larger than the deal.`,
+After working alongside the founder and team over the years, all it took was a quick chat for us to catch the vision that they were aiming for. From the earliest moments of their idea, we partnered with the founding team across strategy, naming, copywriting, and brand identity. Ultimately, this journey led to the development of a brand where every touchpoint communicates the same thing: this is a serious industry player that happens to care about something larger than the deal.`,
     attributes: ["strategy", "copywriting", "branding"],
     clientQuote: {
       text: "",
       author: "",
-      role: "Co-Founder, Faith Driven Talent",
+      role: "Co-Founder, Faithful Talent",
       isFeatured: false,
     },
   },
