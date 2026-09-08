@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Brand Audit",
+  title: "Audit Tool",
+  description: "Try Nectarine Studio's interactive Audit Tool for an instant read on your brand and website's strengths and gaps.",
 };
 
 export default function AuditPage() {

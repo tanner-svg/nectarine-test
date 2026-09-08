@@ -119,10 +119,13 @@ export async function generateMetadata({
     ...(socialImage.width && socialImage.height ? { width: socialImage.width, height: socialImage.height } : {}),
   };
 
+  const description = project.metaDescription || project.headline;
+
   return {
     title,
-    openGraph: { title, images: ogImage ? [ogImage] : undefined },
-    twitter: { card: "summary_large_image", title, images: ogImage ? [ogImage.url] : undefined },
+    description,
+    openGraph: { title, description, images: ogImage ? [ogImage] : undefined },
+    twitter: { card: "summary_large_image", title, description, images: ogImage ? [ogImage.url] : undefined },
   };
 }
 

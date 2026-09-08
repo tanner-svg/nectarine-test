@@ -38,6 +38,8 @@ export interface Project {
   galleryItemFit?: { index: number; fit: "contain" }[];
   /** Short punchy phrase shown on the project detail page and its "read the full story" modal. Falls back to `title`. */
   headline?: string;
+  /** Search-engine meta description for this project's detail page. Falls back to `headline` if left out. */
+  metaDescription?: string;
   /** Which of the six service categories to highlight in the "read the full story" modal. */
   serviceTags?: string[];
   /** Set to true to include this project in the homepage's 4-card portfolio grid. */
