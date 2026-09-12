@@ -11,6 +11,7 @@ const mainLinks = [
   { href: '/workshops-audits', label: 'Workshops & Audits' },
   { href: '/blog', label: 'Blog' },
   { href: '/audit', label: 'Audit Tool' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 const secondaryLinks: { href: string; label: string }[] = [];
