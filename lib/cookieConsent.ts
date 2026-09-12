@@ -5,6 +5,9 @@ export interface CookiePreferences {
 
 export const CONSENT_STORAGE_KEY = "nectarine-cookie-consent";
 export const CONSENT_EVENT = "nectarine-consent-change";
+// Dispatch this (with no detail needed) to reopen the cookie banner's
+// Preferences panel — e.g. from a "Cookie Preferences" link in the footer.
+export const OPEN_PREFERENCES_EVENT = "nectarine-open-cookie-preferences";
 
 export function getStoredPreferences(): CookiePreferences | null {
   try {

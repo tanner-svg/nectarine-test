@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getStoredPreferences, setStoredPreferences } from "@/lib/cookieConsent";
+import { getStoredPreferences, setStoredPreferences, OPEN_PREFERENCES_EVENT } from "@/lib/cookieConsent";
 
 function Toggle({
   checked,
@@ -57,12 +57,20 @@ export default function CookieBanner() {
     setAnalyticsChecked(current?.analytics ?? false);
     setAdvertisingChecked(current?.advertising ?? false);
     setView("preferences");
+    setVisible(true);
   };
 
   const savePreferences = () => {
     setStoredPreferences({ analytics: analyticsChecked, advertising: advertisingChecked });
     setVisible(false);
   };
+
+  // Lets a "Cookie Preferences" link elsewhere on the site (e.g. the
+  // footer) reopen this panel after a visitor has already made a choice.
+  useEffect(() => {
+    window.addEventListener(OPEN_PREFERENCES_EVENT, openPreferences);
+    return () => window.removeEventListener(OPEN_PREFERENCES_EVENT, openPreferences);
+  }, []);
 
   if (!mounted) return null;
 
