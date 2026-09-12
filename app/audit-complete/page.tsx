@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import WipeLink from "@/components/WipeLink";
+import ScheduleCallButton from "@/components/ScheduleCallButton";
 
 export const metadata: Metadata = {
   title: "Audit Complete",
@@ -36,15 +37,14 @@ export default function AuditCompletePage() {
             We&apos;d love to discuss your findings with you and help bring your next step to life!
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 lg:gap-[20px] w-full sm:w-auto items-center justify-center pt-[10px]">
-            <WipeLink
-              href="https://calendar.app.google/7PP2JtLPDtK5qhiw5"
+            <ScheduleCallButton
               overlayColor="#380102"
               textOnHover="#fcf8f3"
               trackLabel="Schedule a Free Call (Audit Complete)"
               className="flex items-center justify-center bg-[#d7432a] rounded-[15px] py-[18px] px-[35px] w-full sm:w-auto font-bel text-[16px] text-[#fcf8f3]"
             >
               Schedule a Free Call
-            </WipeLink>
+            </ScheduleCallButton>
             <WipeLink
               href="/what-we-do"
               overlayColor="#fcf8f3"
