@@ -182,17 +182,20 @@ export default function WhatWeDoPage() {
   return (
     <div className="bg-[#fcf8f3]">
 
-      {/* Hero + category filters */}
-      <section className="pt-[124px] px-[75px] pb-0 flex flex-col gap-[18px]">
-        <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-[18px]">
-          <h1 className="font-bel font-semibold text-[32px] leading-none text-[#380102]">What We Do</h1>
+      {/* Hero + category filters + service detail — one flexible block that
+          fills the space below the nav down to the bottom of the first
+          screen, so the detail slide's closing divider always lands near
+          the bottom edge regardless of viewport height. */}
+      <section className="min-h-[calc(100vh-110px)] px-[75px] pt-[150px] pb-[45px] flex flex-col justify-between gap-[40px]">
+        <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-[25px]">
+          <h1 className="font-bel font-semibold text-[85px] leading-none text-[#380102]">What We Do</h1>
           <div className="flex w-full justify-between gap-[10px]">
             {services.map((s, i) => (
               <button
                 key={s.label}
                 type="button"
                 onClick={() => handleCategoryClick(i)}
-                className="font-bel text-[14px] px-[18px] py-[13px] rounded-full cursor-pointer transition-colors duration-300 whitespace-nowrap"
+                className="font-bel text-[18px] px-[15px] py-[10px] rounded-full cursor-pointer transition-colors duration-300 whitespace-nowrap"
                 style={
                   i === activeIdx
                     ? { backgroundColor: "#ffc1a7", color: "#380102", border: "1px solid transparent" }
@@ -204,27 +207,25 @@ export default function WhatWeDoPage() {
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Service detail — animates when category changes */}
-      <section className="px-[75px] pt-[22px] pb-[24px]">
-        <div className="max-w-[1290px] mx-auto w-full flex gap-[60px] items-start" style={sectionStyle}>
+        {/* Service detail — animates when category changes */}
+        <div className="max-w-[1290px] mx-auto w-full flex gap-[75px] items-start" style={sectionStyle}>
           {/* Left: icon + title + description + CTA */}
-          <div className="w-[380px] flex-shrink-0 flex flex-col gap-[11px]">
+          <div className="w-[426px] flex-shrink-0 flex flex-col gap-[17px]">
             <Image
               src={service.icon}
               alt={service.title}
-              width={96}
-              height={97}
-              className="h-[56px] w-auto object-contain object-left"
+              width={186}
+              height={188}
+              className="h-[188px] w-auto object-contain object-left"
             />
-            <h2 className="font-aleo text-[27px] leading-[1.05] text-[#380102]">{service.title}</h2>
-            <p className="font-aleo text-[14px] leading-[1.45] text-[#380102]">{service.description}</p>
+            <h2 className="font-aleo text-[48px] leading-none text-[#380102]">{service.title}</h2>
+            <p className="font-aleo text-[18px] leading-[1.4] text-[#380102]">{service.description}</p>
             <WipeLink
               href={service.ctaHref}
               overlayColor="#380102"
               textOnHover="#fcf8f3"
-              className="bg-[#d7432a] rounded-[15px] py-[14px] px-[28px] text-center font-bel text-[15px] text-[#fcf8f3] w-fit"
+              className="bg-[#d7432a] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[18px] text-[#fcf8f3]"
             >
               {service.ctaText}
             </WipeLink>
@@ -234,12 +235,12 @@ export default function WhatWeDoPage() {
           <div className="flex-1 flex flex-col">
             {service.items.map((item, i) => (
               <div key={item.title}>
-                <div className="border-t border-[#d7432a]" />
-                <div className="py-[9px] flex flex-col gap-[3px]">
-                  <h3 className="font-aleo text-[18px] leading-[1.2] text-[#380102]">{item.title}</h3>
-                  <p className="font-bel text-[12.5px] leading-[1.35] text-[#380102]">{item.desc}</p>
+                <div className="border-t-2 border-[#d7432a]" />
+                <div className="py-[10px] flex flex-col gap-[10px]">
+                  <h3 className="font-aleo text-[36px] leading-[1.1] text-[#380102]">{item.title}</h3>
+                  <p className="font-bel text-[18px] text-[#380102]">{item.desc}</p>
                 </div>
-                {i === service.items.length - 1 && <div className="border-t border-[#d7432a]" />}
+                {i === service.items.length - 1 && <div className="border-t-2 border-[#d7432a]" />}
               </div>
             ))}
           </div>
@@ -294,17 +295,21 @@ export default function WhatWeDoPage() {
       <Footer variant="dark" />
 
       {/* "Don't see what you're looking for" — floats in after 10s instead of
-          sitting in the hero, so the category filters get the full width. */}
+          sitting in the hero, so the category filters get the full width.
+          Anchored top-right (below the hamburger, above the category row)
+          rather than a bottom corner, since the service detail now fills
+          the screen all the way to the bottom edge — no bottom corner is
+          ever fully clear of real content once that section has loaded. */}
       <div
-        className={`fixed z-[250] inset-x-5 bottom-5 sm:inset-x-auto sm:left-6 sm:bottom-6 sm:w-[320px] transition-all duration-500 ease-out ${
+        className={`fixed z-[250] inset-x-5 top-[76px] sm:inset-x-auto sm:right-[75px] sm:top-[76px] sm:w-[300px] transition-all duration-500 ease-out ${
           showPromo && !promoDismissed
             ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 translate-y-4 pointer-events-none"
+            : "opacity-0 -translate-y-4 pointer-events-none"
         }`}
         role="dialog"
         aria-label="More design help"
       >
-        <div className="relative bg-[#ffc1a7] rounded-[15px] p-[20px] pr-[34px] flex flex-col gap-[10px] shadow-[0_10px_40px_rgba(56,1,2,0.25)]">
+        <div className="relative bg-[#ffc1a7] rounded-[15px] p-[16px] pr-[30px] flex flex-col gap-[8px] shadow-[0_10px_40px_rgba(56,1,2,0.25)]">
           <button
             type="button"
             onClick={() => setPromoDismissed(true)}
