@@ -39,8 +39,11 @@ export default function CustomCursor() {
     const cursorPos = { ...target };
     const shadowPos = { ...target };
     let hasMoved = false;
+    let lastMoveTime = performance.now();
+    let hiddenForIframe = false;
 
     const handleMove = (e: MouseEvent) => {
+      lastMoveTime = performance.now();
       target.x = e.clientX;
       target.y = e.clientY;
       if (!hasMoved) {
@@ -50,6 +53,7 @@ export default function CustomCursor() {
         shadowPos.x = target.x;
         shadowPos.y = target.y;
       }
+      if (hiddenForIframe) hiddenForIframe = false;
       setVisible(true);
       // Our own overlay is pointer-events: none, so e.target already reflects
       // the real page content beneath the cursor.
@@ -62,22 +66,45 @@ export default function CustomCursor() {
     // The browser never sends mousemove into the parent page once the
     // pointer crosses into an iframe's own document (cross-origin iframes
     // like the /audit embed give us zero visibility into pointer position
-    // there), which otherwise leaves our cursor frozen mid-page. mouseover/
-    // mouseout on the iframe element itself still fire in the parent
-    // document at the boundary, so we use those to hand off to the native
-    // system cursor for as long as the pointer is over the iframe.
-    const handleIframeOver = (e: MouseEvent) => {
-      if ((e.target as HTMLElement | null)?.tagName === "IFRAME") setVisible(false);
-    };
-    const handleIframeOut = (e: MouseEvent) => {
-      if ((e.target as HTMLElement | null)?.tagName === "IFRAME") setVisible(true);
+    // there), which otherwise leaves our cursor frozen mid-page. Waiting
+    // for a mouseover/mouseout on the iframe element itself turned out to
+    // be unreliable — Chromium doesn't consistently fire those right at
+    // the iframe boundary — so instead: once mousemove has gone quiet for
+    // a beat, check whether the last known pointer position falls near any
+    // iframe's current bounding box. The last position we actually receive
+    // before losing the pointer is often a little outside the iframe's
+    // real edge — the faster the pointer was moving, the bigger that gap
+    // — so the box is padded generously rather than checked exactly, to
+    // still catch a fast approach. Nothing else on the page would make
+    // mousemove go silent, so this is a safe signal to hide our cursor and
+    // hand off to the native one until movement resumes in the parent.
+    const STALE_MS = 60;
+    const IFRAME_HOVER_MARGIN = 60;
+    const checkIframeHover = () => {
+      if (performance.now() - lastMoveTime < STALE_MS) return;
+      const iframes = document.getElementsByTagName("iframe");
+      let overIframe = false;
+      for (const frame of iframes) {
+        const rect = frame.getBoundingClientRect();
+        if (
+          target.x >= rect.left - IFRAME_HOVER_MARGIN &&
+          target.x <= rect.right + IFRAME_HOVER_MARGIN &&
+          target.y >= rect.top - IFRAME_HOVER_MARGIN &&
+          target.y <= rect.bottom + IFRAME_HOVER_MARGIN
+        ) {
+          overIframe = true;
+          break;
+        }
+      }
+      if (overIframe && !hiddenForIframe) {
+        hiddenForIframe = true;
+        setVisible(false);
+      }
     };
 
     window.addEventListener("mousemove", handleMove);
     document.documentElement.addEventListener("mouseleave", handleLeave);
     document.documentElement.addEventListener("mouseenter", handleEnter);
-    document.addEventListener("mouseover", handleIframeOver);
-    document.addEventListener("mouseout", handleIframeOut);
 
     let rafId: number;
     const tick = () => {
@@ -92,6 +119,7 @@ export default function CustomCursor() {
       if (shadowRef.current) {
         shadowRef.current.style.transform = `translate3d(${shadowPos.x}px, ${shadowPos.y}px, 0)`;
       }
+      checkIframeHover();
       rafId = requestAnimationFrame(tick);
     };
     rafId = requestAnimationFrame(tick);
@@ -100,8 +128,6 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", handleMove);
       document.documentElement.removeEventListener("mouseleave", handleLeave);
       document.documentElement.removeEventListener("mouseenter", handleEnter);
-      document.removeEventListener("mouseover", handleIframeOver);
-      document.removeEventListener("mouseout", handleIframeOut);
       document.documentElement.classList.remove("custom-cursor-active");
       cancelAnimationFrame(rafId);
     };
