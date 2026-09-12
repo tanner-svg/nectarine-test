@@ -1,7 +1,7 @@
 "use client";
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import { getStoredConsent, CONSENT_EVENT } from "@/lib/cookieConsent";
+import { getStoredPreferences, CONSENT_EVENT } from "@/lib/cookieConsent";
 
 const GA_MEASUREMENT_ID = "G-V3LK17ZGFC";
 
@@ -9,7 +9,7 @@ export default function Analytics() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const sync = () => setEnabled(getStoredConsent() === "accepted");
+    const sync = () => setEnabled(getStoredPreferences()?.analytics === true);
     sync();
     window.addEventListener(CONSENT_EVENT, sync);
     return () => window.removeEventListener(CONSENT_EVENT, sync);

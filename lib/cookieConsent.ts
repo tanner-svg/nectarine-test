@@ -1,22 +1,31 @@
-export type ConsentStatus = "accepted" | "rejected";
+export interface CookiePreferences {
+  analytics: boolean;
+}
 
 export const CONSENT_STORAGE_KEY = "nectarine-cookie-consent";
 export const CONSENT_EVENT = "nectarine-consent-change";
 
-export function getStoredConsent(): ConsentStatus | null {
+export function getStoredPreferences(): CookiePreferences | null {
   try {
-    const value = localStorage.getItem(CONSENT_STORAGE_KEY);
-    return value === "accepted" || value === "rejected" ? value : null;
+    const raw = localStorage.getItem(CONSENT_STORAGE_KEY);
+    if (!raw) return null;
+    // Back-compat with the earlier single Accept/Reject button, which
+    // stored the plain string "accepted" or "rejected" instead of an
+    // object of preferences.
+    if (raw === "accepted") return { analytics: true };
+    if (raw === "rejected") return { analytics: false };
+    const parsed = JSON.parse(raw);
+    return { analytics: parsed.analytics === true };
   } catch {
     return null;
   }
 }
 
-export function setStoredConsent(status: ConsentStatus) {
+export function setStoredPreferences(preferences: CookiePreferences) {
   try {
-    localStorage.setItem(CONSENT_STORAGE_KEY, status);
+    localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(preferences));
   } catch {
     // Private browsing / blocked storage — the choice just won't persist.
   }
-  window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: status }));
+  window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: preferences }));
 }
