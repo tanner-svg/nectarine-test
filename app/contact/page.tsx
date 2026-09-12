@@ -15,7 +15,7 @@ export default function ContactPage() {
     <div className="bg-[#fcf8f3]">
       <section className="px-5 sm:px-10 lg:px-[75px] pt-[110px] lg:pt-[160px] pb-12 lg:pb-[100px]">
         <div className="max-w-[1290px] mx-auto flex flex-col items-center gap-8 lg:gap-[50px]">
-          <h1 className="font-aleo font-semibold text-[26px] sm:text-[32px] lg:text-[40px] leading-[1.35] text-center max-w-[880px]">
+          <h1 className="font-aleo font-semibold text-[26px] sm:text-[32px] lg:text-[40px] leading-[1.15] text-center max-w-[1040px]">
             <span className="text-[#380102]">Tell us about what you&apos;re building or dreaming, or ask us any questions you have. </span>
             <span className="text-[#d7432a]">We&apos;re always happy to chat!</span>
           </h1>
