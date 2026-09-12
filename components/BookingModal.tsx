@@ -14,7 +14,7 @@ export default function BookingModal({ open, onClose }: { open: boolean; onClose
 
   return (
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 lg:p-[50px] bg-black/40">
-      <div className="relative bg-[#fcf8f3] rounded-[25px] p-6 lg:p-[40px] max-w-[900px] w-full flex flex-col gap-[20px] max-h-[90vh]">
+      <div className="relative bg-[#fcf8f3] rounded-[25px] p-6 lg:p-[40px] w-[75vw] h-[75vh] flex flex-col gap-[20px]">
         <button onClick={onClose} className="absolute top-4 right-4 lg:top-[25px] lg:right-[25px] z-10" aria-label="Close">
           <Image src="/.shipstudio/assets/cancel.svg" alt="Close" width={36} height={36} />
         </button>
@@ -25,10 +25,10 @@ export default function BookingModal({ open, onClose }: { open: boolean; onClose
           src={BOOKING_IFRAME_SRC}
           style={{ border: 0 }}
           width="100%"
-          height="600"
+          height="100%"
           frameBorder={0}
           title="Schedule a call"
-          className="rounded-[15px] flex-1"
+          className="rounded-[15px] flex-1 min-h-0"
         />
       </div>
     </div>
