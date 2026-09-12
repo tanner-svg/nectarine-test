@@ -9,6 +9,7 @@ import { TransitionProvider } from "@/components/TransitionContext";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
+import CookieBanner from "@/components/CookieBanner";
 
 const belanosima = Belanosima({
   subsets: ["latin"],
@@ -69,6 +70,7 @@ export default function RootLayout({
           <MainContent>{children}</MainContent>
         </TransitionProvider>
         <AgentationProvider />
+        <CookieBanner />
       </body>
     </html>
   );
