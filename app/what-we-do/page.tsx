@@ -195,7 +195,7 @@ export default function WhatWeDoPage() {
                 key={s.label}
                 type="button"
                 onClick={() => handleCategoryClick(i)}
-                className={`flex-1 text-center font-bel text-[14px] px-[10px] py-[12px] rounded-full cursor-pointer whitespace-nowrap transition-colors duration-300 uppercase border-2 ${
+                className={`flex-1 text-center font-bel text-[14px] px-[10px] py-[12px] rounded-full cursor-pointer whitespace-nowrap transition-colors duration-300 uppercase tracking-[0.1em] border ${
                   i === activeIdx
                     ? "bg-[#ffc1a7] border-transparent text-[#380102]"
                     : "bg-transparent border-[#380102] text-[#380102] hover:bg-[#ffc1a7]/60 hover:border-[#ffc1a7]"
