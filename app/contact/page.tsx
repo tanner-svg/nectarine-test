@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
+import TrackedLink from "@/components/TrackedLink";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -26,12 +27,13 @@ export default function ContactPage() {
             </h1>
             <p className="font-aleo text-[16px] lg:text-[18px] text-[#380102] opacity-75 max-w-[480px]">
               Prefer email? Reach us directly at{" "}
-              <a
+              <TrackedLink
                 href="mailto:hello@nectarine.ink"
+                label="Email Us (Contact Page)"
                 className="underline hover:text-[#d7432a] transition-colors duration-200"
               >
                 hello@nectarine.ink
-              </a>
+              </TrackedLink>
               .
             </p>
           </div>
