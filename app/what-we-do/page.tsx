@@ -186,7 +186,7 @@ export default function WhatWeDoPage() {
           fills the space below the nav down to the bottom of the first
           screen, so the detail slide's closing divider always lands near
           the bottom edge regardless of viewport height. */}
-      <section className="min-h-[calc(100vh-110px)] px-[75px] pt-[150px] pb-[45px] flex flex-col justify-between gap-[40px]">
+      <section className="min-h-screen px-[75px] pt-[150px] pb-[45px] flex flex-col justify-between gap-[40px]">
         <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-[25px]">
           <h1 className="font-bel font-semibold text-[85px] leading-none text-[#380102]">What We Do</h1>
           <div className="flex w-full justify-between gap-[10px]">
@@ -195,7 +195,7 @@ export default function WhatWeDoPage() {
                 key={s.label}
                 type="button"
                 onClick={() => handleCategoryClick(i)}
-                className="font-bel text-[18px] px-[15px] py-[10px] rounded-full cursor-pointer transition-colors duration-300 whitespace-nowrap"
+                className="font-bel text-[18px] px-[15px] py-[10px] rounded-full cursor-pointer transition-colors duration-300 whitespace-nowrap uppercase"
                 style={
                   i === activeIdx
                     ? { backgroundColor: "#ffc1a7", color: "#380102", border: "1px solid transparent" }
@@ -238,7 +238,7 @@ export default function WhatWeDoPage() {
                 <div className="border-t-2 border-[#d7432a]" />
                 <div className="py-[10px] flex flex-col gap-[10px]">
                   <h3 className="font-aleo text-[36px] leading-[1.1] text-[#380102]">{item.title}</h3>
-                  <p className="font-bel text-[18px] text-[#380102]">{item.desc}</p>
+                  <p className="font-bel text-[18px] text-[#380102] uppercase">{item.desc}</p>
                 </div>
                 {i === service.items.length - 1 && <div className="border-t-2 border-[#d7432a]" />}
               </div>
