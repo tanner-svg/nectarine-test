@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 
 interface FooterProps {
   variant?: "dark" | "light";
@@ -45,6 +46,7 @@ export default function Footer({ variant = "dark" }: FooterProps) {
             className="relative overflow-hidden flex items-center gap-[10px] rounded-full px-[15px] py-[10px]"
             onMouseEnter={() => setEmailHovered(true)}
             onMouseLeave={() => setEmailHovered(false)}
+            onClick={() => trackEvent("button_click", { button_label: "Email Us (Footer)", destination: "mailto:hello@nectarine.ink" })}
           >
             <span
               className="absolute inset-0 transition-[clip-path] duration-500 ease-in-out pointer-events-none"
