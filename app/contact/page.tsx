@@ -43,7 +43,7 @@ export default function ContactPage() {
 
             {/* Form card */}
             <div className="bg-[#d7432a] rounded-[25px] p-6 lg:p-[40px] flex flex-col">
-              <ContactForm />
+              <ContactForm variant="light" />
             </div>
           </div>
 
