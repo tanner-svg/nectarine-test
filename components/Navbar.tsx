@@ -4,12 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Every page on the site is linked here so it's easy to check what's live.
+// "What We Do," "Workshops & Audits," and "Blog" are hidden from the menu
+// for now — the pages still exist at /what-we-do, /workshops-audits, and
+// /blog, just not linked here. Add them back to this array to restore them.
 const mainLinks = [
   { href: '/work', label: 'Our Work' },
-  { href: '/what-we-do', label: 'What We Do' },
-  { href: '/workshops-audits', label: 'Workshops & Audits' },
-  { href: '/blog', label: 'Blog' },
   { href: '/audit', label: 'Audit Tool' },
   { href: '/contact', label: 'Contact' },
 ];
