@@ -286,6 +286,7 @@ Service copy lives in `data/content/services.ts`. Each service has a `label` (bu
 - **2026-09-12:** Switched the Contact page's form to white text and white input outlines (so it reads clearly on its red-orange card) and removed a stray dark outline that flashed around the Submit button on hover. Added a reusable `variant` option to `components/ContactForm.tsx` so this only changed the /contact page — the same form still shows its original dark maroon text/borders on the homepage and /work, where it sits on a yellow card. Also swapped in an updated version of the booking-calendar graphic on the same card.
 - **2026-09-12:** Made the "Schedule a Call" popup (opened by every "book a call" button site-wide) noticeably bigger — it now fills 75% of the screen's width and height on any device, instead of maxing out at a fairly small fixed size, so there's much more room to see and use the embedded calendar.
 - **2026-09-12:** Enlarged the "Schedule a Call" popup again, from 75% to 85% of the screen's width and height, and changed its card background from the site's off-white cream to plain white.
+- **2026-09-12:** Widened the Contact page's headline (max width 880px → 1040px, so it wraps onto fewer, longer lines) and tightened its line spacing by 15% (1.35 → 1.15) for a denser, less spread-out look.
 
 ## How to Customize
 
