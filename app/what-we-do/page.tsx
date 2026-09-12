@@ -8,6 +8,9 @@ import { getAllProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
 import services from "@/data/content/services";
 import { trackEvent } from "@/lib/analytics";
+import BookingModal from "@/components/BookingModal";
+
+const CALENDAR_LINK = "https://calendar.app.google/7PP2JtLPDtK5qhiw5";
 
 function ArrowOutward({ color = "#380102", size = 10 }: { color?: string; size?: number }) {
   return (
@@ -17,20 +20,15 @@ function ArrowOutward({ color = "#380102", size = 10 }: { color?: string; size?:
   );
 }
 
+// href is omitted when this should open something in-page (e.g. a modal)
+// instead of navigating — in that case it renders as a <button>.
 function WipeLink({ href, overlayColor, textOnHover, className, children, onClick }: {
-  href: string; overlayColor: string; textOnHover: string;
+  href?: string; overlayColor: string; textOnHover: string;
   className?: string; children: React.ReactNode; onClick?: () => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  return (
-    <Link
-      href={href}
-      className={`relative overflow-hidden uppercase ${className ?? ""}`}
-      style={{ letterSpacing: "0.1em" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-    >
+  const content = (
+    <>
       <span
         className="absolute inset-0 transition-[clip-path] duration-500 ease-in-out pointer-events-none"
         style={{ backgroundColor: overlayColor, clipPath: hovered ? "circle(150% at 0% 50%)" : "circle(0% at 0% 50%)" }}
@@ -38,6 +36,24 @@ function WipeLink({ href, overlayColor, textOnHover, className, children, onClic
       <span className="relative z-10" style={{ color: hovered ? textOnHover : "inherit", transition: "color 0.5s ease-in-out" }}>
         {children}
       </span>
+    </>
+  );
+  const sharedProps = {
+    className: `relative overflow-hidden uppercase ${className ?? ""}`,
+    style: { letterSpacing: "0.1em" } as const,
+    onMouseEnter: () => setHovered(true),
+    onMouseLeave: () => setHovered(false),
+  };
+  if (!href) {
+    return (
+      <button type="button" onClick={onClick} {...sharedProps}>
+        {content}
+      </button>
+    );
+  }
+  return (
+    <Link href={href} onClick={onClick} {...sharedProps}>
+      {content}
     </Link>
   );
 }
@@ -110,6 +126,7 @@ export default function WhatWeDoPage() {
   const autoKeyRef = useRef(0);
 
   const [showPromo, setShowPromo] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const [promoDismissed, setPromoDismissed] = useState(false);
 
   useEffect(() => {
@@ -221,9 +238,17 @@ export default function WhatWeDoPage() {
             <h2 className="font-aleo text-[48px] leading-none text-[#380102]">{service.title}</h2>
             <p className="font-aleo text-[18px] leading-[1.4] text-[#380102]">{service.description}</p>
             <WipeLink
-              href={service.ctaHref}
+              href={service.ctaHref === CALENDAR_LINK ? undefined : service.ctaHref}
               overlayColor="#380102"
               textOnHover="#fcf8f3"
+              onClick={
+                service.ctaHref === CALENDAR_LINK
+                  ? () => {
+                      trackEvent("button_click", { button_label: service.ctaText, destination: "booking_modal" });
+                      setBookingOpen(true);
+                    }
+                  : undefined
+              }
               className="bg-[#d7432a] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[18px] text-[#fcf8f3]"
             >
               {service.ctaText}
@@ -336,6 +361,8 @@ export default function WhatWeDoPage() {
           </WipeLink>
         </div>
       </div>
+
+      <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
   );
 }

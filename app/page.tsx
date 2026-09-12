@@ -5,6 +5,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import AutoplayVideo from "@/components/AutoplayVideo";
 import ContactForm from "@/components/ContactForm";
+import BookingModal from "@/components/BookingModal";
 import { trackEvent } from "@/lib/analytics";
 import { getHomepageProjects, getFeaturedProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
@@ -125,20 +126,15 @@ function PortfolioCard({ project, className }: {
   );
 }
 
+// href is omitted when this should open something in-page (e.g. a modal)
+// instead of navigating — in that case it renders as a <button>.
 function WipeLink({ href, overlayColor, textOnHover, className, children, onClick }: {
-  href: string; overlayColor: string; textOnHover: string;
+  href?: string; overlayColor: string; textOnHover: string;
   className?: string; children: React.ReactNode; onClick?: () => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  return (
-    <Link
-      href={href}
-      className={`relative overflow-hidden uppercase ${className ?? ''}`}
-      style={{ letterSpacing: '0.1em' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-    >
+  const content = (
+    <>
       <span
         className="absolute inset-0 transition-[clip-path] duration-500 ease-in-out pointer-events-none"
         style={{ backgroundColor: overlayColor, clipPath: hovered ? 'circle(150% at 0% 50%)' : 'circle(0% at 0% 50%)' }}
@@ -149,6 +145,24 @@ function WipeLink({ href, overlayColor, textOnHover, className, children, onClic
       >
         {children}
       </span>
+    </>
+  );
+  const sharedProps = {
+    className: `relative overflow-hidden uppercase ${className ?? ''}`,
+    style: { letterSpacing: '0.1em' } as const,
+    onMouseEnter: () => setHovered(true),
+    onMouseLeave: () => setHovered(false),
+  };
+  if (!href) {
+    return (
+      <button type="button" onClick={onClick} {...sharedProps}>
+        {content}
+      </button>
+    );
+  }
+  return (
+    <Link href={href} onClick={onClick} {...sharedProps}>
+      {content}
     </Link>
   );
 }
@@ -212,6 +226,7 @@ const accordionContent = (accentColor: string) => (
 
 export default function HomePage() {
   const [overlayOpen, setOverlayOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<'workshops' | 'audits' | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fuzzIndex, setFuzzIndex] = useState(0);
@@ -360,9 +375,12 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-[15px]">
               <WipeLink
-                href="https://calendar.app.google/7PP2JtLPDtK5qhiw5"
                 overlayColor="#380102"
                 textOnHover="#f9ce6a"
+                onClick={() => {
+                  trackEvent("button_click", { button_label: "Book a Strategy Call", destination: "booking_modal" });
+                  setBookingOpen(true);
+                }}
                 className="flex-1 flex items-center justify-center gap-[10px] bg-[#f9ce6a] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] font-bel text-[16px] lg:text-[18px] text-[#380102]"
               >
                 Book a Strategy Call
@@ -490,11 +508,13 @@ export default function HomePage() {
               Our strategy sessions are built to close that gap — giving you the clarity, tools, and creative direction to show up consistently and confidently. Every session is tailored to where you are and where you're headed. Some clients walk away ready to run with it on their own. Others use their session as the launchpad for a longer creative partnership. Either way, you leave with actionable insights to propel your brand forward.
             </p>
             <WipeLink
-              href="https://calendar.app.google/7PP2JtLPDtK5qhiw5"
               overlayColor="#380102"
               textOnHover="#f9ce6a"
               className="flex items-center justify-center bg-[#f9ce6a] rounded-[15px] py-[16px] lg:py-[20px] px-[30px] lg:px-[40px] w-full lg:w-fit font-bel text-[16px] lg:text-[18px] text-[#380102] transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-[#f9ce6a] hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-[#f9ce6a]"
-              onClick={() => trackEvent("button_click", { button_label: "Schedule an Intro Call", destination: "https://calendar.app.google/7PP2JtLPDtK5qhiw5" })}
+              onClick={() => {
+                trackEvent("button_click", { button_label: "Schedule an Intro Call", destination: "booking_modal" });
+                setBookingOpen(true);
+              }}
             >
               Schedule an Intro Call
             </WipeLink>
@@ -607,9 +627,12 @@ export default function HomePage() {
           </div>
         </div>
         <WipeLink
-          href="https://calendar.app.google/7PP2JtLPDtK5qhiw5"
           overlayColor="#fcf8f3"
           textOnHover="#380102"
+          onClick={() => {
+            trackEvent("button_click", { button_label: "Learn More (Creative Services)", destination: "booking_modal" });
+            setBookingOpen(true);
+          }}
           className="bg-[#380102] rounded-[15px] py-[16px] lg:py-[20px] px-[10px] text-center font-bel text-[14px] lg:text-[15px] text-white w-full lg:w-[426px]"
         >
           Learn More
@@ -776,6 +799,7 @@ export default function HomePage() {
       <Footer variant="dark" />
 
       {overlayOpen && <PortfolioOverlay onClose={() => setOverlayOpen(false)} />}
+      <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
   );
 }
