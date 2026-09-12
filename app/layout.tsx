@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Belanosima, Aleo, Inter } from "next/font/google";
 import "./globals.css";
 import { AgentationProvider } from "@/components/AgentationProvider";
@@ -9,6 +8,8 @@ import { TransitionProvider } from "@/components/TransitionContext";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
+import CookieBanner from "@/components/CookieBanner";
+import Analytics from "@/components/Analytics";
 
 const belanosima = Belanosima({
   subsets: ["latin"],
@@ -45,22 +46,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-V3LK17ZGFC"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-V3LK17ZGFC');
-          `}
-        </Script>
-      </head>
       <body className={`antialiased ${belanosima.variable} ${aleo.variable} ${inter.variable}`}>
+        <Analytics />
         <SmoothScroll />
         <CustomCursor />
         <Navbar />
@@ -69,6 +56,7 @@ export default function RootLayout({
           <MainContent>{children}</MainContent>
         </TransitionProvider>
         <AgentationProvider />
+        <CookieBanner />
       </body>
     </html>
   );

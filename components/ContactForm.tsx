@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const WEB3FORMS_ACCESS_KEY = "5af858dd-01bf-4fa3-b7ab-a58d96368c63";
 
@@ -31,6 +32,7 @@ export default function ContactForm() {
       const data = await res.json();
       if (data.success) {
         setStatus("success");
+        trackEvent("form_submitted", { form_name: "contact", page_path: window.location.pathname });
         [nameRef, emailRef, subjectRef].forEach((r) => {
           if (r.current) r.current.value = "";
         });

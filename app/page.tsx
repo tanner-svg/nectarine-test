@@ -5,6 +5,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import AutoplayVideo from "@/components/AutoplayVideo";
 import ContactForm from "@/components/ContactForm";
+import { trackEvent } from "@/lib/analytics";
 import { getHomepageProjects, getFeaturedProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
 
@@ -196,6 +197,7 @@ const accordionContent = (accentColor: string) => (
       overlayColor="#f9ce6a"
       textOnHover="#380102"
       className="bg-[#380102] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[18px] text-[#fcf8f3]"
+      onClick={() => trackEvent("button_click", { button_label: "Schedule a 30 Minute Intro Call", destination: "/workshops-audits" })}
     >
       Schedule a 30 Minute Intro Call
     </WipeLink>
@@ -492,6 +494,7 @@ export default function HomePage() {
               overlayColor="#380102"
               textOnHover="#f9ce6a"
               className="flex items-center justify-center bg-[#f9ce6a] rounded-[15px] py-[16px] lg:py-[20px] px-[30px] lg:px-[40px] w-full lg:w-fit font-bel text-[16px] lg:text-[18px] text-[#380102] transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-[#f9ce6a] hover:outline hover:outline-2 hover:outline-offset-2 hover:outline-[#f9ce6a]"
+              onClick={() => trackEvent("button_click", { button_label: "Schedule an Intro Call", destination: "https://calendar.app.google/7PP2JtLPDtK5qhiw5" })}
             >
               Schedule an Intro Call
             </WipeLink>

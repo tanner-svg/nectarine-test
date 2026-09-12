@@ -4,16 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// "Workshops & Audits", "Creative Services", and "Blog" are hidden from the
-// menu for now — the pages still exist at /workshops-audits, /what-we-do,
-// and /blog, just not linked here. Add them back to this array to restore them.
+// "What We Do," "Workshops & Audits," and "Blog" are hidden from the menu
+// for now — the pages still exist at /what-we-do, /workshops-audits, and
+// /blog, just not linked here. Add them back to this array to restore them.
 const mainLinks = [
   { href: '/work', label: 'Our Work' },
   { href: '/audit', label: 'Audit Tool' },
+  { href: '/contact', label: 'Contact' },
 ];
 
-// Hidden from the menu for now, alongside mainLinks above — add entries
-// back here to restore them.
 const secondaryLinks: { href: string; label: string }[] = [];
 
 export default function Navbar() {
