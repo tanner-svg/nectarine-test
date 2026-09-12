@@ -189,18 +189,17 @@ export default function WhatWeDoPage() {
       <section className="min-h-screen px-[75px] pt-[150px] pb-[45px] flex flex-col justify-between gap-[40px]">
         <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-[25px]">
           <h1 className="font-bel font-semibold text-[85px] leading-none text-[#380102]">What We Do</h1>
-          <div className="flex w-full justify-between gap-[10px]">
+          <div className="flex w-full gap-[10px]">
             {services.map((s, i) => (
               <button
                 key={s.label}
                 type="button"
                 onClick={() => handleCategoryClick(i)}
-                className="font-bel text-[18px] px-[15px] py-[10px] rounded-full cursor-pointer transition-colors duration-300 whitespace-nowrap uppercase"
-                style={
+                className={`flex-1 text-center font-bel text-[14px] px-[10px] py-[12px] rounded-full cursor-pointer whitespace-nowrap transition-colors duration-300 uppercase border-2 ${
                   i === activeIdx
-                    ? { backgroundColor: "#ffc1a7", color: "#380102", border: "1px solid transparent" }
-                    : { border: "1px solid #380102", color: "#380102", background: "transparent" }
-                }
+                    ? "bg-[#ffc1a7] border-transparent text-[#380102]"
+                    : "bg-transparent border-[#380102] text-[#380102] hover:bg-[#ffc1a7]/60 hover:border-[#ffc1a7]"
+                }`}
               >
                 {s.label}
               </button>
