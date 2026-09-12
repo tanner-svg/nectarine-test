@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getStoredPreferences, setStoredPreferences } from "@/lib/cookieConsent";
+import { getStoredPreferences, setStoredPreferences, OPEN_PREFERENCES_EVENT } from "@/lib/cookieConsent";
 
 function Toggle({
   checked,
@@ -36,6 +36,7 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const [view, setView] = useState<"banner" | "preferences">("banner");
   const [analyticsChecked, setAnalyticsChecked] = useState(false);
+  const [advertisingChecked, setAdvertisingChecked] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -47,19 +48,29 @@ export default function CookieBanner() {
   }, []);
 
   const acceptAll = () => {
-    setStoredPreferences({ analytics: true });
+    setStoredPreferences({ analytics: true, advertising: true });
     setVisible(false);
   };
 
   const openPreferences = () => {
-    setAnalyticsChecked(getStoredPreferences()?.analytics ?? false);
+    const current = getStoredPreferences();
+    setAnalyticsChecked(current?.analytics ?? false);
+    setAdvertisingChecked(current?.advertising ?? false);
     setView("preferences");
+    setVisible(true);
   };
 
   const savePreferences = () => {
-    setStoredPreferences({ analytics: analyticsChecked });
+    setStoredPreferences({ analytics: analyticsChecked, advertising: advertisingChecked });
     setVisible(false);
   };
+
+  // Lets a "Cookie Preferences" link elsewhere on the site (e.g. the
+  // footer) reopen this panel after a visitor has already made a choice.
+  useEffect(() => {
+    window.addEventListener(OPEN_PREFERENCES_EVENT, openPreferences);
+    return () => window.removeEventListener(OPEN_PREFERENCES_EVENT, openPreferences);
+  }, []);
 
   if (!mounted) return null;
 
@@ -76,7 +87,7 @@ export default function CookieBanner() {
         {view === "banner" ? (
           <>
             <p className="font-aleo text-[14px] leading-[1.5] text-[#380102]">
-              We use cookies to keep this site running smoothly and to see how visitors find us. You can accept them or choose your preferences.
+              We use cookies to keep this site running smoothly, see how visitors find us, and measure our ads. You can accept them or choose your preferences.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <button
@@ -121,6 +132,17 @@ export default function CookieBanner() {
                   </p>
                 </div>
                 <Toggle checked={analyticsChecked} onChange={() => setAnalyticsChecked((v) => !v)} />
+              </div>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-bel text-[12px] uppercase text-[#380102]" style={{ letterSpacing: "0.08em" }}>
+                    Advertising
+                  </p>
+                  <p className="font-aleo text-[13px] leading-[1.4] text-[#380102] opacity-70 mt-[4px]">
+                    Google Ads — helps us measure how well our ads lead to inquiries.
+                  </p>
+                </div>
+                <Toggle checked={advertisingChecked} onChange={() => setAdvertisingChecked((v) => !v)} />
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
