@@ -1,5 +1,6 @@
 export interface CookiePreferences {
   analytics: boolean;
+  advertising: boolean;
 }
 
 export const CONSENT_STORAGE_KEY = "nectarine-cookie-consent";
@@ -12,10 +13,12 @@ export function getStoredPreferences(): CookiePreferences | null {
     // Back-compat with the earlier single Accept/Reject button, which
     // stored the plain string "accepted" or "rejected" instead of an
     // object of preferences.
-    if (raw === "accepted") return { analytics: true };
-    if (raw === "rejected") return { analytics: false };
+    if (raw === "accepted") return { analytics: true, advertising: false };
+    if (raw === "rejected") return { analytics: false, advertising: false };
     const parsed = JSON.parse(raw);
-    return { analytics: parsed.analytics === true };
+    // Missing fields (e.g. a choice saved before "advertising" existed)
+    // default to false rather than silently opting a visitor in.
+    return { analytics: parsed.analytics === true, advertising: parsed.advertising === true };
   } catch {
     return null;
   }
