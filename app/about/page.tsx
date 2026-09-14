@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import WipeLink from "@/components/WipeLink";
-import team from "@/data/content/team";
+import team, { type TeamMember } from "@/data/content/team";
 import values from "@/data/content/values";
 import { trackEvent } from "@/lib/analytics";
 
@@ -65,56 +65,90 @@ function InfoModal({ title, body, onClose }: { title: string; body: string[]; on
   );
 }
 
-function AvatarPlaceholder({ name, role, index }: { name: string; role: string; index: number }) {
-  const source = name || role;
-  const initials = source
-    .split(" ")
-    .filter((w) => /^[A-Za-z]/.test(w))
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+function AvatarPlaceholder({ name, index }: { name: string; index: number }) {
+  const initials = name
+    ? name
+        .split(" ")
+        .filter((w) => /^[A-Za-z]/.test(w))
+        .map((w) => w[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase()
+    : "?";
   return (
     <div
-      className="w-full aspect-square rounded-[15px] flex items-center justify-center"
+      className="w-[100px] h-[100px] lg:w-[120px] lg:h-[120px] rounded-full flex items-center justify-center flex-shrink-0"
       style={{ backgroundColor: AVATAR_COLORS[index % AVATAR_COLORS.length] }}
     >
-      <span className="font-bel font-semibold text-[44px] lg:text-[56px] text-[#380102]">{initials}</span>
+      <span className="font-bel font-semibold text-[32px] lg:text-[38px] text-[#380102]">{initials}</span>
+    </div>
+  );
+}
+
+function TeamCard({ member, index }: { member: TeamMember; index: number }) {
+  return (
+    <div className="flex flex-col items-center text-center gap-4 lg:gap-[18px] border border-[#380102]/20 rounded-[15px] p-6 lg:p-[30px]">
+      {member.photo ? (
+        <div className="relative w-[100px] h-[100px] lg:w-[120px] lg:h-[120px] rounded-full overflow-hidden flex-shrink-0">
+          <Image src={member.photo} alt={member.name || member.role} fill className="object-cover" />
+        </div>
+      ) : (
+        <AvatarPlaceholder name={member.name} index={index} />
+      )}
+      <div className="flex flex-col gap-[4px]">
+        {member.name && (
+          <h3 className="font-aleo font-semibold text-[20px] lg:text-[22px] leading-[1.2] text-[#380102]">{member.name}</h3>
+        )}
+        <p className="font-bel text-[11px] text-[#d7432a] uppercase" style={{ letterSpacing: "0.08em" }}>
+          {member.role}
+        </p>
+      </div>
+      <div className="w-full border-t border-[#380102]/15" />
+      <div className="flex flex-col gap-[8px] w-full">
+        <span className="font-bel text-[10px] text-[#380102]/55 uppercase" style={{ letterSpacing: "0.1em" }}>
+          5 Favorite Things About Life
+        </span>
+        {member.favorites.length > 0 ? (
+          <ul className="flex flex-col gap-[6px] text-left">
+            {member.favorites.map((fav) => (
+              <li key={fav} className="font-aleo text-[14px] leading-[1.4] text-[#380102] flex items-start gap-[8px]">
+                <span className="text-[#d7432a] leading-[1.4]">•</span>
+                <span>{fav}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="font-aleo text-[14px] italic text-[#380102]/50">Favorites coming soon.</p>
+        )}
+      </div>
     </div>
   );
 }
 
 export default function AboutPage() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const heroWrapperRef = useRef<HTMLDivElement>(null);
+  const sentenceRef = useRef<HTMLParagraphElement>(null);
+  const timelessRef = useRef<HTMLParagraphElement>(null);
   const nektarRef = useRef<HTMLDivElement>(null);
 
+  // The hero is "pinned" (position: sticky) for an extra-tall wrapper, so the
+  // sentence-to-"timeless"-to-Nektar transition plays out while the section
+  // stays put in the viewport, only releasing to normal scroll once it's done.
   useEffect(() => {
-    const words = HERO_SENTENCE.split(" ");
-    const keepIdx = words.findIndex((w) => w.replace(/[.,]/g, "").toLowerCase() === "timeless");
-
     const handleScroll = () => {
-      if (!heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-      // Hero is the first section on the page (visible with no scrolling),
-      // so progress is driven by how far the user has scrolled *past* it —
-      // not by how far it has scrolled into view, like a lower section would.
-      const scrollDistance = Math.max(240, rect.height * 0.45);
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollDistance));
+      if (!heroWrapperRef.current) return;
+      const rect = heroWrapperRef.current.getBoundingClientRect();
+      const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
 
-      wordRefs.current.forEach((el, i) => {
-        if (!el) return;
-        if (i === keepIdx) {
-          el.style.color = progress > 0.2 ? "#d7432a" : "#380102";
-        } else {
-          el.style.opacity = String(Math.max(0.06, 1 - progress * 1.2));
-        }
-      });
+      const crossfade = Math.min(1, progress / 0.45);
+      if (sentenceRef.current) sentenceRef.current.style.opacity = String(1 - crossfade);
+      if (timelessRef.current) timelessRef.current.style.opacity = String(crossfade);
 
+      const reveal = Math.min(1, Math.max(0, (progress - 0.35) / 0.65));
       if (nektarRef.current) {
-        const revealProgress = Math.min(1, Math.max(0, (progress - 0.45) / 0.55));
-        nektarRef.current.style.opacity = String(revealProgress);
-        nektarRef.current.style.transform = `translateY(${(1 - revealProgress) * 24}px)`;
+        nektarRef.current.style.opacity = String(reveal);
+        nektarRef.current.style.transform = `translateY(${(1 - reveal) * 24}px)`;
       }
     };
 
@@ -139,33 +173,40 @@ export default function AboutPage() {
 
   return (
     <div className="bg-[#fcf8f3]">
-      {/* Hero: sentence fades to "timeless", Nektar meaning reveals beneath */}
-      <section ref={heroRef} className="px-5 sm:px-10 lg:px-[75px] pt-[110px] lg:pt-[160px] pb-16 lg:pb-[120px]">
-        <div className="max-w-[1290px] mx-auto flex flex-col gap-10 lg:gap-[60px]">
-          <p className="font-aleo font-semibold text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] max-w-[1080px]">
-            {HERO_SENTENCE.split(" ").map((word, i) => (
-              <span
-                key={i}
-                ref={(el) => {
-                  wordRefs.current[i] = el;
-                }}
-                className="text-[#380102]"
-                style={{ transition: "opacity 0.5s ease, color 0.5s ease" }}
-              >
-                {word}{" "}
-              </span>
-            ))}
-          </p>
-
-          <div ref={nektarRef} className="max-w-[760px] flex flex-col gap-4 lg:gap-[20px]" style={{ opacity: 0, transition: "opacity 0.6s ease, transform 0.6s ease" }}>
-            <span className="font-bel text-[13px] text-[#d7432a] uppercase w-fit flex items-center gap-[8px]" style={{ letterSpacing: "0.15em" }}>
-              Where the name comes from <ChevronIcon direction="right" color="#d7432a" />
+      {/* Hero: pinned in the viewport while the sentence dissolves to "timeless"
+          and the Nektar meaning fades in — see the scroll effect above. */}
+      <section ref={heroWrapperRef} className="relative" style={{ height: "230vh" }}>
+        <div className="sticky top-0 h-screen flex items-center overflow-hidden px-5 sm:px-10 lg:px-[75px]">
+          <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-8 lg:gap-[40px]">
+            <span className="font-bel text-[13px] lg:text-[14px] text-[#380102] border border-[#380102] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: "0.1em" }}>
+              We Are Nectarine
             </span>
-            {NEKTAR_PARAGRAPHS.map((p, i) => (
-              <p key={i} className={i === 0 ? "font-aleo text-[22px] lg:text-[28px] leading-[1.3] text-[#380102]" : "font-aleo text-[16px] lg:text-[18px] leading-[1.6] text-[#380102] opacity-80"}>
-                {p}
+
+            <div className="relative">
+              <p ref={sentenceRef} className="font-aleo font-semibold text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] max-w-[1080px] text-[#380102]" style={{ transition: "opacity 0.4s ease" }}>
+                {HERO_SENTENCE}
               </p>
-            ))}
+              <p
+                ref={timelessRef}
+                className="absolute inset-0 font-aleo font-semibold text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] text-[#d7432a]"
+                style={{ opacity: 0, transition: "opacity 0.4s ease" }}
+              >
+                timeless,
+              </p>
+            </div>
+
+            <div
+              ref={nektarRef}
+              className="border-l-2 border-[#d7432a] pl-5 lg:pl-[30px] max-w-[760px] flex flex-col gap-3 lg:gap-[14px]"
+              style={{ opacity: 0, transform: "translateY(24px)", transition: "opacity 0.5s ease, transform 0.5s ease" }}
+            >
+              {NEKTAR_PARAGRAPHS.map((p, i) => (
+                <p key={i} className={i === 0 ? "font-aleo font-semibold text-[22px] lg:text-[28px] leading-[1.3] text-[#380102]" : "font-aleo text-[15px] lg:text-[17px] leading-[1.6] text-[#380102] opacity-75"}>
+                  {p}
+                </p>
+              ))}
+              <span className="font-aleo text-[14px] text-[#380102]/50">— Merriam-Webster</span>
+            </div>
           </div>
         </div>
       </section>
@@ -182,47 +223,9 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-[30px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-[25px]">
             {team.map((member, i) => (
-              <div key={i} className="flex flex-col gap-5 lg:gap-[20px]">
-                {member.photo ? (
-                  <div className="relative w-full aspect-square rounded-[15px] overflow-hidden">
-                    <Image src={member.photo} alt={member.name || member.role} fill className="object-cover" />
-                  </div>
-                ) : (
-                  <AvatarPlaceholder name={member.name} role={member.role} index={i} />
-                )}
-                <div className="flex flex-col gap-[4px]">
-                  {member.name && (
-                    <h3 className="font-aleo font-semibold text-[22px] leading-[1.2] text-[#380102]">{member.name}</h3>
-                  )}
-                  <p
-                    className={
-                      member.name
-                        ? "font-bel text-[12px] text-[#d7432a] uppercase"
-                        : "font-aleo font-semibold text-[22px] leading-[1.2] text-[#380102]"
-                    }
-                    style={member.name ? { letterSpacing: "0.08em" } : undefined}
-                  >
-                    {member.role}
-                  </p>
-                </div>
-                {member.favorites.length > 0 && (
-                  <div className="flex flex-col gap-[8px] border-t border-[#380102]/15 pt-[16px]">
-                    <span className="font-bel text-[10px] text-[#380102]/55 uppercase" style={{ letterSpacing: "0.1em" }}>
-                      5 Favorite Things About Life
-                    </span>
-                    <ul className="flex flex-col gap-[6px]">
-                      {member.favorites.map((fav) => (
-                        <li key={fav} className="font-aleo text-[14px] leading-[1.4] text-[#380102] flex items-start gap-[8px]">
-                          <span className="text-[#d7432a] leading-[1.4]">•</span>
-                          <span>{fav}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+              <TeamCard key={i} member={member} index={i} />
             ))}
           </div>
         </div>
