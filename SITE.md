@@ -25,6 +25,7 @@
 - **Blog** (`/blog`) — Currently hidden from the main menu again (still works if visited directly at /blog — see Recent Changes). One post is pinned as the "Featured" hero at the top (full excerpt preview, big cover). Below that: a live search box and category filter pills (Branding, Copywriting, Web Design, Strategy, Case Studies), then a grid of every other post — search and filters apply instantly, no page reload. See "Blog Data" below for how to add/edit posts.
 - **Individual Blog Post** (`/blog/[slug]`) — Category, title, date, author, and read time (auto-calculated from word count) at the top, then the full post body, then a "More from the Blog" strip linking to 3 other posts.
 - **Contact** (`/contact`) — Standalone contact page: a centered headline, then two side-by-side cards (stacked on mobile) — a yellow card with a "book a call" graphic and a "Book a Strategy Call" button that opens the Booking Modal popup (see "Booking Modal" below), and a red-orange card with the contact form (using the form's white-text "light" styling — see "Contact Form" below). A direct "hello@nectarine.ink" email link sits below both cards for people who'd rather not fill out a form. To change the text or swap the graphic, edit `app/contact/page.tsx` — the graphic itself lives at `.shipstudio/assets/contact-booking-graphic.png`.
+- **404 (Page Not Found)** (`app/not-found.tsx`) — Shown automatically for any URL that doesn't match a real page. Same branded look as the rest of the site: an eyebrow badge, "This branch doesn't exist." heading, a short line explaining the link may have moved or gone stale, "Back to Home" and "See Our Work" buttons, an "Or get in touch" link to /contact, and the usual dark footer. To change the wording or buttons, edit `app/not-found.tsx` directly.
 
 ## Blog Data
 
@@ -87,6 +88,13 @@ Custom events are sent with a small shared helper, `trackEvent()` in `lib/analyt
 4. **Counting one as a conversion:** Admin → Events → find `form_submitted` in the list (it only appears there after firing at least once) → toggle "Mark as key event." That folds contact-form submissions into GA's conversion reporting.
 
 To add a new event elsewhere on the site later, import `trackEvent` from `lib/analytics.ts` and call it (e.g. `trackEvent("newsletter_signup", { location: "footer" })`) from wherever the action happens — same pattern used above. If the link lives on a page that needs `export const metadata` (so the page file itself can't be a client component), wrap it in `components/TrackedLink.tsx` instead (a small reusable `<a>` that reports its own click, used by the /contact page's email link) — or `components/WipeLink.tsx` if it also needs the site's circular wipe-fill hover effect (pass a `trackLabel` prop instead of an `onClick`, since server-component pages can't hand a function to a client child; used by the /audit-complete "Learn What We Do" button). `components/WipeLink.tsx` can also render as a plain button that opens a popup instead of navigating — just leave off the `href` prop (used by the Booking Modal triggers, see "Booking Modal" above).
+
+## SEO
+
+- **Sitemap** (`app/sitemap.ts`) — lists every real page for search engines: the static pages (homepage, /work, /what-we-do, /workshops-audits, /audit, /audit-complete, /contact, /blog), plus every blog post and every portfolio project, pulled in automatically from their data files — a new blog post or portfolio project shows up here with no extra work. `/homepage-test` (the unfinished draft page) is deliberately left out. Visit it at `/sitemap.xml`.
+- **Robots file** (`app/robots.ts`) — tells search engines they can crawl the whole site except `/homepage-test`, and points them to the sitemap above. Visit it at `/robots.txt`.
+- Both files share a `SITE_URL` constant (`https://www.nectarine.ink`) at the top — if the site ever moves to a different domain, update it in both files (and in `app/layout.tsx`'s `metadataBase`, which is the same URL).
+- Both are required to include `export const dynamic = "force-static"` — this site builds as a static export (see `next.config.js`), so this tells Next.js to generate `sitemap.xml`/`robots.txt` once at build time rather than needing a live server.
 
 ## Assets
 
