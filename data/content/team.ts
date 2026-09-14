@@ -11,6 +11,7 @@ const team: TeamMember[] = [
   {
     name: "Shay Germany",
     role: "CEO, Founder",
+    photo: "/.shipstudio/assets/team/shay-germany.jpg",
     favorites: [
       "Warm Sunshine",
       "Yellow Butterflies",
@@ -22,6 +23,7 @@ const team: TeamMember[] = [
   {
     name: "Tanner Germany",
     role: "Art Director, Co-Owner",
+    photo: "/.shipstudio/assets/team/tanner-germany.jpg",
     favorites: [
       "Coffee With Friends & Family",
       "Finding Rabbit Holes",
@@ -33,11 +35,13 @@ const team: TeamMember[] = [
   {
     name: "Tochukwu",
     role: "Project Manager",
+    photo: "/.shipstudio/assets/team/tochukwu.jpg",
     favorites: [],
   },
   {
-    name: "Sara",
+    name: "Sára",
     role: "Creative",
+    photo: "/.shipstudio/assets/team/sara.jpg",
     favorites: [],
   },
   {
@@ -48,6 +52,24 @@ const team: TeamMember[] = [
   {
     name: "",
     role: "Growth & Relationships Lead",
+    favorites: [],
+  },
+  {
+    name: "Solomon",
+    role: "Role Coming Soon",
+    photo: "/.shipstudio/assets/team/solomon.jpg",
+    favorites: [],
+  },
+  {
+    name: "Hanna",
+    role: "Role Coming Soon",
+    photo: "/.shipstudio/assets/team/hanna.jpg",
+    favorites: [],
+  },
+  {
+    name: "Burcu",
+    role: "Role Coming Soon",
+    photo: "/.shipstudio/assets/team/burcu.jpg",
     favorites: [],
   },
 ];

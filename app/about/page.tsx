@@ -127,28 +127,56 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
 
 export default function AboutPage() {
   const heroWrapperRef = useRef<HTMLDivElement>(null);
-  const sentenceRef = useRef<HTMLParagraphElement>(null);
-  const timelessRef = useRef<HTMLParagraphElement>(null);
+  const sentenceBlockRef = useRef<HTMLDivElement>(null);
+  const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const nektarRef = useRef<HTMLDivElement>(null);
+  const [nektarTop, setNektarTop] = useState(0);
+
+  // The Nektar block is positioned absolutely (out of normal flow) so it
+  // never affects the badge+sentence block's height or its centering — it's
+  // anchored to sit right beneath the sentence via this measured offset,
+  // remeasured on resize since the sentence wraps differently at each width.
+  useEffect(() => {
+    const measure = () => {
+      if (sentenceBlockRef.current) {
+        setNektarTop(sentenceBlockRef.current.offsetHeight + 40);
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   // The hero is "pinned" (position: sticky) for an extra-tall wrapper, so the
   // sentence-to-"timeless"-to-Nektar transition plays out while the section
   // stays put in the viewport, only releasing to normal scroll once it's done.
+  // Each word fades independently in place (rather than crossfading two
+  // separate text blocks) so "timeless" never shifts position — it simply
+  // never fades, only recolors, while every other word around it does.
   useEffect(() => {
+    const words = HERO_SENTENCE.split(" ");
+    const keepIdx = words.findIndex((w) => w.replace(/[.,]/g, "").toLowerCase() === "timeless");
+
     const handleScroll = () => {
       if (!heroWrapperRef.current) return;
       const rect = heroWrapperRef.current.getBoundingClientRect();
       const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
       const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
 
-      const crossfade = Math.min(1, progress / 0.45);
-      if (sentenceRef.current) sentenceRef.current.style.opacity = String(1 - crossfade);
-      if (timelessRef.current) timelessRef.current.style.opacity = String(crossfade);
+      const fadeProgress = Math.min(1, progress / 0.5);
+      wordRefs.current.forEach((el, i) => {
+        if (!el) return;
+        if (i === keepIdx) {
+          el.style.color = fadeProgress > 0.3 ? "#d7432a" : "#380102";
+        } else {
+          el.style.opacity = String(Math.max(0, 1 - fadeProgress * 1.3));
+        }
+      });
 
-      const reveal = Math.min(1, Math.max(0, (progress - 0.35) / 0.65));
+      const reveal = Math.min(1, Math.max(0, (progress - 0.4) / 0.6));
       if (nektarRef.current) {
         nektarRef.current.style.opacity = String(reveal);
-        nektarRef.current.style.transform = `translateY(${(1 - reveal) * 24}px)`;
+        nektarRef.current.style.transform = `translateY(${(1 - reveal) * 16}px)`;
       }
     };
 
@@ -173,32 +201,37 @@ export default function AboutPage() {
 
   return (
     <div className="bg-[#fcf8f3]">
-      {/* Hero: pinned in the viewport while the sentence dissolves to "timeless"
-          and the Nektar meaning fades in — see the scroll effect above. */}
-      <section ref={heroWrapperRef} className="relative" style={{ height: "230vh" }}>
-        <div className="sticky top-0 h-screen flex items-center overflow-hidden px-5 sm:px-10 lg:px-[75px]">
-          <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-8 lg:gap-[40px]">
-            <span className="font-bel text-[13px] lg:text-[14px] text-[#380102] border border-[#380102] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: "0.1em" }}>
-              We Are Nectarine
-            </span>
+      {/* Hero: pinned in the viewport while the sentence fades to "timeless"
+          (in place — it never moves, only recolors) and the Nektar meaning
+          fades in beneath it. See the scroll effect above. */}
+      <section ref={heroWrapperRef} className="relative" style={{ height: "220vh" }}>
+        <div className="sticky top-0 h-screen overflow-hidden px-5 sm:px-10 lg:px-[75px] flex flex-col justify-center">
+          <div className="max-w-[1290px] mx-auto w-full relative">
+            <div ref={sentenceBlockRef} className="flex flex-col gap-8 lg:gap-[40px]">
+              <span className="font-bel text-[13px] lg:text-[14px] text-[#380102] border border-[#380102] rounded-full px-[15px] py-[10px] w-fit uppercase" style={{ letterSpacing: "0.1em" }}>
+                We Are Nectarine
+              </span>
 
-            <div className="relative">
-              <p ref={sentenceRef} className="font-aleo font-semibold text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] max-w-[1080px] text-[#380102]" style={{ transition: "opacity 0.4s ease" }}>
-                {HERO_SENTENCE}
-              </p>
-              <p
-                ref={timelessRef}
-                className="absolute inset-0 font-aleo font-semibold text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] text-[#d7432a]"
-                style={{ opacity: 0, transition: "opacity 0.4s ease" }}
-              >
-                timeless,
+              <p className="font-aleo font-semibold text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] max-w-[1080px]">
+                {HERO_SENTENCE.split(" ").map((word, i) => (
+                  <span
+                    key={i}
+                    ref={(el) => {
+                      wordRefs.current[i] = el;
+                    }}
+                    className="text-[#380102]"
+                    style={{ transition: "opacity 0.5s ease, color 0.5s ease" }}
+                  >
+                    {word}{" "}
+                  </span>
+                ))}
               </p>
             </div>
 
             <div
               ref={nektarRef}
-              className="border-l-2 border-[#d7432a] pl-5 lg:pl-[30px] max-w-[760px] flex flex-col gap-3 lg:gap-[14px]"
-              style={{ opacity: 0, transform: "translateY(24px)", transition: "opacity 0.5s ease, transform 0.5s ease" }}
+              className="absolute left-0 w-full max-w-[760px] border-l-2 border-[#d7432a] pl-5 lg:pl-[30px] flex flex-col gap-3 lg:gap-[14px]"
+              style={{ top: nektarTop, opacity: 0, transform: "translateY(16px)", transition: "opacity 0.5s ease, transform 0.5s ease" }}
             >
               {NEKTAR_PARAGRAPHS.map((p, i) => (
                 <p key={i} className={i === 0 ? "font-aleo font-semibold text-[22px] lg:text-[28px] leading-[1.3] text-[#380102]" : "font-aleo text-[15px] lg:text-[17px] leading-[1.6] text-[#380102] opacity-75"}>
