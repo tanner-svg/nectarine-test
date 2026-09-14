@@ -13,6 +13,7 @@ const mainLinks = [
 ];
 
 const secondaryLinks: { href: string; label: string }[] = [
+  { href: '/about', label: 'About' },
   { href: '/audit', label: 'Audit Tool' },
   { href: '/contact', label: 'Contact' },
 ];
