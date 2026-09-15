@@ -11,7 +11,7 @@ const projects: Project[] = [
     galleryEmbeds: [{ insertAt: 2, url: "https://player.vimeo.com/video/1212456078" }],
     coverMedia: {
       type: "image",
-      url: "/.shipstudio/assets/portfolio/pinkston-for-tn/pinkston-for-tn_7.jpeg",
+      url: "/.shipstudio/assets/portfolio/pinkston-for-tn/pinkston-for-tn_7.png",
     },
     socialImage: "/.shipstudio/assets/portfolio/social/pinkston-for-tn_7.jpg",
     headline: "Designing a Campaign That Put People Before Politics",

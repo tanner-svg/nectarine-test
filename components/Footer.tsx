@@ -2,6 +2,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
+import { OPEN_PREFERENCES_EVENT } from "@/lib/cookieConsent";
 
 interface FooterProps {
   variant?: "dark" | "light";
@@ -45,6 +47,7 @@ export default function Footer({ variant = "dark" }: FooterProps) {
             className="relative overflow-hidden flex items-center gap-[10px] rounded-full px-[15px] py-[10px]"
             onMouseEnter={() => setEmailHovered(true)}
             onMouseLeave={() => setEmailHovered(false)}
+            onClick={() => trackEvent("button_click", { button_label: "Email Us (Footer)", destination: "mailto:hello@nectarine.ink" })}
           >
             <span
               className="absolute inset-0 transition-[clip-path] duration-500 ease-in-out pointer-events-none"
@@ -87,6 +90,14 @@ export default function Footer({ variant = "dark" }: FooterProps) {
             >
               Careers
             </Link>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent(OPEN_PREFERENCES_EVENT))}
+              className="font-bel text-[18px] transition-colors duration-300 hover:!text-[#f9ce6a]"
+              style={{ color: accentColor }}
+            >
+              Cookie Preferences
+            </button>
           </div>
           <span className="font-bel text-[18px]" style={{ color: accentColor }}>© 2026 nectarine studio llc.</span>
         </div>

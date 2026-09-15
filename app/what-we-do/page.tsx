@@ -7,6 +7,10 @@ import AutoplayVideo from "@/components/AutoplayVideo";
 import { getAllProjects } from "@/lib/portfolio";
 import type { Project } from "@/types/portfolio";
 import services from "@/data/content/services";
+import { trackEvent } from "@/lib/analytics";
+import BookingModal from "@/components/BookingModal";
+
+const CALENDAR_LINK = "https://calendar.app.google/7PP2JtLPDtK5qhiw5";
 
 function ArrowOutward({ color = "#380102", size = 10 }: { color?: string; size?: number }) {
   return (
@@ -16,19 +20,15 @@ function ArrowOutward({ color = "#380102", size = 10 }: { color?: string; size?:
   );
 }
 
-function WipeLink({ href, overlayColor, textOnHover, className, children }: {
-  href: string; overlayColor: string; textOnHover: string;
-  className?: string; children: React.ReactNode;
+// href is omitted when this should open something in-page (e.g. a modal)
+// instead of navigating — in that case it renders as a <button>.
+function WipeLink({ href, overlayColor, textOnHover, className, children, onClick }: {
+  href?: string; overlayColor: string; textOnHover: string;
+  className?: string; children: React.ReactNode; onClick?: () => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  return (
-    <Link
-      href={href}
-      className={`relative overflow-hidden uppercase ${className ?? ""}`}
-      style={{ letterSpacing: "0.1em" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+  const content = (
+    <>
       <span
         className="absolute inset-0 transition-[clip-path] duration-500 ease-in-out pointer-events-none"
         style={{ backgroundColor: overlayColor, clipPath: hovered ? "circle(150% at 0% 50%)" : "circle(0% at 0% 50%)" }}
@@ -36,6 +36,24 @@ function WipeLink({ href, overlayColor, textOnHover, className, children }: {
       <span className="relative z-10" style={{ color: hovered ? textOnHover : "inherit", transition: "color 0.5s ease-in-out" }}>
         {children}
       </span>
+    </>
+  );
+  const sharedProps = {
+    className: `relative overflow-hidden uppercase ${className ?? ""}`,
+    style: { letterSpacing: "0.1em" } as const,
+    onMouseEnter: () => setHovered(true),
+    onMouseLeave: () => setHovered(false),
+  };
+  if (!href) {
+    return (
+      <button type="button" onClick={onClick} {...sharedProps}>
+        {content}
+      </button>
+    );
+  }
+  return (
+    <Link href={href} onClick={onClick} {...sharedProps}>
+      {content}
     </Link>
   );
 }
@@ -107,6 +125,15 @@ export default function WhatWeDoPage() {
   const slidingRef = useRef(false);
   const autoKeyRef = useRef(0);
 
+  const [showPromo, setShowPromo] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [promoDismissed, setPromoDismissed] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPromo(true), 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const advanceTo = (idx: number) => {
     if (slidingRef.current || idx === activeIdxRef.current) return;
     slidingRef.current = true;
@@ -172,50 +199,32 @@ export default function WhatWeDoPage() {
   return (
     <div className="bg-[#fcf8f3]">
 
-      {/* Hero + category filters */}
-      <section className="pt-[150px] px-[75px] pb-0 flex flex-col gap-[75px]">
-        <div className="max-w-[1290px] mx-auto w-full flex items-center gap-[25px]">
-          <div className="flex flex-col gap-[25px] flex-1">
-            <h1 className="font-bel font-semibold text-[85px] leading-none text-[#380102]">What We Do</h1>
-            <div className="flex flex-wrap gap-[10px]">
-              {services.map((s, i) => (
-                <button
-                  key={s.label}
-                  type="button"
-                  onClick={() => handleCategoryClick(i)}
-                  className="font-bel text-[18px] px-[15px] py-[10px] rounded-full cursor-pointer transition-colors duration-300"
-                  style={
-                    i === activeIdx
-                      ? { backgroundColor: "#ffc1a7", color: "#380102", border: "1px solid transparent" }
-                      : { border: "1px solid #380102", color: "#380102", background: "transparent" }
-                  }
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* PS card */}
-          <div className="w-[465px] bg-[#ffc1a7] rounded-[15px] p-[40px] flex flex-col gap-[15px]">
-            <p className="font-bel text-[18px] text-black leading-[1.4]">
-              *P.S.<br />
-              Don't see what you're looking for? Ask us anyway. Design spans more than any list can capture — odds are we can help, and if we can't, we'll point you to someone who can
-            </p>
-            <WipeLink
-              href="mailto:hello@nectarine.ink"
-              overlayColor="#380102"
-              textOnHover="#fcf8f3"
-              className="bg-[#d7432a] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[18px] text-[#fcf8f3]"
-            >
-              Hello@nectarine.ink
-            </WipeLink>
+      {/* Hero + category filters + service detail — one flexible block that
+          fills the space below the nav down to the bottom of the first
+          screen, so the detail slide's closing divider always lands near
+          the bottom edge regardless of viewport height. */}
+      <section className="min-h-screen px-[75px] pt-[150px] pb-[45px] flex flex-col justify-between gap-[40px]">
+        <div className="max-w-[1290px] mx-auto w-full flex flex-col gap-[25px]">
+          <h1 className="font-bel font-semibold text-[85px] leading-none text-[#380102]">What We Do</h1>
+          <div className="flex w-full gap-[10px]">
+            {services.map((s, i) => (
+              <button
+                key={s.label}
+                type="button"
+                onClick={() => handleCategoryClick(i)}
+                className={`flex-1 text-center font-bel text-[14px] px-[10px] py-[12px] rounded-full cursor-pointer whitespace-nowrap transition-colors duration-300 uppercase tracking-[0.1em] border ${
+                  i === activeIdx
+                    ? "bg-[#ffc1a7] border-transparent text-[#380102]"
+                    : "bg-transparent border-[#380102] text-[#380102] hover:bg-[#ffc1a7]/60 hover:border-[#ffc1a7]"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
           </div>
         </div>
-      </section>
 
-      {/* Service detail — animates when category changes */}
-      <section className="px-[75px] py-[75px]">
+        {/* Service detail — animates when category changes */}
         <div className="max-w-[1290px] mx-auto w-full flex gap-[75px] items-start" style={sectionStyle}>
           {/* Left: icon + title + description + CTA */}
           <div className="w-[426px] flex-shrink-0 flex flex-col gap-[17px]">
@@ -229,9 +238,17 @@ export default function WhatWeDoPage() {
             <h2 className="font-aleo text-[48px] leading-none text-[#380102]">{service.title}</h2>
             <p className="font-aleo text-[18px] leading-[1.4] text-[#380102]">{service.description}</p>
             <WipeLink
-              href={service.ctaHref}
+              href={service.ctaHref === CALENDAR_LINK ? undefined : service.ctaHref}
               overlayColor="#380102"
               textOnHover="#fcf8f3"
+              onClick={
+                service.ctaHref === CALENDAR_LINK
+                  ? () => {
+                      trackEvent("button_click", { button_label: service.ctaText, destination: "booking_modal" });
+                      setBookingOpen(true);
+                    }
+                  : undefined
+              }
               className="bg-[#d7432a] rounded-[15px] py-[20px] px-[10px] text-center font-bel text-[18px] text-[#fcf8f3]"
             >
               {service.ctaText}
@@ -245,7 +262,7 @@ export default function WhatWeDoPage() {
                 <div className="border-t-2 border-[#d7432a]" />
                 <div className="py-[10px] flex flex-col gap-[10px]">
                   <h3 className="font-aleo text-[36px] leading-[1.1] text-[#380102]">{item.title}</h3>
-                  <p className="font-bel text-[18px] text-[#380102]">{item.desc}</p>
+                  <p className="font-bel text-[18px] text-[#380102] uppercase">{item.desc}</p>
                 </div>
                 {i === service.items.length - 1 && <div className="border-t-2 border-[#d7432a]" />}
               </div>
@@ -300,6 +317,52 @@ export default function WhatWeDoPage() {
       </section>
 
       <Footer variant="dark" />
+
+      {/* "Don't see what you're looking for" — floats in after 10s instead of
+          sitting in the hero, so the category filters get the full width.
+          Anchored top-right (below the hamburger, above the category row)
+          rather than a bottom corner, since the service detail now fills
+          the screen all the way to the bottom edge — no bottom corner is
+          ever fully clear of real content once that section has loaded. */}
+      <div
+        className={`fixed z-[250] inset-x-5 top-[76px] sm:inset-x-auto sm:right-[75px] sm:top-[76px] sm:w-[300px] transition-all duration-500 ease-out ${
+          showPromo && !promoDismissed
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-4 pointer-events-none"
+        }`}
+        role="dialog"
+        aria-label="More design help"
+      >
+        <div className="relative bg-[#ffc1a7] rounded-[15px] p-[16px] pr-[30px] flex flex-col gap-[8px] shadow-[0_10px_40px_rgba(56,1,2,0.25)]">
+          <button
+            type="button"
+            onClick={() => setPromoDismissed(true)}
+            aria-label="Dismiss"
+            className="absolute top-[10px] right-[10px] w-[22px] h-[22px] flex items-center justify-center rounded-full text-[#380102]/60 hover:text-[#380102] transition-colors duration-200"
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M1 9L9 1M1 1L9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+          <p className="font-bel text-[13px] text-black leading-[1.35]">
+            *P.S.<br />
+            Don't see what you're looking for? Ask us anyway. Design spans more than any list can capture — odds are we can help, and if we can't, we'll point you to someone who can
+          </p>
+          <WipeLink
+            href="mailto:hello@nectarine.ink"
+            overlayColor="#380102"
+            textOnHover="#fcf8f3"
+            className="bg-[#d7432a] rounded-[15px] py-[12px] px-[10px] text-center font-bel text-[13px] text-[#fcf8f3]"
+            onClick={() =>
+              trackEvent("button_click", { button_label: "Email Us (What We Do Popup)", destination: "mailto:hello@nectarine.ink" })
+            }
+          >
+            Hello@nectarine.ink
+          </WipeLink>
+        </div>
+      </div>
+
+      <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
   );
 }
