@@ -11,6 +11,7 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/about`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/work`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/what-we-do`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/workshops-audits`, changeFrequency: "monthly", priority: 0.7 },
