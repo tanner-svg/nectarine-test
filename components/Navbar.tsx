@@ -4,16 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// "Blog" and "Workshops & Audits" are hidden from the menu for now — both
-// pages still exist (at /blog and /workshops-audits), just not linked here.
-// Add either back to mainLinks to restore it.
+// "Blog", "Workshops & Audits", and "About" are hidden from the menu for
+// now — all three pages still exist (at /blog, /workshops-audits, and
+// /about), just not linked here. Add any of them back to mainLinks or
+// secondaryLinks to restore it.
 const mainLinks = [
   { href: '/work', label: 'Our Work' },
   { href: '/what-we-do', label: 'Creative Services' },
 ];
 
 const secondaryLinks: { href: string; label: string }[] = [
-  { href: '/about', label: 'About' },
   { href: '/audit', label: 'Audit Tool' },
   { href: '/contact', label: 'Contact' },
 ];
