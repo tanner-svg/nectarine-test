@@ -98,6 +98,20 @@ export default function Footer({ variant = "dark" }: FooterProps) {
             >
               Cookie Preferences
             </button>
+            <Link
+              href="/privacy-policy"
+              className="font-bel text-[18px] transition-colors duration-300 hover:!text-[#f9ce6a]"
+              style={{ color: accentColor }}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/eula"
+              className="font-bel text-[18px] transition-colors duration-300 hover:!text-[#f9ce6a]"
+              style={{ color: accentColor }}
+            >
+              EULA
+            </Link>
           </div>
           <span className="font-bel text-[18px]" style={{ color: accentColor }}>© 2026 nectarine studio llc.</span>
         </div>
