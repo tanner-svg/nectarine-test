@@ -40,7 +40,7 @@ Team members live in `data/content/team.ts` as a list — no CMS, just edit the 
 
 - **To add or edit someone:** set `name`, `role`, and up to 5 `favorites` (their "favorite things about life" answers — shows however many are filled in; leave the array empty and the card shows "Favorites coming soon." instead).
 - **Photos:** real headshots are in for Shay, Tanner, Tochukwu, Sára, Solomon, Hanna, and Burcu — everyone else (Clarissa, the Growth & Relationships Lead) still shows a colored initials placeholder (or "?" if no name is set yet), via `AvatarPlaceholder` in `app/about/page.tsx`. To add a real photo, drop the file into `.shipstudio/assets/team/` **and** `public/.shipstudio/assets/team/` (see "Assets" below for why both), then set that member's `photo` field to the path (e.g. `/.shipstudio/assets/team/shay-germany.jpg`) — the card switches to the real photo automatically.
-- **Still needed:** role titles for Solomon, Hanna, and Burcu (added from a headshot batch that didn't include their titles — cards show "Role Coming Soon" until set) and favorite-things-about-life answers for everyone except Shay and Tanner (the only two filled in on the original copy doc) — plus a name for the Growth & Relationships Lead role, if there's a person attached to it yet.
+- **Still needed:** favorite-things-about-life answers for Clarissa — plus a name for the Growth & Relationships Lead role, if there's a person attached to it yet.
 
 ## Values Data
 
@@ -325,6 +325,7 @@ Service copy lives in `data/content/services.ts`. Each service has a `label` (bu
 - **2026-09-15:** Added a new blog post, "The Fuzz Tax: What an Unclear Brand Really Costs You," by Shay Germany, filed under Branding. Since the blog isn't linked in the main menu right now, visit /blog directly to see it (see the 2026-09-08 note above on how to bring "Blog" back to the menu). Note: the post's closing line signs off with `hello@nectarinestudio.com`, which is a different address than the `hello@nectarine.ink` used elsewhere on the site (footer, contact form) — worth double-checking that's the address you meant to use before this goes out publicly.
 - **2026-09-21:** Hid "About" from the menu again — the page still exists and works if visited directly at /about.
 - **2026-09-22:** Added a Privacy Policy (`/privacy-policy`) and an EULA (`/eula`), linked from the footer next to "Cookie Preferences." The Privacy Policy is written to match what the site actually does today (contact form, Google Analytics, Google Ads, cookie categories); the EULA is a general one, not tied to a specific tool. Both were drafted by Claude, not reviewed by a lawyer — see "Pages" above for what still needs legal review before relying on them.
+- **2026-09-23:** Filled in the last few gaps on the team grid: added "5 favorite things about life" answers for Tochukwu, Sára Kopasz, and Burcu Türeyen (from a team Slack thread), and set final role titles for Solomon ("Brand Partner Lead"), Hanna ("Bookkeeper"), and Burcu ("Creative"). Also filled in Sára's and Burcu's last names now that they were available. Clarissa and the still-unnamed Growth & Relationships Lead are the only cards left with "Favorites coming soon." — see "Team Data" above.
 
 ## How to Customize
 
