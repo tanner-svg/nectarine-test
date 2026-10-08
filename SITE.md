@@ -39,9 +39,9 @@
 Team members live in `data/content/team.ts` as a list — no CMS, just edit the file directly.
 
 - **To add or edit someone:** set `name`, `role`, and up to 5 `favorites` (their "favorite things about life" answers — shows however many are filled in; leave the array empty and the card shows "Favorites coming soon." instead).
-- **Photos:** real headshots are in for Shay, Tanner, Tochukwu, Sára, Solomon, and Burcu — everyone else (Clarissa, the Growth & Relationships Lead) still shows a colored initials placeholder (or "?" if no name is set yet), via `AvatarPlaceholder` in `app/about/page.tsx`. To add a real photo, drop the file into `.shipstudio/assets/team/` **and** `public/.shipstudio/assets/team/` (see "Assets" below for why both), then set that member's `photo` field to the path (e.g. `/.shipstudio/assets/team/shay-germany.jpg`) — the card switches to the real photo automatically.
+- **Photos:** real headshots are in for Shay, Tanner, Tochukwu, Sára, Solomon, and Burcu — Clarissa still shows a colored initials placeholder (or "?" if no name is set yet), via `AvatarPlaceholder` in `app/about/page.tsx`. To add a real photo, drop the file into `.shipstudio/assets/team/` **and** `public/.shipstudio/assets/team/` (see "Assets" below for why both), then set that member's `photo` field to the path (e.g. `/.shipstudio/assets/team/shay-germany.jpg`) — the card switches to the real photo automatically.
 - **Favorites:** filled in for Shay, Tanner, Tochukwu, Sára, and Burcu. Writing a favorite as "Short Title: longer explanation" shows the title in bold (Tochukwu's and Sára's use this); plain sentences show as-is (Burcu's).
-- **Still needed:** role titles for Solomon and Burcu (cards show "Role Coming Soon" until set), favorites for Solomon and Clarissa (cards show "Favorites coming soon."), and a name for the Growth & Relationships Lead role, if there's a person attached to it yet.
+- **Still needed:** favorites for Solomon and Clarissa (cards show "Favorites coming soon." until filled in) and a photo for Clarissa.
 
 ## Values Data
 
@@ -348,7 +348,7 @@ Service copy lives in `data/content/services.ts`. Each service has a `label` (bu
   - **Fixed the email in the Fuzz Tax blog post** — now hello@nectarine.ink.
   - **Added business details for Google** (name, logo, email, 2024 founding, Erie PA base, worldwide service, LinkedIn and Instagram), an **AI summary file** at `/llms.txt`, and hidden main headings on the About, Audit Tool, and Blog pages.
   - **Hid the unfinished Sojourn Turkey and Showered With Love pages from Google** and removed them from the sitemap (new `hideFromSearch` setting).
-- **2026-10-08:** Published the About page — added "About" back to the menu (in the smaller links, before Audit Tool and Contact) and to `llms.txt` (it was already in the sitemap). Added Tochukwu's, Sára's, and Burcu's five favorite things about life, removed Hanna from the team, and changed the Blog's hidden heading to "The Nectarine Journal: Brand Strategy and Design for Climate and Impact-Driven Companies".
+- **2026-10-08:** Published the About page — added "About" back to the menu (in the smaller links, before Audit Tool and Contact) and to `llms.txt` (it was already in the sitemap). Added Tochukwu's, Sára's, and Burcu's five favorite things about life, removed Hanna and the unnamed Growth & Relationships Lead card from the team, set Solomon's role to Brand Partnership Lead and Burcu's to Creative, and changed the Blog's hidden heading to "The Nectarine Journal: Brand Strategy and Design for Climate and Impact-Driven Companies".
 
 ## How to Customize
 

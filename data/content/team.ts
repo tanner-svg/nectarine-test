@@ -62,19 +62,14 @@ const team: TeamMember[] = [
     favorites: [],
   },
   {
-    name: "",
-    role: "Growth & Relationships Lead",
-    favorites: [],
-  },
-  {
     name: "Solomon",
-    role: "Role Coming Soon",
+    role: "Brand Partnership Lead",
     photo: "/.shipstudio/assets/team/solomon.jpg",
     favorites: [],
   },
   {
     name: "Burcu",
-    role: "Role Coming Soon",
+    role: "Creative",
     photo: "/.shipstudio/assets/team/burcu.jpg",
     favorites: [
       "Slow mornings with the amazing smell of freshly brewed coffee :D",
