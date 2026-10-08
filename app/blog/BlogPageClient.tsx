@@ -138,7 +138,7 @@ export default function BlogPageClient({ featuredPost, posts, categories }: Prop
     <div className="bg-[#fcf8f3]">
       {/* Main page heading for Google and screen readers — hidden visually so
           the featured post stays the first thing people see. */}
-      <h1 className="sr-only">The Nectarine Journal: Notes on Brand Strategy and Design for Environmental and Impact-Focused Companies</h1>
+      <h1 className="sr-only">The Nectarine Journal: Brand Strategy and Design for Climate and Impact-Driven Companies</h1>
       <FeaturedPost post={featuredPost} />
 
       {/* Search + filter */}

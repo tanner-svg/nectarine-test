@@ -23,6 +23,7 @@
 - [Home](https://www.nectarine.ink/): Overview of the studio, featured work, services, and how to get in touch.
 - [Our Work](https://www.nectarine.ink/work): Portfolio of brand, web, and campaign projects.
 - [Creative Services](https://www.nectarine.ink/what-we-do): The full list of services — design, writing and copy, digital and UI design, video and media, event design, and workshops and audits.
+- [About](https://www.nectarine.ink/about): The people behind Nectarine Studio, plus the mission, vision, and values that shape how we work.
 - [Free Brand Alignment Audit](https://www.nectarine.ink/audit): An interactive tool that gives a quick read on a brand's and website's strengths and gaps.
 - [Contact](https://www.nectarine.ink/contact): Contact form and booking link for a strategy call.
 

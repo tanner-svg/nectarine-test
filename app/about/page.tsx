@@ -113,7 +113,16 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
             {member.favorites.map((fav) => (
               <li key={fav} className="font-aleo text-[14px] leading-[1.4] text-[#380102] flex items-start gap-[8px]">
                 <span className="text-[#d7432a] leading-[1.4]">•</span>
-                <span>{fav}</span>
+                <span>
+                  {fav.includes(": ") ? (
+                    <>
+                      <span className="font-semibold">{fav.slice(0, fav.indexOf(": "))}:</span>
+                      {fav.slice(fav.indexOf(": ") + 1)}
+                    </>
+                  ) : (
+                    fav
+                  )}
+                </span>
               </li>
             ))}
           </ul>

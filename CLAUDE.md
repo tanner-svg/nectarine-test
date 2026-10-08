@@ -235,7 +235,7 @@ If the user asks for an "About" page:
 
 `public/llms.txt` is a plain-text summary of the site for AI tools (ChatGPT, Claude, Perplexity). It only lists pages that are in the main menu (`components/Navbar.tsx`) plus published portfolio projects — legal pages and pages hidden from the menu are left out on purpose.
 
-**Whenever a page is added to or removed from the menu, or a portfolio project is published (its `hideFromSearch` flag removed in `data/content/projects.ts`), remind the user and offer to update `public/llms.txt` to match.** Currently left out: About, Blog, Workshops & Audits (hidden from menu), Sojourn Turkey and Showered With Love (not published yet), Privacy Policy, EULA.
+**Whenever a page is added to or removed from the menu, or a portfolio project is published (its `hideFromSearch` flag removed in `data/content/projects.ts`), remind the user and offer to update `public/llms.txt` to match.** Currently left out: Blog, Workshops & Audits (hidden from menu), Sojourn Turkey and Showered With Love (not published yet), Privacy Policy, EULA.
 
 ---
 
