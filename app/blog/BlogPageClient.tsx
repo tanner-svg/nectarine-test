@@ -66,9 +66,9 @@ function FeaturedPost({ post }: { post: BlogPost }) {
             >
               Featured
             </span>
-            <h1 className="font-aleo font-bold text-[32px] lg:text-[48px] leading-[1.1] text-[#fcf8f3] group-hover:text-[#f9ce6a] transition-colors duration-300">
+            <h2 className="font-aleo font-bold text-[32px] lg:text-[48px] leading-[1.1] text-[#fcf8f3] group-hover:text-[#f9ce6a] transition-colors duration-300">
               {post.title}
-            </h1>
+            </h2>
             <p className="font-aleo text-[16px] lg:text-[18px] text-[#fcf8f3] opacity-80 leading-[1.5] max-w-[560px]">
               {post.excerpt}
             </p>
@@ -136,6 +136,9 @@ export default function BlogPageClient({ featuredPost, posts, categories }: Prop
 
   return (
     <div className="bg-[#fcf8f3]">
+      {/* Main page heading for Google and screen readers — hidden visually so
+          the featured post stays the first thing people see. */}
+      <h1 className="sr-only">The Nectarine Journal: Notes on Brand Strategy and Design for Environmental and Impact-Focused Companies</h1>
       <FeaturedPost post={featuredPost} />
 
       {/* Search + filter */}

@@ -126,6 +126,7 @@ export async function generateMetadata({
     description,
     openGraph: { title, description, images: ogImage ? [ogImage] : undefined },
     twitter: { card: "summary_large_image", title, description, images: ogImage ? [ogImage.url] : undefined },
+    ...(project.hideFromSearch ? { robots: { index: false, follow: true } } : {}),
   };
 }
 

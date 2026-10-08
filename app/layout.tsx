@@ -10,6 +10,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import CookieBanner from "@/components/CookieBanner";
 import GoogleTags from "@/components/GoogleTags";
+import StructuredData from "@/components/StructuredData";
 
 const belanosima = Belanosima({
   subsets: ["latin"],
@@ -58,6 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased ${belanosima.variable} ${aleo.variable} ${inter.variable}`}>
+        <StructuredData />
         <GoogleTags />
         <SmoothScroll />
         <CustomCursor />

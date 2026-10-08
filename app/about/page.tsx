@@ -201,6 +201,9 @@ export default function AboutPage() {
 
   return (
     <div className="bg-[#fcf8f3]">
+      {/* Main page heading for Google and screen readers — hidden visually so
+          the animated hero sentence below stays the first thing people see. */}
+      <h1 className="sr-only">More About the People and Vision Behind Nectarine</h1>
       {/* Hero: pinned in the viewport while the sentence fades to "timeless"
           (in place — it never moves, only recolors) and the Nektar meaning
           fades in beneath it. See the scroll effect above. */}

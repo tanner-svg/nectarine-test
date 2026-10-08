@@ -185,6 +185,7 @@ After working alongside the founder and team over the years, all it took was a q
   {
     title: "Sojourn Turkey",
     slug: "sojourn-turkey",
+    hideFromSearch: true,
     order: 7,
     showOnHomepage: false,
     showOnWorkPage: false,
@@ -211,6 +212,7 @@ After working alongside the founder and team over the years, all it took was a q
     {
     title: "Showered With Love",
     slug: "swl",
+    hideFromSearch: true,
     order: 8,
     showOnHomepage: false,
     showOnWorkPage: false,

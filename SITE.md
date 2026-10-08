@@ -119,6 +119,10 @@ To add a new event elsewhere on the site later, import `trackEvent` from `lib/an
 - **Page titles** (`app/layout.tsx`) — every page's title automatically gets " | Nectarine Studio" added to the end (e.g. "About | Nectarine Studio"), so you only ever write the short part. The homepage just shows "Nectarine Studio".
 - **Official page addresses** (`app/layout.tsx`, the `alternates` setting) — every page tells Google its one "official" web address (a "canonical" tag), so it never treats small variations of the same address as duplicate pages. Works automatically for new pages.
 - **Hidden from Google:** `/audit-complete` is marked "don't show in search results" (the `robots` line in `app/audit-complete/page.tsx`), and `/homepage-test` is blocked in the robots file.
+- **Business details for Google** (`components/StructuredData.tsx`, loaded on every page) — hidden information that tells Google who Nectarine is: name, logo, email (hello@nectarine.ink — no phone number, on purpose), founding year (2024), official base (Erie, PA, legal only — marked as serving clients worldwide), what the studio specializes in, and its LinkedIn and Instagram profiles. Visitors never see it. Edit that file if any of these change (e.g. add a new social profile to the `sameAs` list).
+- **AI summary file** (`public/llms.txt`, visit at `/llms.txt`) — a plain-text summary of the studio, who it works with, its services, and its main pages, written for AI tools like ChatGPT, Claude, and Perplexity. It only lists pages in the main menu plus published portfolio projects. **When a page is added to the menu or a project is published, update this file too** (Claude has been told to remind you).
+- **Hidden page headings** — the About, Audit Tool, and Blog pages each have a main heading that only Google and screen readers see (so it doesn't change the design): "More About the People and Vision Behind Nectarine", "Free Brand Alignment Audit", and "The Nectarine Journal: Notes on Brand Strategy and Design for Environmental and Impact-Focused Companies". Edit them in each page's file — look for the line with `sr-only`.
+- **Unpublished project pages** — a project with `hideFromSearch: true` in `data/content/projects.ts` is left out of the sitemap and hidden from Google, though its page still works if visited directly. Sojourn Turkey and Showered With Love are set this way until their pages are finished — remove that line when they're ready.
 - **Image descriptions ("alt text")** — read by screen readers and Google Images. Project gallery images get theirs from each project's `galleryAlt` list in `data/content/projects.ts` (see "Project gallery images" below).
 - Both are required to include `export const dynamic = "force-static"` — this site builds as a static export (see `next.config.js`), so this tells Next.js to generate `sitemap.xml`/`robots.txt` once at build time rather than needing a live server.
 
@@ -341,6 +345,8 @@ Service copy lives in `data/content/services.ts`. Each service has a `label` (bu
   - **Hid the audit thank-you page** (`/audit-complete`) from Google and removed it from the sitemap.
   - **Added image descriptions** to every project gallery image (written to describe the actual work, e.g. "Gold foil Judgment of Paris shoulder label on a David Bruce wine bottle"), plus the blog cover icons and the telephone illustration.
   - **Fixed the email in the Fuzz Tax blog post** — now hello@nectarine.ink.
+  - **Added business details for Google** (name, logo, email, 2024 founding, Erie PA base, worldwide service, LinkedIn and Instagram), an **AI summary file** at `/llms.txt`, and hidden main headings on the About, Audit Tool, and Blog pages.
+  - **Hid the unfinished Sojourn Turkey and Showered With Love pages from Google** and removed them from the sitemap (new `hideFromSearch` setting).
 
 ## How to Customize
 

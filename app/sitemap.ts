@@ -29,7 +29,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const portfolioPages: MetadataRoute.Sitemap = getAllProjects().map((project) => ({
+  const portfolioPages: MetadataRoute.Sitemap = getAllProjects()
+    .filter((project) => !project.hideFromSearch)
+    .map((project) => ({
     url: `${SITE_URL}/portfolio/${project.slug}`,
     changeFrequency: "monthly",
     priority: 0.7,
