@@ -113,9 +113,13 @@ To add a new event elsewhere on the site later, import `trackEvent` from `lib/an
 
 ## SEO
 
-- **Sitemap** (`app/sitemap.ts`) — lists every real page for search engines: the static pages (homepage, /about, /work, /what-we-do, /workshops-audits, /audit, /audit-complete, /contact, /blog, /privacy-policy, /eula), plus every blog post and every portfolio project, pulled in automatically from their data files — a new blog post or portfolio project shows up here with no extra work. `/homepage-test` (the unfinished draft page) is deliberately left out. Visit it at `/sitemap.xml`.
+- **Sitemap** (`app/sitemap.ts`) — lists every real page for search engines: the static pages (homepage, /about, /work, /what-we-do, /workshops-audits, /audit, /contact, /blog, /privacy-policy, /eula), plus every blog post and every portfolio project, pulled in automatically from their data files — a new blog post or portfolio project shows up here with no extra work. `/homepage-test` (the unfinished draft page) and `/audit-complete` (the thank-you page people see after finishing the audit) are deliberately left out. Visit it at `/sitemap.xml`.
 - **Robots file** (`app/robots.ts`) — tells search engines they can crawl the whole site except `/homepage-test`, and points them to the sitemap above. Visit it at `/robots.txt`.
 - Both files share a `SITE_URL` constant (`https://www.nectarine.ink`) at the top — if the site ever moves to a different domain, update it in both files (and in `app/layout.tsx`'s `metadataBase`, which is the same URL).
+- **Page titles** (`app/layout.tsx`) — every page's title automatically gets " | Nectarine Studio" added to the end (e.g. "About | Nectarine Studio"), so you only ever write the short part. The homepage just shows "Nectarine Studio".
+- **Official page addresses** (`app/layout.tsx`, the `alternates` setting) — every page tells Google its one "official" web address (a "canonical" tag), so it never treats small variations of the same address as duplicate pages. Works automatically for new pages.
+- **Hidden from Google:** `/audit-complete` is marked "don't show in search results" (the `robots` line in `app/audit-complete/page.tsx`), and `/homepage-test` is blocked in the robots file.
+- **Image descriptions ("alt text")** — read by screen readers and Google Images. Project gallery images get theirs from each project's `galleryAlt` list in `data/content/projects.ts` (see "Project gallery images" below).
 - Both are required to include `export const dynamic = "force-static"` — this site builds as a static export (see `next.config.js`), so this tells Next.js to generate `sitemap.xml`/`robots.txt` once at build time rather than needing a live server.
 
 ## Assets
@@ -180,6 +184,10 @@ Each project's individual page (`/portfolio/[slug]`) pulls its image gallery fro
 Example: `pinkston-for-tn_1.png`, `pinkston-for-tn_2.png`, `pinkston-for-tn_3.png`, ...
 
 Images and short video clips (`.png`, `.jpg`, `.gif`, `.webp`, `.mp4`, `.mov`, `.webm`) both work. As with all assets, files need to exist in both `.shipstudio/assets/portfolio/<folder>/` and `public/.shipstudio/assets/portfolio/<folder>/` to show up on the site.
+
+**Image descriptions:** each project in `data/content/projects.ts` has a `galleryAlt` list matching each gallery file name to a short description (e.g. `"Bottle-Mock_5.png": "Faithful Talent sticker on a water bottle in a backpack"`). When you add a new gallery image, add a line for it there. If you forget, it falls back to "<Project name> project by Nectarine Studio", which is fine but less helpful to Google.
+
+**Keep files small:** big images and videos make the site slow (and slow sites rank lower on Google). Before adding media, aim for photos under ~500 KB (about 2400px wide is plenty) and videos under ~2 MB. Prefer short MP4 videos over animated GIFs — the same animation is usually 5–10× smaller as an MP4.
 
 ### Social share images
 
@@ -325,6 +333,14 @@ Service copy lives in `data/content/services.ts`. Each service has a `label` (bu
 - **2026-09-15:** Added a new blog post, "The Fuzz Tax: What an Unclear Brand Really Costs You," by Shay Germany, filed under Branding. Since the blog isn't linked in the main menu right now, visit /blog directly to see it (see the 2026-09-08 note above on how to bring "Blog" back to the menu). Note: the post's closing line signs off with `hello@nectarinestudio.com`, which is a different address than the `hello@nectarine.ink` used elsewhere on the site (footer, contact form) — worth double-checking that's the address you meant to use before this goes out publicly.
 - **2026-09-21:** Hid "About" from the menu again — the page still exists and works if visited directly at /about.
 - **2026-09-22:** Added a Privacy Policy (`/privacy-policy`) and an EULA (`/eula`), linked from the footer next to "Cookie Preferences." The Privacy Policy is written to match what the site actually does today (contact form, Google Analytics, Google Ads, cookie categories); the EULA is a general one, not tied to a specific tool. Both were drafted by Claude, not reviewed by a lawyer — see "Pages" above for what still needs legal review before relying on them.
+- **2026-10-08:** SEO and speed clean-up, based on a review of the live site:
+  - **Faster homepage** — compressed the four biggest homepage media files (Faithful Talent video, David Bruce video, Frontier Operators photo) and turned the Sojourn Turkey animated GIF into a much smaller MP4 video. The homepage went from about 43 MB to about 6.6 MB, with no visible difference.
+  - **Fixed project titles** — Sojourn Turkey is now "Positioning One of the Mediterranean's Most Trusted Travel Brands for the European MICE Market" and Showered With Love is now "Changing Lives, One Hot Shower at a Time" (both were showing the Michael Cook book title by mistake). Sojourn Turkey also got its own social share image.
+  - **Page titles** now end in " | Nectarine Studio" everywhere (e.g. "About | Nectarine Studio").
+  - **Each page now tells Google its official address** (canonical tag).
+  - **Hid the audit thank-you page** (`/audit-complete`) from Google and removed it from the sitemap.
+  - **Added image descriptions** to every project gallery image (written to describe the actual work, e.g. "Gold foil Judgment of Paris shoulder label on a David Bruce wine bottle"), plus the blog cover icons and the telephone illustration.
+  - **Fixed the email in the Fuzz Tax blog post** — now hello@nectarine.ink.
 
 ## How to Customize
 

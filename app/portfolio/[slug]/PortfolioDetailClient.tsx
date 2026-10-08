@@ -79,11 +79,12 @@ function GalleryGrid({
               ) : item.type === "embed" ? (
                 <iframe
                   src={item.url}
+                  title={item.alt}
                   className="absolute inset-0 w-full h-full border-0"
                   allow="autoplay; fullscreen; picture-in-picture"
                 />
               ) : (
-                <Image src={item.url} alt="" fill className={fit === "contain" ? "object-contain" : "object-cover"} />
+                <Image src={item.url} alt={item.alt ?? ""} fill className={fit === "contain" ? "object-contain" : "object-cover"} />
               )}
             </div>
             );

@@ -44,7 +44,7 @@ function BlogCover({ post }: { post: BlogPost }) {
       className="w-full rounded-[8px] relative overflow-hidden flex items-center justify-center transition-transform duration-500 group-hover:scale-[1.03]"
       style={{ aspectRatio: "3/2", backgroundColor: post.coverColor }}
     >
-      <Image src={post.coverIcon} alt="" width={64} height={64} className="w-[25%] h-auto opacity-80" />
+      <Image src={post.coverIcon} alt={`${post.category} illustration for ${post.title}`} width={64} height={64} className="w-[25%] h-auto opacity-80" />
     </div>
   );
 }
@@ -56,7 +56,7 @@ function FeaturedPost({ post }: { post: BlogPost }) {
         <Link href={`/blog/${post.slug}`} className="group flex flex-col lg:flex-row gap-8 lg:gap-[60px] items-center">
           <div className="w-full lg:w-[45%] rounded-[16px] overflow-hidden" style={{ backgroundColor: post.coverColor }}>
             <div className="relative w-full flex items-center justify-center" style={{ aspectRatio: "4/3" }}>
-              <Image src={post.coverIcon} alt="" width={110} height={110} className="w-[30%] h-auto opacity-80 transition-transform duration-500 group-hover:scale-[1.05]" />
+              <Image src={post.coverIcon} alt={`${post.category} illustration for ${post.title}`} width={110} height={110} className="w-[30%] h-auto opacity-80 transition-transform duration-500 group-hover:scale-[1.05]" />
             </div>
           </div>
           <div className="flex-1 flex flex-col gap-5 lg:gap-[25px]">

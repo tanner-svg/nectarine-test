@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/what-we-do`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/workshops-audits`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/audit`, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/audit-complete`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE_URL}/contact`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/blog`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/privacy-policy`, changeFrequency: "yearly", priority: 0.3 },

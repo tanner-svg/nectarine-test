@@ -9,6 +9,8 @@ const VIDEO_EXT = /\.(mp4|mov|webm)$/i;
 export interface GalleryItem {
   url: string;
   type: "image" | "video" | "embed";
+  /** Description for screen readers and Google Images. */
+  alt?: string;
 }
 
 export function getGalleryImages(galleryFolder: string): GalleryItem[] {

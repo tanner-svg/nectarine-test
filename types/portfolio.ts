@@ -36,6 +36,8 @@ export interface Project {
   galleryColumnWidths?: { rowIndex: number; widths: number[] }[];
   /** Shows a specific gallery item's full image (letterboxed) instead of cropping it to fill its box. `index` is the 0-based position in the final gallery array (after embeds are spliced in). */
   galleryItemFit?: { index: number; fit: "contain" }[];
+  /** Image descriptions ("alt text") for gallery files, keyed by file name (e.g. "Bottle-Mock_5.png"). Read by screen readers and Google Images. Any gallery image not listed falls back to "<project title> project by Nectarine Studio". */
+  galleryAlt?: Record<string, string>;
   /** Short punchy phrase shown on the project detail page and its "read the full story" modal. Falls back to `title`. */
   headline?: string;
   /** Search-engine meta description for this project's detail page. Falls back to `headline` if left out. */
