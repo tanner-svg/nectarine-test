@@ -36,6 +36,8 @@ export interface Project {
   galleryColumnWidths?: { rowIndex: number; widths: number[] }[];
   /** Shows a specific gallery item's full image (letterboxed) instead of cropping it to fill its box. `index` is the 0-based position in the final gallery array (after embeds are spliced in). */
   galleryItemFit?: { index: number; fit: "contain" }[];
+  /** Image descriptions ("alt text") for gallery files, keyed by file name (e.g. "Bottle-Mock_5.png"). Read by screen readers and Google Images. Any gallery image not listed falls back to "<project title> project by Nectarine Studio". */
+  galleryAlt?: Record<string, string>;
   /** Short punchy phrase shown on the project detail page and its "read the full story" modal. Falls back to `title`. */
   headline?: string;
   /** Search-engine meta description for this project's detail page. Falls back to `headline` if left out. */
@@ -48,6 +50,8 @@ export interface Project {
   homepageOrder?: number;
   /** Set to false to hide this project from the /work page grid. Defaults to true (shown). Doesn't affect the homepage, testimonials, or the project's own detail page — those are controlled separately. */
   showOnWorkPage?: boolean;
+  /** Set to true while a project page isn't ready yet: keeps it out of the sitemap and tells Google not to show it in search results. The page still works if someone visits its address directly. Remove (or set to false) when the page is ready to publish. */
+  hideFromSearch?: boolean;
   /** Explicit JPG/PNG to use as this project's social share preview (og:image), e.g. "/.shipstudio/assets/portfolio/social/pinkston-for-tn.jpg". Overrides the automatic cover/gallery-based fallback. Falls back to that automatic pick if left out. */
   socialImage?: string;
   body: string;

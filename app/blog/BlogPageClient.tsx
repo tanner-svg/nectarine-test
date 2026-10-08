@@ -44,7 +44,7 @@ function BlogCover({ post }: { post: BlogPost }) {
       className="w-full rounded-[8px] relative overflow-hidden flex items-center justify-center transition-transform duration-500 group-hover:scale-[1.03]"
       style={{ aspectRatio: "3/2", backgroundColor: post.coverColor }}
     >
-      <Image src={post.coverIcon} alt="" width={64} height={64} className="w-[25%] h-auto opacity-80" />
+      <Image src={post.coverIcon} alt={`${post.category} illustration for ${post.title}`} width={64} height={64} className="w-[25%] h-auto opacity-80" />
     </div>
   );
 }
@@ -56,7 +56,7 @@ function FeaturedPost({ post }: { post: BlogPost }) {
         <Link href={`/blog/${post.slug}`} className="group flex flex-col lg:flex-row gap-8 lg:gap-[60px] items-center">
           <div className="w-full lg:w-[45%] rounded-[16px] overflow-hidden" style={{ backgroundColor: post.coverColor }}>
             <div className="relative w-full flex items-center justify-center" style={{ aspectRatio: "4/3" }}>
-              <Image src={post.coverIcon} alt="" width={110} height={110} className="w-[30%] h-auto opacity-80 transition-transform duration-500 group-hover:scale-[1.05]" />
+              <Image src={post.coverIcon} alt={`${post.category} illustration for ${post.title}`} width={110} height={110} className="w-[30%] h-auto opacity-80 transition-transform duration-500 group-hover:scale-[1.05]" />
             </div>
           </div>
           <div className="flex-1 flex flex-col gap-5 lg:gap-[25px]">
@@ -66,9 +66,9 @@ function FeaturedPost({ post }: { post: BlogPost }) {
             >
               Featured
             </span>
-            <h1 className="font-aleo font-bold text-[32px] lg:text-[48px] leading-[1.1] text-[#fcf8f3] group-hover:text-[#f9ce6a] transition-colors duration-300">
+            <h2 className="font-aleo font-bold text-[32px] lg:text-[48px] leading-[1.1] text-[#fcf8f3] group-hover:text-[#f9ce6a] transition-colors duration-300">
               {post.title}
-            </h1>
+            </h2>
             <p className="font-aleo text-[16px] lg:text-[18px] text-[#fcf8f3] opacity-80 leading-[1.5] max-w-[560px]">
               {post.excerpt}
             </p>
@@ -136,6 +136,9 @@ export default function BlogPageClient({ featuredPost, posts, categories }: Prop
 
   return (
     <div className="bg-[#fcf8f3]">
+      {/* Main page heading for Google and screen readers — hidden visually so
+          the featured post stays the first thing people see. */}
+      <h1 className="sr-only">The Nectarine Journal: Brand Strategy and Design for Climate and Impact-Driven Companies</h1>
       <FeaturedPost post={featuredPost} />
 
       {/* Search + filter */}

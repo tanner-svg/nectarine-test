@@ -778,7 +778,7 @@ export default function HomePage() {
               <div className="flex-1 flex flex-col gap-6 lg:gap-[32px]">
                 <Image
                   src="/.shipstudio/assets/Contact-Illustration.png"
-                  alt=""
+                  alt="Vintage rotary telephone illustration inviting you to contact Nectarine Studio"
                   width={207}
                   height={154}
                   className="w-[160px] lg:w-[210px] h-auto"

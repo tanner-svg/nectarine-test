@@ -113,7 +113,16 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
             {member.favorites.map((fav) => (
               <li key={fav} className="font-aleo text-[14px] leading-[1.4] text-[#380102] flex items-start gap-[8px]">
                 <span className="text-[#d7432a] leading-[1.4]">•</span>
-                <span>{fav}</span>
+                <span>
+                  {fav.includes(": ") ? (
+                    <>
+                      <span className="font-semibold">{fav.slice(0, fav.indexOf(": "))}:</span>
+                      {fav.slice(fav.indexOf(": ") + 1)}
+                    </>
+                  ) : (
+                    fav
+                  )}
+                </span>
               </li>
             ))}
           </ul>
@@ -201,6 +210,9 @@ export default function AboutPage() {
 
   return (
     <div className="bg-[#fcf8f3]">
+      {/* Main page heading for Google and screen readers — hidden visually so
+          the animated hero sentence below stays the first thing people see. */}
+      <h1 className="sr-only">More About the People and Vision Behind Nectarine</h1>
       {/* Hero: pinned in the viewport while the sentence fades to "timeless"
           (in place — it never moves, only recolors) and the Nektar meaning
           fades in beneath it. See the scroll effect above. */}

@@ -10,6 +10,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import CookieBanner from "@/components/CookieBanner";
 import GoogleTags from "@/components/GoogleTags";
+import StructuredData from "@/components/StructuredData";
 
 const belanosima = Belanosima({
   subsets: ["latin"],
@@ -35,7 +36,18 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.nectarine.ink"),
-  title: "Nectarine Studio",
+  // Every other page's title gets " | Nectarine Studio" added to the end
+  // (e.g. "About" becomes "About | Nectarine Studio"). The homepage, which
+  // doesn't set its own title, just shows "Nectarine Studio".
+  title: {
+    default: "Nectarine Studio",
+    template: "%s | Nectarine Studio",
+  },
+  // Tells Google the one "official" address for each page, so it never
+  // treats variations (like a trailing slash or tracking tags) as duplicates.
+  alternates: {
+    canonical: "./",
+  },
   description: "We are a creative studio developing timeless, world-class brands for holistic, impact-driven companies.",
 };
 
@@ -47,6 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased ${belanosima.variable} ${aleo.variable} ${inter.variable}`}>
+        <StructuredData />
         <GoogleTags />
         <SmoothScroll />
         <CustomCursor />

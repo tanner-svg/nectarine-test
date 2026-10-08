@@ -79,7 +79,7 @@ export default async function BlogDetailPage({
       {/* Cover */}
       <section className="px-5 sm:px-10 lg:px-[75px] pb-10 lg:pb-[60px]">
         <div className="max-w-[860px] mx-auto rounded-[16px] overflow-hidden flex items-center justify-center" style={{ aspectRatio: "16/9", backgroundColor: post.coverColor }}>
-          <Image src={post.coverIcon} alt="" width={130} height={130} className="w-[20%] h-auto opacity-80" />
+          <Image src={post.coverIcon} alt={`${post.category} illustration for ${post.title}`} width={130} height={130} className="w-[20%] h-auto opacity-80" />
         </div>
       </section>
 
@@ -106,7 +106,7 @@ export default async function BlogDetailPage({
                     className="w-full rounded-[8px] relative overflow-hidden flex items-center justify-center transition-transform duration-500 group-hover:scale-[1.03]"
                     style={{ aspectRatio: "3/2", backgroundColor: rp.coverColor }}
                   >
-                    <Image src={rp.coverIcon} alt="" width={64} height={64} className="w-[25%] h-auto opacity-80" />
+                    <Image src={rp.coverIcon} alt={`${rp.category} illustration for ${rp.title}`} width={64} height={64} className="w-[25%] h-auto opacity-80" />
                   </div>
                   <h3 className="font-aleo font-bold text-[20px] leading-[1.15] text-[#380102] group-hover:text-[#d7432a] transition-colors duration-300">
                     {rp.title}

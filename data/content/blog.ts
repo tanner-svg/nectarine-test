@@ -170,7 +170,7 @@ Try asking three people on your staff today to describe what you do in one sente
 
 If the answers are all over the map, don't sweat it. It just means you are paying a little more Fuzz Tax than you need to.
 
-Hop on a 20-30 minute chat with us and let's get it sorted out: hello@nectarinestudio.com`,
+Hop on a 20-30 minute chat with us and let's get it sorted out: hello@nectarine.ink`,
   },
 ];
 

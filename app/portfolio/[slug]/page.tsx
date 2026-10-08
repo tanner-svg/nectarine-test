@@ -126,6 +126,7 @@ export async function generateMetadata({
     description,
     openGraph: { title, description, images: ogImage ? [ogImage] : undefined },
     twitter: { card: "summary_large_image", title, description, images: ogImage ? [ogImage.url] : undefined },
+    ...(project.hideFromSearch ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
@@ -138,10 +139,13 @@ export default async function PortfolioDetailPage({
   const project = getAllProjects().find((p) => p.slug === slug);
   if (!project) notFound();
 
-  const gallery = project.galleryFolder ? getGalleryImages(project.galleryFolder) : [];
+  const gallery = (project.galleryFolder ? getGalleryImages(project.galleryFolder) : []).map((item) => ({
+    ...item,
+    alt: project.galleryAlt?.[item.url.split("/").pop()!] ?? `${project.title} project by Nectarine Studio`,
+  }));
   if (project.galleryEmbeds) {
     for (const embed of [...project.galleryEmbeds].sort((a, b) => b.insertAt - a.insertAt)) {
-      gallery.splice(embed.insertAt, 0, { url: embed.url, type: "embed" });
+      gallery.splice(embed.insertAt, 0, { url: embed.url, type: "embed", alt: `${project.title} video by Nectarine Studio` });
     }
   }
   const otherProjects = getAllProjects().filter((p) => p.slug !== slug).slice(0, 3);

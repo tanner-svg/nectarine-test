@@ -6,6 +6,9 @@ import ScheduleCallButton from "@/components/ScheduleCallButton";
 export const metadata: Metadata = {
   title: "Audit Complete",
   description: "Thank you for completing Nectarine Studio's brand alignment audit — we'll be in touch shortly with your results.",
+  // Thank-you page people only reach after finishing the audit — keep it out
+  // of Google search results.
+  robots: { index: false, follow: true },
 };
 
 export default function AuditCompletePage() {
